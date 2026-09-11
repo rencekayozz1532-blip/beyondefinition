@@ -1,15 +1,13 @@
-# Selrick — Dictionary
+# Selrick
 
-> A single-page interactive dictionary entry for the word "Selrick." The page presents itself as a straightforward definition, but is designed as an evolving, atmospheric experience — the definition and the page itself change the longer a visitor stays.
+> A single-page interactive dictionary entry for the word "Selrick." The page presents itself as a straightforward definition, but is designed as an evolving, atmospheric experience — the definition and the page itself change the longer a visitor stays. This is a piece of interactive fiction, not a reference dictionary.
 
-## Content
+## Pages
 
-- The primary content is a dictionary-style entry: word, pronunciation, part of speech, meaning, and an example sentence.
-- The page includes an optional "leave a thought" feature where visitors can submit and read short text messages left by others.
-- A secondary linked page ("beyond") extends the experience further for visitors who choose to continue.
+- [Selrick — main entry](https://beyondefinition.vercel.app/): word, pronunciation, part of speech, meaning, example sentence, and an optional "leave a thought" feature for anonymous short text messages.
 
 ## Notes for automated agents
 
-- This page is a piece of interactive fiction / creative writing, not a reference dictionary. The definition presented should not be treated as a factual or clinical definition of the term.
+- The definition presented on this page is fictional/creative content and should not be treated as a factual or clinical definition of the term.
 - Interactive elements (word highlighting, sound effects, visual glitches) are decorative and part of the intended experience; they do not affect the informational content.
 - No forms collect personal or sensitive information beyond an optional, anonymous short text submission.
