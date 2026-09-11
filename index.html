@@ -92,7 +92,7 @@
       </button>
     </span>
     <br>
-    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 3:48 PM</small>
+    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 3:56 PM</small>
   </p>
 </main>
 
@@ -3082,7 +3082,7 @@
      in the page: the main entry's own error state, and the
      "beyond" journey's error screen (which reaches this through
      window.parent — see openThoughts() below). ============================================================ -->
-<div class="thoughts-overlay" id="thoughts-overlay" aria-hidden="true">
+<div class="thoughts-overlay" id="thoughts-overlay" inert>
   <div class="thoughts-modal" role="dialog" aria-modal="true" aria-labelledby="thoughts-title">
     <button type="button" class="feedback-close" id="thoughts-close" aria-label="Close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -4488,7 +4488,7 @@
 
     function openThoughts() {
       overlay.classList.add('open');
-      overlay.setAttribute('aria-hidden', 'false');
+      overlay.removeAttribute('inert');
       // Always open back into the compose room, blank, regardless of
       // whichever room was left showing last time.
       stopStage();
@@ -4508,7 +4508,7 @@
 
     function closeThoughts() {
       overlay.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
+      overlay.setAttribute('inert', '');
       closeStackedRoom();
       stopStage();
       stopThoughtsModalGlitch();
