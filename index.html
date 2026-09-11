@@ -1625,7 +1625,7 @@
       </button>
     </span>
     <br>
-    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 11:48 AM</small>
+    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 2:53 PM</small>
   </p>
 </main>
 
@@ -3226,7 +3226,7 @@
   // biggest cost on a phone screen; a coarser buffer reads the same
   // as grain at .05 opacity under an overlay blend but is roughly
   // 10x cheaper to compute.
-  const GRAIN_SCALE = 0.3;
+  const GRAIN_SCALE = 0.18;
   function sizeGrain(){
     grainCanvas.width = Math.ceil((innerWidth + 100) * GRAIN_SCALE);
     grainCanvas.height = Math.ceil((innerHeight + 100) * GRAIN_SCALE);
@@ -3250,7 +3250,7 @@
     // battery animating something nobody can see.
     if(!document.hidden){
       grainTick++;
-      if(grainTick % 4 === 0) drawGrain(); // low fps flicker, not every frame
+      if(grainTick % 8 === 0) drawGrain(); // low fps flicker, not every frame
     }
     requestAnimationFrame(grainLoop);
   }
