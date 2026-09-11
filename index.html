@@ -262,22 +262,40 @@
     background: var(--accent);
     clip-path: var(--line-clip);
     transition: clip-path 1.1s ease-in-out;
-    animation: exampleLineUnease 5.5s ease-in-out infinite;
+    animation: exampleLineUnease 5.5s ease-in-out infinite, exampleLineColor 5.5s steps(1,end) infinite;
   }
+  /* Split in two: PageSpeed flagged this as a non-composited
+     animation because `background` can't run on the GPU compositor —
+     and since it shared one @keyframes rule with opacity/transform,
+     the *whole* animation fell back to the main thread, repainting
+     every frame for as long as the page stayed open. Opacity and
+     transform (the actual jitter) now run on their own, fully
+     composited, smooth at any frame rate. The color swaps move to a
+     `steps()` timing, so the browser only repaints at the handful of
+     moments the color actually changes — an instant snap instead of
+     a continuous fade, which reads more like a glitch anyway. */
   @keyframes exampleLineUnease {
-    0%, 100% { opacity: 1; transform: translateX(0) scaleY(1); background: var(--accent); }
+    0%, 100% { opacity: 1; transform: translateX(0) scaleY(1); }
     18% { opacity: 1; }
     19% { opacity: .3; transform: translateX(-1.5px) scaleY(.97); }
     21% { opacity: .9; transform: translateX(0) scaleY(1); }
-    44% { opacity: .85; background: #5c1c24; }
+    44% { opacity: .85; }
     46% { opacity: .15; transform: translateX(1.5px); }
-    49% { opacity: 1; background: var(--accent); transform: translateX(0); }
+    49% { opacity: 1; transform: translateX(0); }
     68% { opacity: 1; }
     69% { opacity: .45; transform: translateY(2px) scaleY(.9); }
     71% { opacity: 1; transform: translateY(0) scaleY(1); }
-    86% { opacity: 1; background: var(--accent); }
-    87% { opacity: .9; background: #5c1c24; }
-    89% { opacity: 1; background: var(--accent); }
+    86% { opacity: 1; }
+    87% { opacity: .9; }
+    89% { opacity: 1; }
+  }
+  @keyframes exampleLineColor {
+    0%, 100% { background: var(--accent); }
+    44% { background: #5c1c24; }
+    49% { background: var(--accent); }
+    86% { background: var(--accent); }
+    87% { background: #5c1c24; }
+    89% { background: var(--accent); }
   }
 
   .example p {
@@ -1625,7 +1643,7 @@
       </button>
     </span>
     <br>
-    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 2:53 PM</small>
+    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Sep 11, 2026, 3:09 PM</small>
   </p>
 </main>
 
