@@ -6784,14 +6784,16 @@
 
     // Turn these to taste. Higher static / lower bandwidth = a worse station.
     const RADIO = {
-      highpass: 380,      // Hz. cuts bass, like a small speaker
-      lowpass: 2900,      // Hz. cuts the top end
-      midBoost: 6,        // dB of honky midrange
-      drive: 3.2,         // distortion amount
-      hiss: 0.035,        // steady static level
-      fadeChance: 0.03,   // chance per tick the signal drops out for a moment
-      crackle: 0.22,      // chance per tick of a pop
-      wow: 0.004          // speed wobble (0.004 = 0.4%)
+      highpass: 350,      // Hz. cuts bass, like a small speaker
+      lowpass: 2800,      // Hz. cuts the top end before the crush
+      crushRate: 8000,    // Hz. lower = grainier, more "low bitrate" (try 6000 to 11025)
+      crushBits: 7,       // bit depth. lower = crunchier (try 5 to 8)
+      midBoost: 3,        // dB of boxy midrange
+      drive: 1.2,         // distortion amount
+      hiss: 0.003,        // steady static level (barely there)
+      fadeChance: 0,      // chance per tick the signal dips
+      crackle: 0,         // chance per tick of a pop
+      wow: 0              // speed wobble (0.0015 = 0.15%)
     };
 
     let radioCtx = null;
@@ -6816,6 +6818,56 @@
       return buf;
     }
 
+    // The low-quality part: drops the sample rate and bit depth, like a
+    // tiny low-bitrate file. Uses an AudioWorklet where the browser
+    // allows it, and falls back to a ScriptProcessor otherwise.
+    let crusherReady = false, crusherLoading = false;
+    function ensureCtx() {
+      if (radioCtx) return radioCtx;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try { radioCtx = new AC(); } catch (e) { return null; }
+      return radioCtx;
+    }
+    function prepareCrusher() {
+      if (crusherReady || crusherLoading) return;
+      const ctx = ensureCtx();
+      if (!ctx || !ctx.audioWorklet || !window.Blob || !window.URL) return;
+      crusherLoading = true;
+      const code = "class C extends AudioWorkletProcessor{constructor(o){super();const p=o.processorOptions;this.hold=Math.max(1,Math.round(sampleRate/p.rate));this.lv=Math.pow(2,p.bits-1);this.c=0;this.l=0;}" +
+        "process(i,o){const a=i[0][0];if(!a)return true;for(let n=0;n<a.length;n++){if(this.c===0)this.l=Math.round(a[n]*this.lv)/this.lv;this.c=(this.c+1)%this.hold;for(let k=0;k<o[0].length;k++)o[0][k][n]=this.l;}return true;}}" +
+        "registerProcessor('radio-crusher',C);";
+      const url = URL.createObjectURL(new Blob([code], { type: 'application/javascript' }));
+      ctx.audioWorklet.addModule(url).then(() => { crusherReady = true; }).catch(() => {});
+    }
+    function makeCrusher(ctx) {
+      if (crusherReady) {
+        try {
+          return new AudioWorkletNode(ctx, 'radio-crusher', {
+            numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1],
+            processorOptions: { rate: RADIO.crushRate, bits: RADIO.crushBits }
+          });
+        } catch (e) {}
+      }
+      if (ctx.createScriptProcessor) {
+        const node = ctx.createScriptProcessor(2048, 1, 1);
+        const hold = Math.max(1, Math.round(ctx.sampleRate / RADIO.crushRate));
+        const lv = Math.pow(2, RADIO.crushBits - 1);
+        let c = 0, last = 0;
+        node.onaudioprocess = (ev) => {
+          const a = ev.inputBuffer.getChannelData(0), o = ev.outputBuffer.getChannelData(0);
+          for (let n = 0; n < a.length; n++) {
+            if (c === 0) last = Math.round(a[n] * lv) / lv;
+            c = (c + 1) % hold;
+            o[n] = last;
+          }
+        };
+        return node;
+      }
+      const pass = ctx.createGain(); // no crusher available: still band-limited
+      return pass;
+    }
+
     // One radio per posted song. Nothing is built until the first tap
     // (browsers only allow audio after a tap anyway).
     function createRadio(url, seed, ui) {
@@ -6832,6 +6884,8 @@
         hp.channelCount = 1; hp.channelCountMode = 'explicit'; // mono, like one small speaker
         const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = RADIO.lowpass; lp.Q.value = 1.1;
         const mid = ctx.createBiquadFilter(); mid.type = 'peaking'; mid.frequency.value = 1400; mid.Q.value = 0.9; mid.gain.value = RADIO.midBoost;
+        const crush = makeCrusher(ctx);
+        const lp2 = ctx.createBiquadFilter(); lp2.type = 'lowpass'; lp2.frequency.value = 3600; lp2.Q.value = 0.7;
         const shaper = ctx.createWaveShaper(); shaper.curve = driveCurve(RADIO.drive); shaper.oversample = '2x';
         const comp = ctx.createDynamicsCompressor();
         comp.threshold.value = -30; comp.knee.value = 12; comp.ratio.value = 8; comp.attack.value = 0.004; comp.release.value = 0.2;
@@ -6839,7 +6893,7 @@
         const hiss = ctx.createGain(); hiss.gain.value = 0;    // static level
         const nbp = ctx.createBiquadFilter(); nbp.type = 'bandpass'; nbp.frequency.value = 2200; nbp.Q.value = 0.5;
         const out = ctx.createGain(); out.gain.value = 0.85;
-        src.connect(hp); hp.connect(lp); lp.connect(mid); mid.connect(shaper); shaper.connect(comp); comp.connect(sig); sig.connect(out);
+        src.connect(hp); hp.connect(lp); lp.connect(crush); crush.connect(lp2); lp2.connect(mid); mid.connect(shaper); shaper.connect(comp); comp.connect(sig); sig.connect(out);
         nbp.connect(hiss); hiss.connect(out); out.connect(ctx.destination);
         g = { ctx, lp, sig, hiss, nbp, buf: noiseBuffer(ctx) };
       }
@@ -6859,11 +6913,11 @@
         if (el > fadeUntil && Math.random() < RADIO.fadeChance) fadeUntil = el + 0.7 + Math.random() * 1.6;
         const fading = el < fadeUntil;
         const s = 0.82 + 0.1 * Math.sin(el * 0.35 + seed) + 0.05 * Math.sin(el * 1.3 + seed * 2);
-        g.sig.gain.setTargetAtTime(fading ? 0.3 : s, now, 0.12);
-        g.hiss.gain.setTargetAtTime(fading ? 0.17 : RADIO.hiss + (1 - s) * 0.05, now, 0.1);
-        g.lp.frequency.setTargetAtTime(fading ? 1500 : RADIO.lowpass + 260 * Math.sin(el * 0.5 + seed), now, 0.2);
+        g.sig.gain.setTargetAtTime(fading ? 0.6 : s, now, 0.12);
+        g.hiss.gain.setTargetAtTime(fading ? 0.04 : RADIO.hiss + (1 - s) * 0.015, now, 0.1);
+        g.lp.frequency.setTargetAtTime(fading ? 2200 : RADIO.lowpass + 260 * Math.sin(el * 0.5 + seed), now, 0.2);
         if (!fading && Math.random() < RADIO.crackle) { // a pop
-          g.hiss.gain.setValueAtTime(0.22, now);
+          g.hiss.gain.setValueAtTime(0.05, now);
           g.hiss.gain.setTargetAtTime(RADIO.hiss, now + 0.03, 0.04);
         }
         try { audio.playbackRate = 1 + RADIO.wow * Math.sin(el * 0.9 + seed) + RADIO.wow * 0.5 * Math.sin(el * 2.7); } catch (e) {}
@@ -6901,11 +6955,11 @@
           // tuning in: static up front, the station sliding into focus
           startNoise();
           g.hiss.gain.cancelScheduledValues(now); g.sig.gain.cancelScheduledValues(now); g.lp.frequency.cancelScheduledValues(now);
-          g.hiss.gain.setValueAtTime(0.3, now);
-          g.hiss.gain.setTargetAtTime(RADIO.hiss, now + 0.5, 0.5);
-          g.sig.gain.setValueAtTime(0.05, now);
+          g.hiss.gain.setValueAtTime(0.02, now);
+          g.hiss.gain.setTargetAtTime(RADIO.hiss, now + 0.4, 0.4);
+          g.sig.gain.setValueAtTime(0.3, now);
           g.sig.gain.setTargetAtTime(0.85, now + 0.5, 0.4);
-          g.lp.frequency.setValueAtTime(600, now);
+          g.lp.frequency.setValueAtTime(1200, now);
           g.lp.frequency.exponentialRampToValueAtTime(RADIO.lowpass, now + 1.4);
           setUi('playing');
           timer = setInterval(tick, 220);
@@ -7233,6 +7287,7 @@
 
     /* ---------- open / close ---------- */
     function openRoom() {
+      prepareCrusher();
       lastOpener = document.activeElement;
       room.classList.add('open');
       room.removeAttribute('inert');
