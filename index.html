@@ -611,6 +611,104 @@
   .speak-room,.speak-room *,.speak-room *::before,.speak-room *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;}
 }
 </style>
+<style id="room-diary">
+/* room: library / diary feel. CSS only, room-scoped, no logic touched. */
+.speak-room{
+  --diary-line:rgba(112,78,127,.10);
+  --diary-line-strong:rgba(112,78,127,.22);
+  --diary-page:rgba(255,255,255,.30);
+  --diary-margin:rgba(112,78,127,.32);
+}
+:root.dark-mode .speak-room,
+:root:has(#beyond-overlay[style*="display: block"]) .speak-room{
+  --diary-line:rgba(200,170,215,.07);
+  --diary-line-strong:rgba(200,170,215,.16);
+  --diary-page:rgba(255,255,255,.025);
+  --diary-margin:rgba(170,123,178,.34);
+}
+
+/* header: cover page with a bookmark ribbon */
+.speak-room .speak-header{border-bottom:3px double var(--rule);padding-bottom:12px;}
+.speak-room #speak-title::before{
+  content:'property of selrick';display:block;margin-bottom:8px;
+  font:400 10px/1 'Courier Prime','Courier New',monospace;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+.speak-room .speak-sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14.5px;}
+.speak-room .speak-header .speak-col::after{
+  content:'';position:absolute;z-index:2;pointer-events:none;
+  right:clamp(16px,5vw,28px);
+  top:calc(-1 * max(8px, env(safe-area-inset-top, 8px)));
+  width:13px;height:calc(max(8px, env(safe-area-inset-top, 8px)) + 30px);
+  background:var(--accent);opacity:.8;
+  clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 6px),0 100%);
+}
+
+/* the page: soft paper, faint ruled lines, a margin line */
+.speak-room .speak-scroll{display:flex;flex-direction:column;}
+.speak-room .speak-scroll > .speak-col{
+  flex:1 0 auto;padding-top:6px;
+  padding-left:clamp(32px,9vw,46px);
+  background-color:var(--diary-page);
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--diary-line) 31px,var(--diary-line) 32px);
+}
+.speak-room .speak-scroll > .speak-col::before{
+  content:'';position:absolute;top:0;bottom:0;left:clamp(18px,5vw,26px);width:1px;
+  background:var(--diary-margin);pointer-events:none;
+}
+@media (min-width:700px){
+  .speak-room .speak-scroll > .speak-col{border-left:1px solid var(--rule);border-right:1px solid var(--rule);box-shadow:0 0 40px var(--card-shadow);}
+}
+
+/* entries: dated pages, stitched apart */
+.speak-room #speak-feed{gap:0;padding-top:4px;}
+.speak-room #speak-feed > .speak-post{padding:18px 0 20px;border-bottom:1px dashed var(--rule);}
+.speak-room #speak-feed > .speak-post:last-child{border-bottom:0;}
+.speak-room #speak-feed > .speak-post:nth-of-type(n) .speak-post-text{
+  max-width:100%;padding:2px 2px;color:var(--ink);
+  font-size:clamp(17px,4.5vw,20px);line-height:1.6;
+}
+/* the date reads like a library due-date stamp */
+.speak-room .speak-post > .speak-time:not(.speak-time-tape){
+  font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:.14em;
+  padding:3px 8px 2px;border:1px solid currentColor;border-radius:3px;
+  transform:rotate(-1.2deg);opacity:.88;margin-bottom:4px;width:fit-content;
+}
+
+/* tape: a catalogue card */
+.speak-room .speak-post > .speak-radio{border-radius:6px;}
+.speak-room .speak-replies{border-radius:8px;}
+
+/* replies: slips tucked into the margin */
+.speak-room .speak-reply{
+  border-radius:3px 12px 12px 3px;border-left:2px solid var(--accent);
+  background:var(--paper);box-shadow:0 1px 6px var(--card-shadow);
+}
+.speak-room .speak-reply:has(.speak-reply-name.owner){
+  border-radius:12px 3px 3px 12px;border-left:0;border-right:2px solid var(--accent);
+  background:rgba(112,78,127,.14);box-shadow:0 1px 6px var(--card-shadow);
+}
+
+/* writing area: a blank ruled page */
+.speak-room .speak-compose{
+  margin:14px 0 8px;padding:12px 14px 10px;border:1px solid var(--rule);border-radius:4px;
+  background:var(--paper);transition:border-color .2s ease;
+}
+.speak-room .speak-compose:focus-within{border-color:var(--accent);}
+.speak-room #speak-post-input{
+  border:0;border-radius:0;box-shadow:none;padding:0 2px;background-color:transparent;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 27px,var(--diary-line-strong) 27px,var(--diary-line-strong) 28px);
+  background-attachment:local;
+  font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:17px;line-height:28px;
+}
+.speak-room #speak-post-input:focus-visible{outline:none;border:0;box-shadow:none;}
+
+/* end of the page */
+.speak-room .speak-foot::before{
+  content:'*   *   *';display:block;margin-bottom:6px;
+  color:var(--accent);opacity:.6;letter-spacing:.2em;
+}
+</style>
 </head>
 <body>
 <script>
