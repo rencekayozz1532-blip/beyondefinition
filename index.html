@@ -307,12 +307,6 @@
   .thoughts-music-result-title{font-size:12.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .thoughts-music-result-artist{font-size:11px;font-style:italic;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .thoughts-music-status{font-size:11.5px;font-style:italic;color:var(--muted);padding:4px 2px;}
-  .thought-music{display:flex;align-items:center;gap:8px;margin-top:8px;padding:6px 8px;border:1px solid var(--rule);border-radius:10px;background:rgba(112,78,127,.06);}
-  .thought-music img{width:30px;height:30px;border-radius:4px;flex:0 0 auto;object-fit:cover;}
-  .thought-music-meta{min-width:0;display:flex;flex-direction:column;flex:1 1 auto;}
-  .thought-music-title{font-size:12px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .thought-music-artist{font-size:10.5px;font-style:italic;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .thought-music audio{height:28px;max-width:120px;flex:0 0 auto;}
   .speak-radio{display:flex;align-items:center;gap:14px;margin-top:16px;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);box-shadow:0 2px 12px var(--card-shadow);}
   .speak-radio .say{flex:0 0 auto;}
   .speak-radio-meta{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px;}
@@ -417,6 +411,55 @@
   .speak-room.open > .speak-header,
   .speak-room.open > .speak-scroll {
     animation: roomContentFadeIn 0.35s ease both;
+  }
+
+  /* These two are places people are actually reading and typing, not
+     passing through, so the site's usual unease-flicker on titles,
+     subtext, and the background wash is turned off here — titles,
+     subheads, and the room's radio "on air" label stay put once
+     they've faded in, instead of dipping in brightness every few
+     seconds. */
+  #thoughts-title,
+  #thoughts-panel-wall h3,
+  #thoughts-stacked-title,
+  #speak-title,
+  #thoughts-panel-compose .feedback-sub,
+  #thoughts-panel-wall .feedback-sub,
+  .thoughts-stacked-sub,
+  .speak-sub,
+  .thoughts-modal::before,
+  .thoughts-stacked-room::before,
+  .speak-room::before,
+  .speak-radio.playing .speak-radio-dial {
+    animation: none !important;
+  }
+
+  /* Cards (the stacked-room's thought cards, a room's own new-post
+     card) used to strobe in with a rapid multi-step opacity flicker
+     on arrival — now they just appear. The wall's single rotating
+     quote (.thought-line) used to keep pulsing brightness forever
+     once shown; it now fades in/out once and holds steady. */
+  .thought-stack-item,
+  .thought-stack-item-new,
+  .speak-post-new {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
+  .thought-line {
+    transition: opacity 0.6s ease;
+  }
+  .thought-line.show,
+  .thought-line.thought-line-new {
+    animation: none !important;
+    opacity: .85 !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
+  .thought-line.fade {
+    animation: none !important;
+    opacity: 0 !important;
   }
 </style>
 <style>
@@ -567,13 +610,13 @@
 .thought-like{margin-top:3px;transition:background .2s ease,color .2s ease;}
 .thought-like.liked{background:rgba(112,78,127,.12);}
 /* wall: plain quotes, no bubble */
-.thoughts-modal .thought-line::before,.thought-stack-item p::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+.thoughts-modal .thought-line::before,.thought-stack-item p:not(.speak-radio-title)::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
 /* full list: soft chat bubbles, alternating sides, corner-tail (no diamond) */
 .thoughts-stack-list{gap:12px;padding-top:18px;}
 .thoughts-stacked-room .thought-stack-item{position:relative;align-self:flex-start;box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:12px 16px 9px;text-align:left;border:0;border-radius:20px 20px 20px 6px;background-color:rgba(112,78,127,.11);background-image:none;box-shadow:none;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
 .thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
-.thoughts-stacked-room .thought-stack-item p::before{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-right:4px;opacity:.55;}
+.thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::before{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-right:4px;opacity:.55;}
 .thoughts-stacked-room .thought-stack-item time{margin-top:7px;font-size:9.5px;letter-spacing:.1em;opacity:.8;}
 .thoughts-stacked-room .thought-stack-item .thought-like{margin:2px 0 0;padding:4px 8px 4px 0;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin-left:auto;padding:4px 0 4px 8px;}
@@ -788,7 +831,7 @@
   background-origin:content-box,padding-box;background-clip:content-box,padding-box;background-attachment:local,scroll;
 }
 .thoughts-modal .thoughts-compose textarea:focus-visible{border-color:var(--accent);}
-.thoughts-compose .feedback-whisper.thoughts-whisper{margin:6px 0 0;}
+.thoughts-compose .feedback-whisper.thoughts-whisper{margin:18px 0 0;}
 .thoughts-modal .thoughts-status{min-height:16px;margin:4px 0 0;}
 .thoughts-modal .thoughts-row{margin-top:10px;}
 .thoughts-modal .thoughts-row button.primary{padding:8px 16px;min-height:36px;font-size:13px;border-radius:18px;}
@@ -820,9 +863,8 @@
   content:'';position:absolute;top:2px;bottom:2px;left:6px;width:1.5px;
   background:var(--diary-margin,var(--rule));pointer-events:none;
 }
-.thoughts-modal .thought-line time,.thought-stack-item time{
-  display:inline-block;font-family:'Courier Prime','Courier New',monospace;
-  border:1px solid currentColor;border-radius:3px;padding:2px 6px 1px;
+.thought-stack-item time{
+  display:block;font-family:'Courier Prime','Courier New',monospace;
   letter-spacing:.12em;opacity:.85;
 }
 .thoughts-stacked-room .thought-stack-item:nth-of-type(odd){transform:rotate(-.6deg);}
@@ -843,6 +885,27 @@
     if (!el) return;
     window.__topZBase += 1;
     el.style.zIndex = window.__topZBase;
+
+    // Every full-page overlay funnels through here to take focus, so
+    // this is also the one place to make sure whichever overlay *isn't*
+    // the one taking focus stops making noise (audio/spoken lines)
+    // behind it — stacking still works visually, it just no longer
+    // overlaps in sound.
+    try {
+      var beyondOverlay = document.getElementById('beyond-overlay');
+      if (beyondOverlay && el !== beyondOverlay && beyondOverlay.style.display !== 'none') {
+        var frame = document.getElementById('beyond-frame');
+        var fw = frame && frame.contentWindow;
+        if (fw) {
+          if (typeof fw.fadeAmbienceOut === 'function') fw.fadeAmbienceOut(0.3);
+          if (typeof fw.stopVoiceEngine === 'function') fw.stopVoiceEngine();
+        }
+      }
+    } catch (e) {}
+    try {
+      var room = document.getElementById('speak-room');
+      if (room && el !== room && typeof window.pauseRoomRadio === 'function') window.pauseRoomRadio();
+    } catch (e) {}
   };
 
   // Small floating-heart burst, used wherever a heart/like button goes
@@ -962,7 +1025,7 @@
       </button>
     </span>
     <br>
-    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Monday, September 21, 2026, 2:16 PM</small>
+    <small style="opacity:0.55; font-size:10.5px; display:inline-block; margin-top:8px;">Last updated: Tuesday, September 22, 2026, 10:05 AM</small>
   </p>
 </main>
 
@@ -1865,6 +1928,11 @@
   window.wakeAmbience = function(){ if(!AudioEngine.isReady()) AudioEngine.init(); };
   window.fadeAmbienceOut = function(duration){ AudioEngine.fadeOut(duration); };
   window.fadeAmbienceIn = function(duration){ AudioEngine.fadeIn(duration); };
+  // Exposed so the parent page can silence this page's spoken lines
+  // from outside — used when another page/overlay takes focus while
+  // this one is still open underneath it, so the two don't talk over
+  // each other.
+  window.stopVoiceEngine = function(){ try { VoiceEngine.stop(); } catch(e) {} };
 
   /* ============================================================
      AUDIO UNLOCK — no gate to click through; the first real
@@ -5175,17 +5243,43 @@
   /* Keep the surreal interruptions, but do not let hidden overlays or
      background tabs consume a frame budget. */
   (function smoothRuntime(){
-    const beyond = document.getElementById('beyond-overlay');
-    const frame = document.getElementById('beyond-frame');
+    // #beyond-overlay and #beyond-frame live in the parent (dictionary)
+    // page, not in this document — this page IS what's inside that
+    // frame. Reach out to the parent (same-origin, via srcdoc) to find
+    // them; if that ever fails, fall back to only the tab-hidden check
+    // so this never throws.
+    let parentDoc = null;
+    try { parentDoc = window.parent && window.parent.document; } catch(e) {}
+    const beyond = parentDoc ? parentDoc.getElementById('beyond-overlay') : null;
+    const frame = parentDoc ? parentDoc.getElementById('beyond-frame') : null;
     const grain = document.getElementById('grain');
     const lowPower = matchMedia('(max-width: 600px), (hover: none), (prefers-reduced-motion: reduce)').matches;
 
+    let wasHidden = false;
     function pauseHiddenLayers(){
-      const hidden = document.hidden || (beyond && beyond.style.display !== 'none');
+      const overlayClosed = !!(beyond && beyond.style.display === 'none');
+      const hidden = document.hidden || overlayClosed;
       if (grain) grain.style.visibility = hidden ? 'hidden' : 'visible';
-      if (frame && hidden) frame.style.visibility = beyond && beyond.style.display !== 'none' ? 'visible' : 'hidden';
+      if (frame) frame.style.visibility = hidden ? 'hidden' : 'visible';
+      // Belt-and-suspenders: if this page's overlay got closed some
+      // way other than its own "leave" button (which already fades
+      // things out itself), make sure the ambience and any spoken
+      // line don't keep running unheard behind the dictionary page.
+      if (hidden && !wasHidden) {
+        try { if (typeof AudioEngine !== 'undefined' && AudioEngine.isReady()) AudioEngine.fadeOut(0.2); } catch(e) {}
+        try { if (typeof VoiceEngine !== 'undefined') VoiceEngine.stop(); } catch(e) {}
+      }
+      wasHidden = hidden;
     }
     document.addEventListener('visibilitychange', pauseHiddenLayers, { passive: true });
+    // The overlay can also open/close without a visibilitychange event
+    // firing (the tab itself never leaves the foreground), so watch it
+    // directly too.
+    if (beyond && window.MutationObserver) {
+      try {
+        new MutationObserver(pauseHiddenLayers).observe(beyond, { attributes: true, attributeFilter: ['style'] });
+      } catch(e) {}
+    }
     pauseHiddenLayers();
 
     // Avoid running expensive spontaneous distortions while the reader is
@@ -5272,18 +5366,11 @@
   }
 </style>
 <script>
-  (function smoothRuntimeFinal(){
-    const beyond = document.getElementById('beyond-overlay');
-    const frame = document.getElementById('beyond-frame');
-    const grain = document.getElementById('grain');
-    function syncVisibility(){
-      const hidden = document.hidden;
-      if (grain) grain.style.visibility = hidden ? 'hidden' : 'visible';
-      if (frame && beyond && beyond.style.display === 'none') frame.style.visibility = 'hidden';
-    }
-    document.addEventListener('visibilitychange', syncVisibility, { passive: true });
-    syncVisibility();
-  })();
+  // (The pause/resume-on-hide logic now lives in one place, in the
+  // smoothRuntime block above, which also correctly reaches into the
+  // parent page to check the overlay itself rather than just the tab.
+  // This used to be a second, separately-buggy copy of that same
+  // check — removed rather than left to fight the fixed version.)
 </script>
 <style id='dictionary-palette-lock'>
   /* Beyond page: the dictionary's own dusty-lavender palette, in its dark form. */
@@ -6417,14 +6504,41 @@
     const musicGoBtn = document.getElementById('thoughts-music-go');
     const musicResultsEl = document.getElementById('thoughts-music-results');
     let pendingMusic = null, musicSearchToken = 0;
+    let musicPreviewEl = null, musicStartBtn = null, musicStartLabel = null;
+    const fmtStart = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
 
     function setPendingMusic(track) {
       pendingMusic = track || null;
+      if (musicPreviewEl) { try { musicPreviewEl.pause(); } catch (e) {} musicPreviewEl.remove(); musicPreviewEl = null; }
+      if (musicStartBtn) { musicStartBtn.parentNode && musicStartBtn.parentNode.remove(); musicStartBtn = null; musicStartLabel = null; }
       if (musicNameEl) {
         musicNameEl.hidden = musicClearBtn.hidden = !track;
         musicNameEl.textContent = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')) : '';
       }
       if (musicPickBtn) musicPickBtn.querySelector('.lbl').textContent = track ? 'change song' : 'attach a song';
+      if (track && musicWrap) {
+        // let the visitor listen to the 30-second clip and choose where
+        // in it the attached card should start playing from.
+        musicPreviewEl = document.createElement('audio');
+        musicPreviewEl.controls = true; musicPreviewEl.preload = 'none'; musicPreviewEl.className = 'speak-audio-preview';
+        musicPreviewEl.src = track.previewUrl;
+        musicWrap.parentNode.insertBefore(musicPreviewEl, musicWrap.nextSibling);
+        const row = document.createElement('div');
+        row.className = 'speak-attach';
+        musicStartBtn = document.createElement('button');
+        musicStartBtn.type = 'button'; musicStartBtn.className = 'speak-link';
+        musicStartBtn.innerHTML = '<span class="lbl">start the clip here</span>';
+        musicStartLabel = document.createElement('span');
+        musicStartLabel.className = 'speak-attach-name';
+        musicStartLabel.textContent = 'starts at the beginning';
+        musicStartBtn.addEventListener('click', () => {
+          const t = musicPreviewEl.currentTime || 0;
+          pendingMusic.startAt = t;
+          musicStartLabel.textContent = t > 0.15 ? ('starts at ' + fmtStart(t)) : 'starts at the beginning';
+        });
+        row.appendChild(musicStartBtn); row.appendChild(musicStartLabel);
+        musicPreviewEl.insertAdjacentElement('afterend', row);
+      }
       if (submitBtn) submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
     }
     function closeMusicSearch() {
@@ -6975,37 +7089,160 @@
       }
       node.src = entry.media_url;
       box.appendChild(node);
-      const seedKey = String(entry.media_url || entry.id || entry.created_at || '');
-      const seed = hashSeed(seedKey);
-      const rot = (seed % 17) - 8;
-      const tx = (hashSeed(seedKey + '|x') % 27) - 13;
-      const ty = (hashSeed(seedKey + '|y') % 21) - 10;
+      const rot = Math.round(Math.random() * 17) - 8;
+      const tx = Math.round(Math.random() * 27) - 13;
+      const ty = Math.round(Math.random() * 21) - 10;
       box.style.transform = 'rotate(' + rot + 'deg) translate(' + tx + 'px, ' + ty + 'px)';
       return box;
     }
     // A song, found on the internet by whoever left the thought (never a
-    // file off their device) — a small player with its title and a tiny
-    // artwork thumbnail, playable right where the thought is read.
+    // file off their device) — styled like the room's radio card: a
+    // play button, a scrolling title, a seek bar, skip buttons and a
+    // dial readout. Driven by a plain &lt;audio&gt; element rather than the
+    // room's lofi Web Audio chain, since a URL found online may not
+    // allow the CORS fetch that chain needs to decode the file.
+    let thoughtActiveAudio = null;
+    function createThoughtAudio(url, ui) {
+      const m = /#start=(\d+(?:\.\d+)?)$/.exec(url || '');
+      const startAt = m ? parseFloat(m[1]) : 0;
+      const cleanUrl = m ? url.slice(0, m.index) : (url || '');
+      const audio = new Audio();
+      audio.preload = 'none';
+      audio.src = cleanUrl;
+      let appliedStart = false;
+      const fmt = (t) => { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+      function setUi(state) {
+        ui.box.classList.toggle('playing', state === 'playing');
+        ui.box.classList.toggle('lost', state === 'lost');
+        ui.btn.classList.toggle('playing', state === 'playing' || state === 'loading');
+        ui.btn.innerHTML = state === 'playing' ? ui.pauseIcon : ui.playIcon;
+        ui.btn.setAttribute('aria-label', state === 'playing' ? 'pause' : 'play');
+        ui.dial.textContent = state === 'lost' ? 'lost the signal' : state === 'loading' ? 'tuning\u2026' : ui.freq;
+      }
+      function progress() {
+        const dur = audio.duration || 0;
+        ui.fill.style.width = (dur ? Math.min(100, audio.currentTime / dur * 100) : 0) + '%';
+        if (ui.time) ui.time.textContent = fmt(audio.currentTime) + ' / ' + fmt(dur);
+      }
+      audio.addEventListener('timeupdate', progress);
+      audio.addEventListener('loadedmetadata', () => {
+        if (!appliedStart && startAt > 0) { audio.currentTime = Math.min(startAt, audio.duration || startAt); appliedStart = true; }
+        progress();
+      });
+      audio.addEventListener('play', () => setUi('playing'));
+      audio.addEventListener('pause', () => { if (!audio.ended) setUi('idle'); });
+      audio.addEventListener('ended', () => { setUi('idle'); ui.fill.style.width = '0'; });
+      audio.addEventListener('waiting', () => setUi('loading'));
+      audio.addEventListener('error', () => setUi('lost'));
+      const api = {
+        setMute(v) { audio.muted = !!v; },
+        seek(frac) {
+          if (!audio.duration) return;
+          audio.currentTime = Math.min(0.999, Math.max(0, frac)) * audio.duration;
+          progress();
+        },
+        seekBy(sec) {
+          if (!audio.duration) return;
+          audio.currentTime = Math.min(audio.duration, Math.max(0, audio.currentTime + sec));
+          progress();
+        },
+        stop() {
+          audio.pause();
+          if (thoughtActiveAudio === api) thoughtActiveAudio = null;
+        },
+        toggle() {
+          if (!audio.paused) { audio.pause(); return; }
+          if (thoughtActiveAudio && thoughtActiveAudio !== api) thoughtActiveAudio.stop();
+          thoughtActiveAudio = api;
+          setUi('loading');
+          audio.play().catch(() => setUi('lost'));
+        }
+      };
+      return api;
+    }
     function buildThoughtMusic(entry) {
       const box = document.createElement('div');
-      box.className = 'thought-music';
-      const audio = document.createElement('audio');
-      audio.controls = true; audio.preload = 'none'; audio.src = entry.music_url;
-      const meta = document.createElement('span');
-      meta.className = 'thought-music-meta';
+      box.className = 'speak-radio';
+      const btn = document.createElement('button');
+      btn.className = 'say'; btn.type = 'button';
+      const playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+      const pauseIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+      btn.innerHTML = playIcon;
+      btn.setAttribute('aria-label', 'play');
+      const meta = document.createElement('div');
+      meta.className = 'speak-radio-meta';
+      const idNum = hashSeed(String(entry.id != null ? entry.id : entry.music_url || ''));
+      const freq = 'track ' + String(idNum % 1000).padStart(3, '0');
       const parts = String(entry.music_title || '').split(' \u2014 ');
-      const t = document.createElement('span');
-      t.className = 'thought-music-title';
-      t.textContent = parts[0] || entry.music_title || 'a song';
-      meta.appendChild(t);
-      if (parts[1]) {
-        const a = document.createElement('span');
-        a.className = 'thought-music-artist';
-        a.textContent = parts[1];
-        meta.appendChild(a);
-      }
+      const titleText = parts[0] || entry.music_title || 'a song';
+      const titleEl = document.createElement('p');
+      titleEl.className = 'speak-radio-title';
+      const titleIn = document.createElement('span');
+      titleIn.className = 'speak-radio-title-in';
+      titleIn.textContent = parts[1] ? titleText + ' \u2014 ' + parts[1] : titleText;
+      titleEl.appendChild(titleIn);
+      titleEl.title = entry.music_title || titleText;
+      const measureTitle = () => {
+        titleEl.classList.remove('scroll');
+        const w = titleEl.clientWidth;
+        const need = Math.ceil(titleIn.getBoundingClientRect().width);
+        const over = need - w;
+        const on = w > 0 && over > 2;
+        titleEl.classList.toggle('scroll', on);
+        if (on) { titleEl.style.setProperty('--shift', -over + 'px'); titleEl.style.setProperty('--dur', Math.max(6, over / 16 + 4) + 's'); }
+      };
+      if ('ResizeObserver' in window) new ResizeObserver(measureTitle).observe(titleEl);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureTitle).catch(() => {});
+      setTimeout(measureTitle, 400);
+      const dial = document.createElement('span');
+      dial.className = 'speak-radio-dial'; dial.textContent = freq;
+      const time = document.createElement('span');
+      time.className = 'speak-radio-time';
+      const SPK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg>';
+      const MUT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+      const mute = document.createElement('button');
+      mute.className = 'speak-radio-mute'; mute.type = 'button'; mute.innerHTML = SPK;
+      mute.setAttribute('aria-label', 'mute');
+      let isMuted = false;
+      mute.addEventListener('click', (e) => { e.stopPropagation(); isMuted = !isMuted; audioApi.setMute(isMuted); mute.innerHTML = isMuted ? MUT : SPK; mute.classList.toggle('on', isMuted); mute.setAttribute('aria-label', isMuted ? 'unmute' : 'mute'); });
+      const bar = document.createElement('div');
+      bar.className = 'speak-radio-bar';
+      const fill = document.createElement('i');
+      bar.appendChild(fill);
+      const seek = document.createElement('div');
+      seek.className = 'speak-radio-seek';
+      seek.tabIndex = 0;
+      seek.setAttribute('role', 'slider');
+      seek.setAttribute('aria-label', 'seek');
+      seek.appendChild(bar);
+      meta.appendChild(titleEl);
+      meta.appendChild(seek);
+      const RW = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 6v12l-8.5-6zM21 6v12l-8.5-6z"/></svg>';
+      const FF = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 6v12l8.5-6zM3 6v12l8.5-6z"/></svg>';
+      const rew = document.createElement('button');
+      rew.className = 'speak-radio-skip'; rew.type = 'button'; rew.innerHTML = RW; rew.setAttribute('aria-label', 'back 10 seconds');
+      const ff = document.createElement('button');
+      ff.className = 'speak-radio-skip'; ff.type = 'button'; ff.innerHTML = FF; ff.setAttribute('aria-label', 'forward 10 seconds');
+      const skips = document.createElement('div');
+      skips.className = 'speak-radio-skips';
+      const ctl = document.createElement('div');
+      ctl.className = 'speak-radio-ctl';
+      ctl.appendChild(rew); ctl.appendChild(btn); ctl.appendChild(ff);
+      const end = document.createElement('div');
+      end.className = 'speak-radio-end';
+      end.appendChild(dial); end.appendChild(mute);
+      skips.appendChild(time); skips.appendChild(ctl); skips.appendChild(end);
+      meta.appendChild(skips);
       box.appendChild(meta);
-      box.appendChild(audio);
+      const audioApi = createThoughtAudio(entry.music_url, { box, btn, dial, time, fill, freq, playIcon, pauseIcon });
+      btn.addEventListener('click', (e) => { e.stopPropagation(); audioApi.toggle(); });
+      seek.addEventListener('click', (e) => { e.stopPropagation(); const r = bar.getBoundingClientRect(); if (r.width) audioApi.seek((e.clientX - r.left) / r.width); });
+      seek.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); audioApi.seekBy(5); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); audioApi.seekBy(-5); }
+      });
+      rew.addEventListener('click', (e) => { e.stopPropagation(); audioApi.seekBy(-10); });
+      ff.addEventListener('click', (e) => { e.stopPropagation(); audioApi.seekBy(10); });
       return box;
     }
     function buildStackItem(entry, isNew) {
@@ -7017,7 +7254,7 @@
         // stays a tilted sticker, the words sit next to it like a quote
         const group = document.createElement('div');
         group.className = 'speak-media-note thought-media-note';
-        const mediaSide = hashSeed('m' + (entry.id != null ? entry.id : entry.media_url)) % 2 ? 'right' : 'left';
+        const mediaSide = Math.random() < 0.5 ? 'right' : 'left';
         if (mediaSide === 'right') group.classList.add('reverse');
         group.appendChild(buildThoughtMedia(entry));
         if (!wordless) {
@@ -7312,14 +7549,17 @@
 
       const entry = { content: typed || THOUGHT_MEDIA_ONLY, created_at: new Date().toISOString() };
       if (mediaUrl) entry.media_url = mediaUrl;
-      if (track) { entry.music_url = track.previewUrl; entry.music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : ''); }
+      if (track) {
+        entry.music_url = track.previewUrl + (track.startAt > 0.15 ? '#start=' + Math.round(track.startAt) : '');
+        entry.music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : '');
+      }
       let saved = false;
 
       if (backendReady) {
         try {
           const body = { content: entry.content };
           if (mediaUrl) body.media_url = mediaUrl;
-          if (track) { body.music_url = track.previewUrl; body.music_title = entry.music_title; }
+          if (track) { body.music_url = entry.music_url; body.music_title = entry.music_title; }
           const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
             method: 'POST',
             headers: {
@@ -7842,9 +8082,12 @@
 
     // One radio per posted song. Nothing loads until the first tap.
     function createRadio(url, seed, ui) {
-      let buf = null, g = null, src = null, offset = 0, startedAt = 0, playing = false, loading = false, timer = null;
-      const PK = 'selrick-pos:' + url; let muted = false;
-      try { offset = parseFloat(localStorage.getItem(PK)) || 0; } catch (e) {}
+      const startMatch = /#start=(\d+(?:\.\d+)?)$/.exec(url || '');
+      const startAt = startMatch ? parseFloat(startMatch[1]) : 0;
+      const cleanUrl = startMatch ? url.slice(0, startMatch.index) : (url || '');
+      let buf = null, g = null, src = null, offset = startAt, startedAt = 0, playing = false, loading = false, timer = null;
+      const PK = 'selrick-pos:' + cleanUrl; let muted = false;
+      try { const saved = localStorage.getItem(PK); if (saved != null) offset = parseFloat(saved) || 0; } catch (e) {}
 
       function graph(ctx) {
         const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = RADIO.highpass; hp.Q.value = 0.8;
@@ -7910,7 +8153,7 @@
           activeRadio = api;
           if (!buf) {
             loading = true; setUi('loading');
-            try { buf = await loadLofi(url); }
+            try { buf = await loadLofi(cleanUrl); }
             catch (e) { loading = false; if (activeRadio === api) activeRadio = null; setUi('lost'); return; }
             loading = false;
             if (activeRadio !== api) { setUi('idle'); return; } // they tapped something else meanwhile
@@ -8055,11 +8298,24 @@
     function setPendingAudio(track) {
       pendingAudio = track || null;
       if (audioPreview) { try { audioPreview.pause(); } catch (e) {} audioPreview.remove(); audioPreview = null; }
+      if (audioStartBtn) { audioStartBtn.parentNode && audioStartBtn.parentNode.remove(); audioStartBtn = null; audioStartLabel = null; }
       if (track) {
         audioPreview = document.createElement('audio');
         audioPreview.controls = true; audioPreview.preload = 'none'; audioPreview.className = 'speak-audio-preview';
         audioPreview.src = track.previewUrl;
         audioTitleInput.parentNode.insertBefore(audioPreview, audioTitleInput);
+        const row = el('div', 'speak-attach');
+        audioStartBtn = el('button', 'speak-link');
+        audioStartBtn.type = 'button';
+        audioStartBtn.innerHTML = '<span class="lbl">start the clip here</span>';
+        audioStartLabel = el('span', 'speak-attach-name', 'starts at the beginning');
+        audioStartBtn.addEventListener('click', () => {
+          const t = audioPreview.currentTime || 0;
+          pendingAudio.startAt = t;
+          audioStartLabel.textContent = t > 0.15 ? ('starts at ' + fmtRadioStart(t)) : 'starts at the beginning';
+        });
+        row.appendChild(audioStartBtn); row.appendChild(audioStartLabel);
+        audioPreview.insertAdjacentElement('afterend', row);
       }
       audioName.hidden = audioClear.hidden = !track;
       audioTitleInput.hidden = !track;
@@ -8214,7 +8470,8 @@
     }
 
     const SEEN_KEY = 'selrick-room-seen', POST_DRAFT = 'selrick-draft-post';
-    let seenBefore = null, audioPreview = null;
+    let seenBefore = null, audioPreview = null, audioStartBtn = null, audioStartLabel = null;
+    const fmtRadioStart = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
     try { seenBefore = localStorage.getItem(SEEN_KEY); } catch (e) {}
     const isFresh = (iso) => !!seenBefore && !!iso && new Date(iso) > new Date(seenBefore);
     const mineIds = () => { try { return JSON.parse(localStorage.getItem('selrick-my-replies') || '[]'); } catch (e) { return []; } };
@@ -8561,7 +8818,7 @@
       postSubmit.disabled = true;
       let audioUrl = null, mediaUrl = null;
       try {
-        if (track) audioUrl = track.previewUrl;
+        if (track) audioUrl = track.previewUrl + (track.startAt > 0.15 ? '#start=' + Math.round(track.startAt) : '');
         if (mfile) {
           setStatus(postStatus, 'sending the picture\u2026 0%');
           mediaUrl = await uploadMedia(mfile, token, (pct) => setStatus(postStatus, 'sending the picture\u2026 ' + pct + '%'));
@@ -8644,6 +8901,10 @@
     window.openRoom = openRoom;
     window.selrickGetToken = getToken;
     window.closeRoom = closeRoom;
+    // Exposed so bringOverlayToFront can silence this room's radio
+    // when another overlay takes focus on top of it, without fully
+    // closing the room itself.
+    window.pauseRoomRadio = function(){ if (activeRadio) activeRadio.stop(); };
     // Fetch the room's posts ahead of time so it opens with content in place.
     (function prewarmRoom(){
       function run(){ setTimeout(function(){ if (!loadedAt && !room.classList.contains('open')) loadRoom(); }, 2500); }
