@@ -541,9 +541,11 @@
 @keyframes titleRead{0%,14%{transform:translateX(0)}86%,100%{transform:translateX(var(--shift,0))}}
 .speak-radio-skips{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);}
 .speak-radio-end{display:flex;align-items:center;gap:2px;justify-self:end;min-width:0;}
-.speak-room .speak-radio-dial{font-size:9px;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.speak-radio-dial{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.speak-room .speak-radio-dial{font-size:9px;letter-spacing:.08em;}
 .speak-radio-skips .speak-radio-time{font-size:10px;}
 @media (max-width:340px){.speak-radio-end .speak-radio-dial{display:none;}}
+
 .speak-room .speak-replies{gap:5px;}
 .speak-room .speak-reply{align-self:flex-start;width:fit-content;max-width:100%;padding:4px 8px 3px;border:1px solid var(--rule);border-radius:9px 9px 9px 2px;background:rgba(112,78,127,.05);text-align:left;}
 .speak-room .speak-reply:has(.speak-reply-name.owner){border-color:var(--accent);background:rgba(112,78,127,.1);align-self:flex-end;border-radius:9px 9px 2px 9px;text-align:right;}
@@ -615,6 +617,15 @@
 /* full list: soft chat bubbles, alternating sides, corner-tail (no diamond) */
 .thoughts-stack-list{gap:12px;padding-top:18px;}
 .thoughts-stacked-room .thought-stack-item{position:relative;align-self:flex-start;box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:12px 16px 9px;text-align:left;border:0;border-radius:20px 20px 20px 6px;background-color:rgba(112,78,127,.11);background-image:none;box-shadow:none;}
+/* An audio card was being dropped straight into a chat-bubble item
+   sized with width:fit-content — fine for plain text, but the
+   player's row of controls (play button, seek bar, skip buttons,
+   mute, track label) can't wrap, so on a narrow bubble they were
+   squeezed past their min-content size and overlapped each other.
+   Once a bubble is holding a player, let it take the same full
+   share of the row every other bubble gets instead of shrink-wrapping. */
+.thoughts-stacked-room .thought-stack-item:has(.speak-radio){width:100%;min-width:0;}
+.thought-stack-item .speak-radio{width:100%;box-sizing:border-box;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
 .thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
 .thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::before{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-right:4px;opacity:.55;}
@@ -657,6 +668,7 @@
    thoughts wall — the quote mark and type already come from the
    stack item's own paragraph styling, so this just lays it out */
 .thoughts-stacked-room .thought-stack-item .thought-media-note{display:flex;flex-direction:row;align-items:center;gap:10px;max-width:100%;margin:2px 0;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note.centered{justify-content:center;margin-left:auto;margin-right:auto;}
 .thoughts-stacked-room .thought-stack-item .thought-media-note.reverse{flex-direction:row-reverse;}
 .thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media{max-width:110px;margin:0;flex:0 0 auto;line-height:0;}
 .thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media img,
@@ -892,6 +904,18 @@
     // the one taking focus stops making noise (audio/spoken lines)
     // behind it — stacking still works visually, it just no longer
     // overlaps in sound.
+    //
+    // Anything switching pages should go dead immediately rather than
+    // trailing off — so this always kills this page's own currently
+    // speaking voice (and the beyond page's, if that's what's mid-line)
+    // and any song currently playing from an attached thought, no
+    // matter which overlay is opening.
+    try {
+      if (typeof window.stopAllVoices === 'function') window.stopAllVoices();
+    } catch (e) {}
+    try {
+      if (typeof window.stopThoughtAudio === 'function') window.stopThoughtAudio();
+    } catch (e) {}
     try {
       var beyondOverlay = document.getElementById('beyond-overlay');
       if (beyondOverlay && el !== beyondOverlay && beyondOverlay.style.display !== 'none') {
@@ -2092,6 +2116,7 @@
     function maybeSpeakAmbient(){
       if(!unlocked || document.hidden) return;
       if(typeof voidEntered !== 'undefined' && voidEntered) return;
+      if(typeof pageIsCovered === 'function' && pageIsCovered()) return;
       const now = performance.now();
       if(now - lastAmbientAt < 4000) return;
       if(Math.random() < 0.5 + instability*0.3){
@@ -5763,6 +5788,10 @@
       }
     } catch (e) {}
   }
+  // Exposed so bringOverlayToFront (defined earlier, in a separate
+  // top-level script tag with no access to this closure) can reach
+  // this and cut this page's voice the instant any overlay/room opens.
+  window.stopAllVoices = stopAllVoices;
 
   // A synthesized "voice" for when the page doesn't want to say the
   // word at all anymore. A handful of distinct unsettling textures,
@@ -6648,18 +6677,18 @@
     function glitchThoughtsOnce() {
       if (!overlay.classList.contains('open') || !modalEl) return;
       const visual = Math.min(1, (typeof instability !== 'undefined' ? instability : 0));
-      if (Math.random() < 0.01 + 0.01 * visual) { if (typeof flashDarkMode === 'function') flashDarkMode(); }
 
+      // This is a page people are actually reading and typing on, not
+      // passing through — a full-page invert flash, a dark-mode swap
+      // (it recolors the modal's own background/text, since both use
+      // the same CSS variables), a screen-wide noise overlay, or a
+      // shake of the whole card read as the page flickering while
+      // someone's mid-thought. Keep only the small, local touches: the
+      // title's letters glitching or a word briefly dropping out, and
+      // the occasional flash line — nothing that touches the whole
+      // screen or the color scheme.
       const roll = Math.random();
-      if (roll < 0.16) {
-        modalEl.classList.remove('shake');
-        void modalEl.offsetWidth;
-        modalEl.classList.add('shake');
-      } else if (roll < 0.32) {
-        if (typeof noiseFlicker === 'function') noiseFlicker();
-      } else if (roll < 0.44) {
-        if (typeof invertFlash === 'function') invertFlash();
-      } else if (roll < 0.66) {
+      if (roll < 0.4) {
         // The title borrows the exact same letter-glitch the words
         // elsewhere on the page get.
         const titleWords = Array.from(document.querySelectorAll('#thoughts-title .word-scatter'))
@@ -6667,7 +6696,7 @@
         if (titleWords.length && typeof letterGlitch === 'function') {
           letterGlitch(titleWords[Math.floor(Math.random() * titleWords.length)]);
         }
-      } else if (roll < 0.8) {
+      } else if (roll < 0.75) {
         dropThoughtsTitleWord();
       } else {
         const rect = modalEl.getBoundingClientRect();
@@ -7070,7 +7099,7 @@
     // Same data as the wall, just laid out plainly: one column, every
     // thought its own block, aligned the same way as the one before
     // it, and nothing here ever fades back out on its own.
-    function buildThoughtMedia(entry) {
+    function buildThoughtMedia(entry, centered) {
       const box = document.createElement('div');
       box.className = 'speak-media';
       let node;
@@ -7086,6 +7115,15 @@
       node.src = entry.media_url;
       box.appendChild(node);
       const rot = Math.round(Math.random() * 17) - 8;
+      // A sticker paired with its own words gets nudged off-center so it
+      // reads as tucked in beside the caption. On its own, with no words
+      // to sit next to, that same nudge just reads as randomly
+      // off-center — so it keeps its tilt but drops the drift and sits
+      // in the middle of the bubble instead.
+      if (centered) {
+        box.style.transform = 'rotate(' + rot + 'deg)';
+        return box;
+      }
       const tx = Math.round(Math.random() * 27) - 13;
       const ty = Math.round(Math.random() * 21) - 10;
       box.style.transform = 'rotate(' + rot + 'deg) translate(' + tx + 'px, ' + ty + 'px)';
@@ -7098,6 +7136,13 @@
     // room's lofi Web Audio chain, since a URL found online may not
     // allow the CORS fetch that chain needs to decode the file.
     let thoughtActiveAudio = null;
+    // Exposed so bringOverlayToFront can silence whatever song is
+    // currently playing from a thought's attached music the instant
+    // another page/overlay takes focus, instead of it playing on
+    // underneath the new page.
+    window.stopThoughtAudio = function () {
+      try { if (thoughtActiveAudio) thoughtActiveAudio.stop(); } catch (e) {}
+    };
     function createThoughtAudio(url, ui) {
       const m = /#start=(\d+(?:\.\d+)?)$/.exec(url || '');
       const startAt = m ? parseFloat(m[1]) : 0;
@@ -7250,9 +7295,17 @@
         // stays a tilted sticker, the words sit next to it like a quote
         const group = document.createElement('div');
         group.className = 'speak-media-note thought-media-note';
-        const mediaSide = Math.random() < 0.5 ? 'right' : 'left';
-        if (mediaSide === 'right') group.classList.add('reverse');
-        group.appendChild(buildThoughtMedia(entry));
+        if (wordless) {
+          // No words to sit next to, so there's no side to pair
+          // against — center the sticker instead of leaving it
+          // pinned to whichever side the coin flip below would have
+          // picked.
+          group.classList.add('centered');
+        } else {
+          const mediaSide = Math.random() < 0.5 ? 'right' : 'left';
+          if (mediaSide === 'right') group.classList.add('reverse');
+        }
+        group.appendChild(buildThoughtMedia(entry, wordless));
         if (!wordless) {
           const cap = document.createElement('p');
           cap.className = 'speak-media-caption';
@@ -7487,6 +7540,8 @@
       if (!stackedRoomEl) return;
       stackedRoomEl.classList.remove('open');
       stackedRoomEl.setAttribute('aria-hidden', 'true');
+      if (thoughtActiveAudio) thoughtActiveAudio.stop();
+      if (typeof stopAllVoices === 'function') stopAllVoices();
       stopStackedColorPulse();
     }
 
@@ -7647,6 +7702,8 @@
     function closeThoughts() {
       overlay.classList.remove('open');
       overlay.setAttribute('inert', '');
+      if (thoughtActiveAudio) thoughtActiveAudio.stop();
+      if (typeof stopAllVoices === 'function') stopAllVoices();
       closeStackedRoom();
       stopStage();
       stopThoughtsModalGlitch();
@@ -8861,6 +8918,7 @@
     }
     function closeRoom() {
       if (activeRadio) activeRadio.stop();
+      if (typeof stopAllVoices === 'function') stopAllVoices();
       room.classList.remove('open');
       room.setAttribute('inert', '');
       room.setAttribute('aria-hidden', 'true');
@@ -9494,16 +9552,30 @@
     return false;
   }
 
+  // True while anything is showing that should fully cover this page —
+  // the "beyond" overlay, or the thoughts modal/stacked room/speak room.
+  // Those three are opaque siblings *of* this page rather than a
+  // separate document, so without this check the timers below kept
+  // glitching, flashing invert/dark-mode on <body>/<html>, and speaking
+  // random words the whole time someone was reading or writing in one
+  // of them — the filter and color-variable changes bleed straight
+  // through their z-index and read as the room itself flickering, plus
+  // the extra work was pure wasted background load while covered.
+  function pageIsCovered() {
+    const beyondOverlayEl = document.getElementById('beyond-overlay');
+    if (beyondOverlayEl && beyondOverlayEl.style.display !== 'none') return true;
+    const thoughtsOverlayEl = document.getElementById('thoughts-overlay');
+    if (thoughtsOverlayEl && thoughtsOverlayEl.classList.contains('open')) return true;
+    const stackedRoomEl = document.querySelector('.thoughts-stacked-room');
+    if (stackedRoomEl && stackedRoomEl.classList.contains('open')) return true;
+    const speakRoomEl = document.getElementById('speak-room');
+    if (speakRoomEl && speakRoomEl.classList.contains('open')) return true;
+    return false;
+  }
+
   function ambientGlitchTick() {
     const visual = Math.min(1, instability);
-    // While the "beyond" overlay is open (its main scene or any of its
-    // rooms), this page is fully hidden behind it — so it should stop
-    // glitching and, especially, stop occasionally speaking, instead
-    // of quietly carrying on back here and bleeding its own ambient
-    // voice and noise into whatever's showing on top of it.
-    const beyondOverlayEl = document.getElementById('beyond-overlay');
-    const beyondIsOpen = !!(beyondOverlayEl && beyondOverlayEl.style.display !== 'none');
-    if (!beyondIsOpen) {
+    if (!pageIsCovered()) {
       if (instability > 0.15 && Math.random() < visual * 0.55) {
         const words = wordScatterPool()
           .filter(w => w.dataset.gone !== '1');
@@ -9542,32 +9614,34 @@
   // instability — small surprises you can stumble onto just by having
   // the page open, without needing to click much at all.
   function passiveSurpriseTick() {
-    if (Math.random() < 0.35) {
-      const words = wordScatterPool()
-        .filter(w => w.dataset.gone !== '1');
-      if (words.length) {
-        const w = words[Math.floor(Math.random() * words.length)];
-        const roll = Math.random();
-        if (roll < 0.3) {
-          letterGlitch(w);
-        } else if (roll < 0.48) {
-          noiseFlicker();
-        } else if (roll < 0.62) {
-          shakeCard();
-        } else if (roll < 0.78) {
-          const wr = w.getBoundingClientRect();
-          spawnFlashLine(wr.left + wr.width / 2, wr.top, null, Math.random() < 0.25);
-        } else if (roll < 0.9) {
-          screenTear();
-        } else {
-          maybeSpeakScary(0.35);
+    if (!pageIsCovered()) {
+      if (Math.random() < 0.35) {
+        const words = wordScatterPool()
+          .filter(w => w.dataset.gone !== '1');
+        if (words.length) {
+          const w = words[Math.floor(Math.random() * words.length)];
+          const roll = Math.random();
+          if (roll < 0.3) {
+            letterGlitch(w);
+          } else if (roll < 0.48) {
+            noiseFlicker();
+          } else if (roll < 0.62) {
+            shakeCard();
+          } else if (roll < 0.78) {
+            const wr = w.getBoundingClientRect();
+            spawnFlashLine(wr.left + wr.width / 2, wr.top, null, Math.random() < 0.25);
+          } else if (roll < 0.9) {
+            screenTear();
+          } else {
+            maybeSpeakScary(0.35);
+          }
         }
       }
+      if (Math.random() < 0.34) teaseVanishedWord();
+      if (Math.random() < 0.01) flashDarkMode();
+      if (Math.random() < 0.05) maybeNudgeFixedElement();
+      if (Math.random() < 0.04) hrGlitchPulse();
     }
-    if (Math.random() < 0.34) teaseVanishedWord();
-    if (Math.random() < 0.01) flashDarkMode();
-    if (Math.random() < 0.05) maybeNudgeFixedElement();
-    if (Math.random() < 0.04) hrGlitchPulse();
     const nextDelay = 2600 + Math.random() * 4200;
     setTimeout(passiveSurpriseTick, nextDelay);
   }
