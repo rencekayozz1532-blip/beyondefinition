@@ -41,7 +41,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500&display=optional" rel="stylesheet">
-<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);--scanline-tint: rgba(50,36,56,0.025);}:root.dark-mode {--ink: #ebe4ee;--paper: #1a131d;--rule: #413247;--accent: #c4aece;--muted: #9b8aa3;--card-shadow: rgba(0,0,0,0.55);--scanline-tint: rgba(255,255,255,0.03);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper)),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.card {width: 100%;max-width: 720px;margin: 0 auto;padding: 52px clamp(20px, 6vw, 52px) max(52px, env(safe-area-inset-bottom, 20px));flex: 1 0 auto;display: flex;flex-direction: column;}.word-row {display: flex;align-items: baseline;gap: 16px;flex-wrap: wrap;}h1 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(34px, 9vw, 60px);letter-spacing: -0.01em;margin: 0;line-height: 0.95;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}.subtext {font-family: 'Source Serif 4', Georgia, serif;font-size: clamp(12px, 3.2vw, 13px);color: var(--muted);letter-spacing: 0.02em;margin: 6px 0 0;}hr {border: none;border-top: 1px solid var(--rule);margin: 22px 0 26px;animation: hrFlicker 6.5s linear infinite;transition: border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;}@keyframes hrFlicker {0%, 100% { opacity: 1; } 22% { opacity: 1; } 23% { opacity: .35; } 24% { opacity: .85; }46% { opacity: .9; } 47% { opacity: .2; } 48% { opacity: 1; } 49% { opacity: .5; } 50% { opacity: 1; }77% { opacity: 1; } 78% { opacity: .4; } 79% { opacity: 1; }}@keyframes titleUnease {0%, 100% { color: var(--ink); filter: none; }37% { color: var(--ink); filter: none; }38% { color: var(--thought-glow, var(--ink)); filter: none; }40% { color: var(--ink); filter: none; }68% { color: var(--ink); filter: none; }69% { color: var(--thought-cool, var(--ink)); filter: none; }71% { color: var(--ink); filter: none; }}hr.glitch-pulse {border-color: var(--accent);filter: drop-shadow(0 0 4px rgba(112,78,127,0.65));transform: scaleX(1.015);}.pron-row {display: flex;align-items: center;gap: 12px;font-size: clamp(14px, 3.6vw, 16px);margin-bottom: 32px;}.body-grid {display: grid;grid-template-columns: 1fr;gap: 28px;}.pron-label { color: var(--ink); }.pron-alt { color: var(--muted); font-style: italic; }button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}h2.section-title {font-family: 'Fraunces', Georgia, serif;font-weight: 600;font-size: clamp(11px, 2.6vw, 12px);letter-spacing: 0.09em;text-transform: uppercase;color: var(--accent);margin: 0 0 12px;}.meaning {font-size: clamp(15px, 3.8vw, 17px);line-height: 1.65;max-width: 48ch;margin: 0;text-align: left;hyphens: auto;text-wrap: pretty;}.example {position: relative;border-left: none;padding-left: 22px;margin: 0;--line-clip: polygon(44% 0%, 56% 0%, 56% 34%, 56% 66%, 56% 100%, 44% 100%, 44% 66%, 44% 34%);}.example::before {content: '';position: absolute;left: 0; top: 0; bottom: 0;width: 2px;background: var(--accent);}@keyframes exampleLineUnease {0%, 100% { opacity: 1; transform: translateX(0) scaleY(1); }18% { opacity: 1; }19% { opacity: .3; transform: translateX(-1.5px) scaleY(.97); }21% { opacity: .9; transform: translateX(0) scaleY(1); }44% { opacity: .85; }46% { opacity: .15; transform: translateX(1.5px); }49% { opacity: 1; transform: translateX(0); }68% { opacity: 1; }69% { opacity: .45; transform: translateY(2px) scaleY(.9); }71% { opacity: 1; transform: translateY(0) scaleY(1); }86% { opacity: 1; }87% { opacity: .9; }89% { opacity: 1; }}@keyframes exampleLineColor {0%, 100% { background: var(--accent); }44% { background: #422e4a; }49% { background: var(--accent); }86% { background: var(--accent); }87% { background: #422e4a; }89% { background: var(--accent); }}.example p {font-style: italic;font-size: clamp(14px, 3.6vw, 16px);line-height: 1.6;color: #423548;margin: 0;max-width: 44ch;text-align: left;hyphens: auto;text-wrap: pretty;}.example .headword { font-style: normal; font-weight: 600; color: var(--ink); }.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;animation: mainFooterFlicker 6.5s linear infinite;}@keyframes mainFooterFlicker {0%, 100% { opacity: 1; } 22% { opacity: 1; } 23% { opacity: .35; } 24% { opacity: .85; }46% { opacity: .9; } 47% { opacity: .2; } 48% { opacity: 1; } 49% { opacity: .5; } 50% { opacity: 1; }77% { opacity: 1; } 78% { opacity: .4; } 79% { opacity: 1; }}@media (max-width: 480px) {.pron-row { flex-wrap: wrap; }}.card { cursor: pointer; transition: box-shadow 1.4s ease; touch-action: manipulation; }.word-scatter {display: inline-block;transition: transform 0.6s ease, filter 0.6s ease, opacity 0.45s ease, text-shadow 0.6s ease, color 0.8s ease;will-change: transform, filter, opacity;}.word-scatter.marked {color: var(--accent);filter: saturate(0.55);}.scatter-hint {font-size: clamp(10px, 2.6vw, 11px);color: var(--muted);font-style: italic;margin: 4px 0 0;opacity: 0.75;}.glitch-img-pop {position: fixed;inset: 0;z-index: 99997;pointer-events: none;display: flex;align-items: center;justify-content: center;opacity: 0;mix-blend-mode: difference;}.glitch-img-pop svg {width: min(55vw, 300px);height: auto;filter: invert(1) contrast(1.8) saturate(0);}.glitch-img-pop.show {animation: glitchImgPop 0.22s steps(3, end) forwards;}@keyframes glitchImgPop {0%   { opacity: 0;    transform: scale(0.9) translateX(0); }25%  { opacity: 0.85; transform: scale(1.05) translateX(-8px); }50%  { opacity: 0.1;  transform: scale(0.96) translateX(6px); }75%  { opacity: 0.8;  transform: scale(1.02) translateX(-3px); }100% { opacity: 0;    transform: scale(1)    translateX(0); }}.flash-line {position: fixed;pointer-events: none;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: clamp(12px, 3.2vw, 14px);color: var(--accent);opacity: 0;white-space: normal;max-width: min(80vw, 320px);text-align: center;transform: translate(-50%, -50%) scale(1);filter: blur(0px);text-shadow: none;z-index: 9999;transition: opacity 0.35s ease, transform 0.9s ease, filter 0.9s ease;}.flash-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}@keyframes flashLineFlickerIn {0%   { opacity: 0;    filter: blur(4px); transform: translate(-50%, -50%) scale(0.9); letter-spacing: 0.05em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(3px); }18%  { opacity: 0.6;  filter: blur(1px); }27%  { opacity: 0.1;  filter: blur(2px); }38%  { opacity: 0.7;  filter: blur(0.4px); transform: translate(-50%, -50%) scale(1.01); }49%  { opacity: 0.25; filter: blur(1.5px); }63%  { opacity: 0.8;  filter: blur(0); transform: translate(-50%, -50%) scale(1); }80%  { opacity: 0.4; }100% { opacity: 0.85; filter: blur(0); transform: translate(-50%, -50%) scale(1); letter-spacing: normal; }}@keyframes blockFlickerIn {0%   { opacity: 0;    filter: blur(4px); letter-spacing: 0.05em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(3px); }18%  { opacity: 0.6;  filter: blur(1px); }27%  { opacity: 0.1;  filter: blur(2px); }38%  { opacity: 0.7;  filter: blur(0.4px); }49%  { opacity: 0.25; filter: blur(1.5px); }63%  { opacity: 0.8;  filter: blur(0); }80%  { opacity: 0.4; }100% { opacity: 1;    filter: blur(0); letter-spacing: normal; }}@keyframes flashLinePulse {0%, 100% { opacity: 0.85; text-shadow: none; }50% { opacity: 0.55; text-shadow: none; }}.flash-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}@keyframes flashLineFlickerOut {0%   { opacity: 0.85; filter: blur(0);    transform: translate(-50%, -50%) scale(1); }14%  { opacity: 0.15; filter: blur(1px); }26%  { opacity: 0.7;  filter: blur(0.5px); }39%  { opacity: 0.08; filter: blur(2px); }52%  { opacity: 0.5;  filter: blur(1.5px); transform: translate(-50%, -50%) scale(0.98); }68%  { opacity: 0.06; filter: blur(3px); }82%  { opacity: 0.3;  filter: blur(3.5px); }100% { opacity: 0;    filter: blur(4px);  transform: translate(-50%, -50%) scale(0.92); }}@keyframes card-shake {0%   { transform: translate(0, 0); }20%  { transform: translate(-0.25px, 0.12px); }40%  { transform: translate(0.25px, -0.12px); }60%  { transform: translate(-0.12px, 0.25px); }80%  { transform: translate(0.12px, -0.25px); }100% { transform: translate(0, 0); }}.card.shake {animation: card-shake 0.15s linear;}.thoughts-modal.shake {animation: card-shake 0.15s linear;}.noise-overlay {position: fixed;inset: 0;pointer-events: none;opacity: 0;z-index: 9998;mix-blend-mode: overlay;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");transition: opacity 0.06s ease;}.scanlines {position: fixed;inset: 0;pointer-events: none;z-index: 9997;opacity: 0;background: repeating-linear-gradient(0deg,rgba(50,36,56,0.06),rgba(50,36,56,0.06) 1px,transparent 1px,transparent 3px);transition: opacity 1.2s ease;}.ghost {position: absolute;pointer-events: none;}.rgb-split {text-shadow: none !important;}.invert-flash {animation: invert-pulse 0.12s steps(1) 1;}@keyframes invert-pulse {0%   { filter: invert(0); }50%  { filter: invert(1); }100% { filter: invert(0); }}.tear-strip {position: fixed;left: 0;width: 100%;pointer-events: none;z-index: 9996;overflow: hidden;background: var(--paper);}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.footer-dot { color: var(--rule); }.feedback-close {all: unset;position: absolute;top: 14px;right: 14px;cursor: pointer;color: var(--muted);width: 26px;height: 26px;display: inline-flex;align-items: center;justify-content: center;border-radius: 50%;transition: background 0.15s ease, color 0.15s ease;}.feedback-close:hover { background: var(--rule); color: var(--ink); }.feedback-close svg { width: 14px; height: 14px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards,whisperPulse 5.5s ease-in-out 1.3s infinite;}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0%   { opacity: 0;    filter: blur(3px); letter-spacing: 0.3em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(2.5px); }18%  { opacity: 0.55; filter: blur(1px); }24%  { opacity: 0.1;  filter: blur(2px); }33%  { opacity: 0.65; filter: blur(0.5px); letter-spacing: 0.1em; }41%  { opacity: 0.2;  filter: blur(1.5px); }52%  { opacity: 0.7;  filter: blur(0); letter-spacing: 0.18em; }68%  { opacity: 0.35; }82%  { opacity: 0.75; }100% { opacity: 0.75; filter: blur(0); letter-spacing: 0.16em; }}@keyframes whisperPulse {0%, 100% { opacity: 0.75; text-shadow: none; }50% { opacity: 0.55; text-shadow: none; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);border-radius: 22px;border: 1px solid var(--rule);padding: 16px 20px 14px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);animation: stackedWashDrift 14s ease-in-out infinite;}.thoughts-modal::after {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.035;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;animation: hrFlicker 7.5s linear infinite, titleUnease 6.4s steps(1, end) infinite;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {animation: hrFlicker 7.5s linear infinite reverse;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 10px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 0.55;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-flicker-split {filter: none;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite,thoughtGlow 2.6s ease-out 0.32s 1;}@keyframes thoughtGlow {0%   { text-shadow: 0 0 14px rgba(107,74,122,0.5); }100% { text-shadow: none; }}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-row button.primary.flicker {filter: none;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);animation: stackedWashDrift 14s ease-in-out infinite;}.thoughts-stacked-room::after {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.03;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}@keyframes stackedWashDrift {0%, 100% { opacity: 0.6; transform: translateX(0); }50% { opacity: 1; transform: translateX(3%); }}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(22px, 6vw, 30px);margin: 0 0 6px;animation: hrFlicker 7.5s linear infinite, titleUnease 6.4s steps(1, end) infinite;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 13px;animation: hrFlicker 7.5s linear infinite reverse;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 14px;}.thought-stack-item {text-align: center;padding: 8px 10px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);animation: blockFlickerIn 0.32s steps(1, end) both;transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-stack-item.stack-color-pulse {filter: none;}.thought-like {all: unset;box-sizing: border-box;display: none;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--accent);line-height: 1;pointer-events: none;cursor: default;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease;}.thought-like.liked {display: flex;}html.selrick-owner .thought-like {display: flex;pointer-events: auto;cursor: pointer;color: var(--muted);}html.selrick-owner .thought-like.liked {color: var(--accent);}html.selrick-owner .thought-like:hover {color: var(--accent);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 7px;font-family: 'Source Serif 4', Georgia, serif;font-size: 11px;font-style: italic;letter-spacing: 0.03em;color: var(--muted);}.thought-like-time:empty {display: none;}.thought-stack-item-new {animation: blockFlickerIn 0.32s steps(1, end) both,thoughtGlowBright 3s ease-out 0.32s 1;}@keyframes thoughtGlowBright {0%   { text-shadow: 0 0 14px rgba(107,74,122,0.55); }100% { text-shadow: none; }}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}#portal-transition {position: fixed;inset: 0;z-index: 999999;pointer-events: none;opacity: 0;background: #000000;display: none;}#portal-transition.playing { display: block; opacity: 1; }#portal-transition .portal-flash {position: absolute;inset: 0;background: #eee7f1;opacity: 0;}#portal-transition.playing .portal-flash {animation: portal-flash-pulse 0.34s ease 1;}@keyframes portal-flash-pulse {0%   { opacity: 0; }18%  { opacity: 0; }20%  { opacity: 0.9; }23%  { opacity: 0.1; }42%  { opacity: .55; }46%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-static {position: absolute;inset: 0;opacity: 0;mix-blend-mode: overlay;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}#portal-transition.playing .portal-static {animation: portal-static-pulse 0.34s steps(6) 1;}@keyframes portal-static-pulse {0%   { opacity: 0; }12%  { opacity: .5; }20%  { opacity: .85; }40%  { opacity: .35; }50%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-scan {position: absolute;inset: 0;opacity: 0;background: repeating-linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5) 2px,transparent 2px,transparent 5px);}#portal-transition.playing .portal-scan {animation: portal-scan-pulse 0.34s linear 1;}@keyframes portal-scan-pulse {0%   { opacity: 0; transform: translateY(0); }18%  { opacity: .5; }30%  { opacity: .28; transform: translateY(40%); }45%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-bar {position: absolute;left: 0;width: 100%;background: #0d090e;opacity: 0;transform: translateX(0);}#portal-transition.playing .portal-bar {animation: portal-bar-shift 0.34s cubic-bezier(.36,.07,.19,.97) 1;}#portal-transition.playing .portal-bar:nth-child(5) { animation-delay: 0.01s; }#portal-transition.playing .portal-bar:nth-child(6) { animation-delay: 0.03s; }#portal-transition.playing .portal-bar:nth-child(7) { animation-delay: 0.05s; }#portal-transition.playing .portal-bar:nth-child(8) { animation-delay: 0.02s; }@keyframes portal-bar-shift {0%   { opacity: 0; transform: translateX(0); }16%  { opacity: .85; transform: translateX(var(--bx, 40px)); }28%  { opacity: .85; transform: translateX(calc(var(--bx, 40px) * -1)); }40%  { opacity: .6; transform: translateX(calc(var(--bx, 40px) * .4)); }50%  { opacity: 0; transform: translateX(0); }100% { opacity: 0; }}#portal-transition .portal-ghost {position: absolute;inset: 0;opacity: 0;filter: blur(2px) brightness(1.3);mix-blend-mode: screen;}#portal-transition.playing .portal-ghost {animation: portal-ghost-fade 0.38s ease-out 1;}@keyframes portal-ghost-fade {0%   { opacity: 0; transform: scale(1); }22%  { opacity: .5; transform: scale(1.015); }100% { opacity: 0; transform: scale(1.06); }}.card.emptying {transition: opacity 1.8s ease, filter 1.8s ease;opacity: 0;filter: blur(2px);pointer-events: none;}#dict-void {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 40;background: var(--paper);background-image:radial-gradient(circle at 20% -8%, rgba(107,74,122,0.08), transparent 48%),radial-gradient(circle at 86% 8%, rgba(96,70,107,0.07), transparent 52%);opacity: 0;pointer-events: none;transition: opacity 2.4s ease, background-color 1.4s ease;}#dict-void.active { opacity: 1; pointer-events: auto; }#dict-void.error-mode { background: #100b12; background-image: none; }#dict-void.shake { animation: card-shake 0.18s linear; }#dict-void::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 45% at 50% 0%, rgba(107,74,122,0.05), transparent 72%);opacity: 0;transition: opacity 1.2s ease;animation: stackedWashDrift 14s ease-in-out infinite;}#dict-void.active::before { opacity: 1; }#dict-void.error-mode::before { opacity: 0; }#dict-void::after {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse at center, transparent var(--void-tight, 55%), rgba(16,11,18,0.55) 130%);opacity: 0;transition: opacity 1.1s ease, background 1.6s ease;}#dict-void.vignette::after { opacity: 1; }#dict-void.inverted {filter: invert(1) hue-rotate(180deg);}#dict-void.drained {filter: grayscale(0.9) contrast(1.2);transition: filter 0.5s ease;}.void-scanbar {position: absolute;left: 0;right: 0;height: 160px;top: -160px;pointer-events: none;background: linear-gradient(180deg, transparent, rgba(50,36,56,0.05) 42%, rgba(50,36,56,0.11) 50%, rgba(50,36,56,0.05) 58%, transparent);mix-blend-mode: multiply;animation: voidScanRoll 8s linear infinite;}:root.dark-mode .void-scanbar {background: linear-gradient(180deg, transparent, rgba(235,228,238,0.05) 42%, rgba(235,228,238,0.12) 50%, rgba(235,228,238,0.05) 58%, transparent);mix-blend-mode: screen;}#dict-void.error-mode .void-scanbar { display: none; }@keyframes voidScanRoll {0% { transform: translateY(0); }100% { transform: translateY(calc(100vh + 320px)); }}.dict-void-line {position: fixed;left: 50%;top: 50%;width: max-content;max-width: min(84vw, 480px);text-align: center;text-wrap: balance;overflow-wrap: anywhere;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4.2vw, 19px);line-height: 1.55;color: var(--muted);opacity: 0;pointer-events: none;transition: color 1.4s ease;transform: translate(-50%, -50%);}.dict-void-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}.dict-void-line.glitch-out {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.dict-error-box {position: fixed;inset: 0;z-index: 42;display: flex;align-items: center;justify-content: center;padding: 24px;opacity: 0;pointer-events: none;overflow: hidden;transition: opacity 0.6s ease;}.dict-error-box.show { opacity: 1; }.dict-error-box::before {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.05;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}@keyframes dictErrorStatic { 0% { transform: translate(0,0); } 100% { transform: translate(-3%,2%); } }.dict-error-inner {position: relative;width: 100%;max-width: 560px;font-family: 'Courier Prime', 'Courier New', Courier, monospace;color: #a888b5;font-size: clamp(12px, 2.6vw, 14px);line-height: 1.9;letter-spacing: 0.03em;text-align: left;animation: dictErrorFlicker 3.4s linear infinite;}@keyframes dictErrorFlicker {0%, 100% { opacity: 1; } 4% { opacity: .5; } 5% { opacity: 1; }61% { opacity: 1; } 62% { opacity: .3; } 63% { opacity: .85; }64% { opacity: 1; }}.dict-error-title {display: block;color: #9b75ab;text-transform: lowercase;letter-spacing: 0.08em;margin-bottom: 14px;}.dict-error-body { display: block; }.dict-error-line {display: block;width: max-content;max-width: none;white-space: nowrap;transform-origin: left center;transform: scale(var(--err-line-scale, 1));}.dict-error-cursor { display: inline-block; width: 8px; }.dict-error-cursor.blink { animation: dictErrCursorBlink 1s steps(1) infinite; }@keyframes dictErrCursorBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }.dict-void-footer {position: fixed;left: 0;right: 0;bottom: max(22px, env(safe-area-inset-bottom, 0px));z-index: 43;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 11px;letter-spacing: 0.04em;color: var(--muted);opacity: 0;pointer-events: none;transition: opacity 1.6s ease;}.dict-void-footer.show { opacity: 0.85; pointer-events: auto; }.dict-void-footer a, .dict-void-footer button {all: unset;cursor: pointer;color: var(--muted);display: inline-flex;align-items: center;gap: 5px;font-family: inherit;font-size: inherit;letter-spacing: inherit;}.dict-void-footer svg { flex-shrink: 0; }.dict-void-footer a:hover, .dict-void-footer button:hover { color: var(--accent); }.dict-void-footer-dot { margin: 0 8px; color: var(--rule); }.dict-void-footer-whisper {margin-top: 10px;font-size: 10px;letter-spacing: 0.06em;color: var(--muted);min-height: 1.4em;}body.dict-void-dead .dict-void-footer,body.dict-void-dead .dict-void-footer a,body.dict-void-dead .dict-void-footer button {color: #a888b5;}body.dict-void-dead .dict-void-footer a:hover,body.dict-void-dead .dict-void-footer button:hover { color: #d4c3db; }body.dict-void-dead .dict-void-footer-dot { color: #3d2b45; }body.dict-void-dead .dict-void-footer-whisper { color: #735480; }button, a, [role="button"] { touch-action: manipulation; }</style>
+<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);--scanline-tint: rgba(50,36,56,0.025);}:root.dark-mode {--ink: #ebe4ee;--paper: #1a131d;--rule: #413247;--accent: #c4aece;--muted: #9b8aa3;--card-shadow: rgba(0,0,0,0.55);--scanline-tint: rgba(255,255,255,0.03);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper)),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.card {width: 100%;max-width: 720px;margin: 0 auto;padding: 52px clamp(20px, 6vw, 52px) max(52px, env(safe-area-inset-bottom, 20px));flex: 1 0 auto;display: flex;flex-direction: column;}.word-row {display: flex;align-items: baseline;gap: 16px;flex-wrap: wrap;}h1 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(34px, 9vw, 60px);letter-spacing: -0.01em;margin: 0;line-height: 0.95;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}.subtext {font-family: 'Source Serif 4', Georgia, serif;font-size: clamp(12px, 3.2vw, 13px);color: var(--muted);letter-spacing: 0.02em;margin: 6px 0 0;}hr {border: none;border-top: 1px solid var(--rule);margin: 22px 0 26px;animation: hrFlicker 6.5s linear infinite;transition: border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;}@keyframes hrFlicker {0%, 100% { opacity: 1; } 22% { opacity: 1; } 23% { opacity: .35; } 24% { opacity: .85; }46% { opacity: .9; } 47% { opacity: .2; } 48% { opacity: 1; } 49% { opacity: .5; } 50% { opacity: 1; }77% { opacity: 1; } 78% { opacity: .4; } 79% { opacity: 1; }}@keyframes titleUnease {0%, 100% { color: var(--ink); filter: none; }37% { color: var(--ink); filter: none; }38% { color: var(--thought-glow, var(--ink)); filter: none; }40% { color: var(--ink); filter: none; }68% { color: var(--ink); filter: none; }69% { color: var(--thought-cool, var(--ink)); filter: none; }71% { color: var(--ink); filter: none; }}hr.glitch-pulse {border-color: var(--accent);filter: drop-shadow(0 0 4px rgba(112,78,127,0.65));transform: scaleX(1.015);}.pron-row {display: flex;align-items: center;gap: 12px;font-size: clamp(14px, 3.6vw, 16px);margin-bottom: 32px;}.body-grid {display: grid;grid-template-columns: 1fr;gap: 28px;}.pron-label { color: var(--ink); }.pron-alt { color: var(--muted); font-style: italic; }button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}h2.section-title {font-family: 'Fraunces', Georgia, serif;font-weight: 600;font-size: clamp(11px, 2.6vw, 12px);letter-spacing: 0.09em;text-transform: uppercase;color: var(--accent);margin: 0 0 12px;}.meaning {font-size: clamp(15px, 3.8vw, 17px);line-height: 1.65;max-width: 48ch;margin: 0;text-align: left;hyphens: auto;text-wrap: pretty;}.example {position: relative;border-left: none;padding-left: 22px;margin: 0;--line-clip: polygon(44% 0%, 56% 0%, 56% 34%, 56% 66%, 56% 100%, 44% 100%, 44% 66%, 44% 34%);}.example::before {content: '';position: absolute;left: 0; top: 0; bottom: 0;width: 2px;background: var(--accent);}@keyframes exampleLineUnease {0%, 100% { opacity: 1; transform: translateX(0) scaleY(1); }18% { opacity: 1; }19% { opacity: .3; transform: translateX(-1.5px) scaleY(.97); }21% { opacity: .9; transform: translateX(0) scaleY(1); }44% { opacity: .85; }46% { opacity: .15; transform: translateX(1.5px); }49% { opacity: 1; transform: translateX(0); }68% { opacity: 1; }69% { opacity: .45; transform: translateY(2px) scaleY(.9); }71% { opacity: 1; transform: translateY(0) scaleY(1); }86% { opacity: 1; }87% { opacity: .9; }89% { opacity: 1; }}@keyframes exampleLineColor {0%, 100% { background: var(--accent); }44% { background: #422e4a; }49% { background: var(--accent); }86% { background: var(--accent); }87% { background: #422e4a; }89% { background: var(--accent); }}.example p {font-style: italic;font-size: clamp(14px, 3.6vw, 16px);line-height: 1.6;color: #423548;margin: 0;max-width: 44ch;text-align: left;hyphens: auto;text-wrap: pretty;}.example .headword { font-style: normal; font-weight: 600; color: var(--ink); }.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;animation: mainFooterFlicker 6.5s linear infinite;}@keyframes mainFooterFlicker {0%, 100% { opacity: 1; } 22% { opacity: 1; } 23% { opacity: .35; } 24% { opacity: .85; }46% { opacity: .9; } 47% { opacity: .2; } 48% { opacity: 1; } 49% { opacity: .5; } 50% { opacity: 1; }77% { opacity: 1; } 78% { opacity: .4; } 79% { opacity: 1; }}@media (max-width: 480px) {.pron-row { flex-wrap: wrap; }}.card { cursor: pointer; transition: box-shadow 1.4s ease; touch-action: manipulation; }.word-scatter {display: inline-block;transition: transform 0.6s ease, filter 0.6s ease, opacity 0.45s ease, text-shadow 0.6s ease, color 0.8s ease;will-change: transform, filter, opacity;}.word-scatter.marked {color: var(--accent);filter: saturate(0.55);}.scatter-hint {font-size: clamp(10px, 2.6vw, 11px);color: var(--muted);font-style: italic;margin: 4px 0 0;opacity: 0.75;}.glitch-img-pop {position: fixed;inset: 0;z-index: 99997;pointer-events: none;display: flex;align-items: center;justify-content: center;opacity: 0;mix-blend-mode: difference;}.glitch-img-pop svg {width: min(55vw, 300px);height: auto;filter: invert(1) contrast(1.8) saturate(0);}.glitch-img-pop.show {animation: glitchImgPop 0.22s steps(3, end) forwards;}@keyframes glitchImgPop {0%   { opacity: 0;    transform: scale(0.9) translateX(0); }25%  { opacity: 0.85; transform: scale(1.05) translateX(-8px); }50%  { opacity: 0.1;  transform: scale(0.96) translateX(6px); }75%  { opacity: 0.8;  transform: scale(1.02) translateX(-3px); }100% { opacity: 0;    transform: scale(1)    translateX(0); }}.flash-line {position: fixed;pointer-events: none;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: clamp(12px, 3.2vw, 14px);color: var(--accent);opacity: 0;white-space: normal;max-width: min(80vw, 320px);text-align: center;transform: translate(-50%, -50%) scale(1);filter: blur(0px);text-shadow: none;z-index: 9999;transition: opacity 0.35s ease, transform 0.9s ease, filter 0.9s ease;}.flash-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}@keyframes flashLineFlickerIn {0%   { opacity: 0;    filter: blur(4px); transform: translate(-50%, -50%) scale(0.9); letter-spacing: 0.05em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(3px); }18%  { opacity: 0.6;  filter: blur(1px); }27%  { opacity: 0.1;  filter: blur(2px); }38%  { opacity: 0.7;  filter: blur(0.4px); transform: translate(-50%, -50%) scale(1.01); }49%  { opacity: 0.25; filter: blur(1.5px); }63%  { opacity: 0.8;  filter: blur(0); transform: translate(-50%, -50%) scale(1); }80%  { opacity: 0.4; }100% { opacity: 0.85; filter: blur(0); transform: translate(-50%, -50%) scale(1); letter-spacing: normal; }}@keyframes blockFlickerIn {0%   { opacity: 0;    filter: blur(4px); letter-spacing: 0.05em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(3px); }18%  { opacity: 0.6;  filter: blur(1px); }27%  { opacity: 0.1;  filter: blur(2px); }38%  { opacity: 0.7;  filter: blur(0.4px); }49%  { opacity: 0.25; filter: blur(1.5px); }63%  { opacity: 0.8;  filter: blur(0); }80%  { opacity: 0.4; }100% { opacity: 1;    filter: blur(0); letter-spacing: normal; }}@keyframes flashLinePulse {0%, 100% { opacity: 0.85; text-shadow: none; }50% { opacity: 0.55; text-shadow: none; }}.flash-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}@keyframes flashLineFlickerOut {0%   { opacity: 0.85; filter: blur(0);    transform: translate(-50%, -50%) scale(1); }14%  { opacity: 0.15; filter: blur(1px); }26%  { opacity: 0.7;  filter: blur(0.5px); }39%  { opacity: 0.08; filter: blur(2px); }52%  { opacity: 0.5;  filter: blur(1.5px); transform: translate(-50%, -50%) scale(0.98); }68%  { opacity: 0.06; filter: blur(3px); }82%  { opacity: 0.3;  filter: blur(3.5px); }100% { opacity: 0;    filter: blur(4px);  transform: translate(-50%, -50%) scale(0.92); }}@keyframes card-shake {0%   { transform: translate(0, 0); }20%  { transform: translate(-0.25px, 0.12px); }40%  { transform: translate(0.25px, -0.12px); }60%  { transform: translate(-0.12px, 0.25px); }80%  { transform: translate(0.12px, -0.25px); }100% { transform: translate(0, 0); }}.card.shake {animation: card-shake 0.15s linear;}.thoughts-modal.shake {animation: card-shake 0.15s linear;}.noise-overlay {position: fixed;inset: 0;pointer-events: none;opacity: 0;z-index: 9998;mix-blend-mode: overlay;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");transition: opacity 0.06s ease;}.scanlines {position: fixed;inset: 0;pointer-events: none;z-index: 9997;opacity: 0;background: repeating-linear-gradient(0deg,rgba(50,36,56,0.06),rgba(50,36,56,0.06) 1px,transparent 1px,transparent 3px);transition: opacity 1.2s ease;}.ghost {position: absolute;pointer-events: none;}.rgb-split {text-shadow: none !important;}.invert-flash {animation: invert-pulse 0.12s steps(1) 1;}@keyframes invert-pulse {0%   { filter: invert(0); }50%  { filter: invert(1); }100% { filter: invert(0); }}.tear-strip {position: fixed;left: 0;width: 100%;pointer-events: none;z-index: 9996;overflow: hidden;background: var(--paper);}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.footer-dot { color: var(--rule); }.feedback-close {all: unset;position: absolute;top: 14px;right: 14px;cursor: pointer;color: var(--muted);width: 26px;height: 26px;display: inline-flex;align-items: center;justify-content: center;border-radius: 50%;transition: background 0.15s ease, color 0.15s ease;}.feedback-close:hover { background: var(--rule); color: var(--ink); }.feedback-close svg { width: 14px; height: 14px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards,whisperPulse 5.5s ease-in-out 1.3s infinite;}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0%   { opacity: 0;    filter: blur(3px); letter-spacing: 0.3em; }6%   { opacity: 0.5;  filter: blur(1.5px); }11%  { opacity: 0.05; filter: blur(2.5px); }18%  { opacity: 0.55; filter: blur(1px); }24%  { opacity: 0.1;  filter: blur(2px); }33%  { opacity: 0.65; filter: blur(0.5px); letter-spacing: 0.1em; }41%  { opacity: 0.2;  filter: blur(1.5px); }52%  { opacity: 0.7;  filter: blur(0); letter-spacing: 0.18em; }68%  { opacity: 0.35; }82%  { opacity: 0.75; }100% { opacity: 0.75; filter: blur(0); letter-spacing: 0.16em; }}@keyframes whisperPulse {0%, 100% { opacity: 0.75; text-shadow: none; }50% { opacity: 0.55; text-shadow: none; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);border-radius: 22px;border: 1px solid var(--rule);padding: 16px 20px 14px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);animation: stackedWashDrift 14s ease-in-out infinite;}.thoughts-modal::after {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.035;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;animation: hrFlicker 7.5s linear infinite, titleUnease 6.4s steps(1, end) infinite;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {animation: hrFlicker 7.5s linear infinite reverse;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 10px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 0.55;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-flicker-split {filter: none;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite,thoughtGlow 2.6s ease-out 0.32s 1;}@keyframes thoughtGlow {0%   { text-shadow: 0 0 14px rgba(107,74,122,0.5); }100% { text-shadow: none; }}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-row button.primary.flicker {filter: none;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),repeating-linear-gradient(0deg, transparent, transparent 27px, var(--scanline-tint) 28px);background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);animation: stackedWashDrift 14s ease-in-out infinite;}.thoughts-stacked-room::after {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.03;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}@keyframes stackedWashDrift {0%, 100% { opacity: 0.6; transform: translateX(0); }50% { opacity: 1; transform: translateX(3%); }}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(22px, 6vw, 30px);margin: 0 0 6px;animation: hrFlicker 7.5s linear infinite, titleUnease 6.4s steps(1, end) infinite;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 13px;animation: hrFlicker 7.5s linear infinite reverse;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 14px;}.thought-stack-item {text-align: center;padding: 8px 10px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);animation: blockFlickerIn 0.32s steps(1, end) both;transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-stack-item.stack-color-pulse {filter: none;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 7px;font-family: 'Source Serif 4', Georgia, serif;font-size: 11px;font-style: italic;letter-spacing: 0.03em;color: var(--muted);}.thought-like-time:empty {display: none;}.thought-stack-item-new {animation: blockFlickerIn 0.32s steps(1, end) both,thoughtGlowBright 3s ease-out 0.32s 1;}@keyframes thoughtGlowBright {0%   { text-shadow: 0 0 14px rgba(107,74,122,0.55); }100% { text-shadow: none; }}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}#portal-transition {position: fixed;inset: 0;z-index: 999999;pointer-events: none;opacity: 0;background: #000000;display: none;}#portal-transition.playing { display: block; opacity: 1; }#portal-transition .portal-flash {position: absolute;inset: 0;background: #eee7f1;opacity: 0;}#portal-transition.playing .portal-flash {animation: portal-flash-pulse 0.34s ease 1;}@keyframes portal-flash-pulse {0%   { opacity: 0; }18%  { opacity: 0; }20%  { opacity: 0.9; }23%  { opacity: 0.1; }42%  { opacity: .55; }46%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-static {position: absolute;inset: 0;opacity: 0;mix-blend-mode: overlay;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}#portal-transition.playing .portal-static {animation: portal-static-pulse 0.34s steps(6) 1;}@keyframes portal-static-pulse {0%   { opacity: 0; }12%  { opacity: .5; }20%  { opacity: .85; }40%  { opacity: .35; }50%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-scan {position: absolute;inset: 0;opacity: 0;background: repeating-linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5) 2px,transparent 2px,transparent 5px);}#portal-transition.playing .portal-scan {animation: portal-scan-pulse 0.34s linear 1;}@keyframes portal-scan-pulse {0%   { opacity: 0; transform: translateY(0); }18%  { opacity: .5; }30%  { opacity: .28; transform: translateY(40%); }45%  { opacity: 0; }100% { opacity: 0; }}#portal-transition .portal-bar {position: absolute;left: 0;width: 100%;background: #0d090e;opacity: 0;transform: translateX(0);}#portal-transition.playing .portal-bar {animation: portal-bar-shift 0.34s cubic-bezier(.36,.07,.19,.97) 1;}#portal-transition.playing .portal-bar:nth-child(5) { animation-delay: 0.01s; }#portal-transition.playing .portal-bar:nth-child(6) { animation-delay: 0.03s; }#portal-transition.playing .portal-bar:nth-child(7) { animation-delay: 0.05s; }#portal-transition.playing .portal-bar:nth-child(8) { animation-delay: 0.02s; }@keyframes portal-bar-shift {0%   { opacity: 0; transform: translateX(0); }16%  { opacity: .85; transform: translateX(var(--bx, 40px)); }28%  { opacity: .85; transform: translateX(calc(var(--bx, 40px) * -1)); }40%  { opacity: .6; transform: translateX(calc(var(--bx, 40px) * .4)); }50%  { opacity: 0; transform: translateX(0); }100% { opacity: 0; }}#portal-transition .portal-ghost {position: absolute;inset: 0;opacity: 0;filter: blur(2px) brightness(1.3);mix-blend-mode: screen;}#portal-transition.playing .portal-ghost {animation: portal-ghost-fade 0.38s ease-out 1;}@keyframes portal-ghost-fade {0%   { opacity: 0; transform: scale(1); }22%  { opacity: .5; transform: scale(1.015); }100% { opacity: 0; transform: scale(1.06); }}.card.emptying {transition: opacity 1.8s ease, filter 1.8s ease;opacity: 0;filter: blur(2px);pointer-events: none;}#dict-void {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 40;background: var(--paper);background-image:radial-gradient(circle at 20% -8%, rgba(107,74,122,0.08), transparent 48%),radial-gradient(circle at 86% 8%, rgba(96,70,107,0.07), transparent 52%);opacity: 0;pointer-events: none;transition: opacity 2.4s ease, background-color 1.4s ease;}#dict-void.active { opacity: 1; pointer-events: auto; }#dict-void.error-mode { background: #100b12; background-image: none; }#dict-void.shake { animation: card-shake 0.18s linear; }#dict-void::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 45% at 50% 0%, rgba(107,74,122,0.05), transparent 72%);opacity: 0;transition: opacity 1.2s ease;animation: stackedWashDrift 14s ease-in-out infinite;}#dict-void.active::before { opacity: 1; }#dict-void.error-mode::before { opacity: 0; }#dict-void::after {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse at center, transparent var(--void-tight, 55%), rgba(16,11,18,0.55) 130%);opacity: 0;transition: opacity 1.1s ease, background 1.6s ease;}#dict-void.vignette::after { opacity: 1; }#dict-void.inverted {filter: invert(1) hue-rotate(180deg);}#dict-void.drained {filter: grayscale(0.9) contrast(1.2);transition: filter 0.5s ease;}.void-scanbar {position: absolute;left: 0;right: 0;height: 160px;top: -160px;pointer-events: none;background: linear-gradient(180deg, transparent, rgba(50,36,56,0.05) 42%, rgba(50,36,56,0.11) 50%, rgba(50,36,56,0.05) 58%, transparent);mix-blend-mode: multiply;animation: voidScanRoll 8s linear infinite;}:root.dark-mode .void-scanbar {background: linear-gradient(180deg, transparent, rgba(235,228,238,0.05) 42%, rgba(235,228,238,0.12) 50%, rgba(235,228,238,0.05) 58%, transparent);mix-blend-mode: screen;}#dict-void.error-mode .void-scanbar { display: none; }@keyframes voidScanRoll {0% { transform: translateY(0); }100% { transform: translateY(calc(100vh + 320px)); }}.dict-void-line {position: fixed;left: 50%;top: 50%;width: max-content;max-width: min(84vw, 480px);text-align: center;text-wrap: balance;overflow-wrap: anywhere;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4.2vw, 19px);line-height: 1.55;color: var(--muted);opacity: 0;pointer-events: none;transition: color 1.4s ease;transform: translate(-50%, -50%);}.dict-void-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards,flashLinePulse 4.5s ease-in-out 0.32s infinite;}.dict-void-line.glitch-out {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.dict-error-box {position: fixed;inset: 0;z-index: 42;display: flex;align-items: center;justify-content: center;padding: 24px;opacity: 0;pointer-events: none;overflow: hidden;transition: opacity 0.6s ease;}.dict-error-box.show { opacity: 1; }.dict-error-box::before {content: '';position: absolute;inset: 0;pointer-events: none;opacity: 0.05;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}@keyframes dictErrorStatic { 0% { transform: translate(0,0); } 100% { transform: translate(-3%,2%); } }.dict-error-inner {position: relative;width: 100%;max-width: 560px;font-family: 'Courier Prime', 'Courier New', Courier, monospace;color: #a888b5;font-size: clamp(12px, 2.6vw, 14px);line-height: 1.9;letter-spacing: 0.03em;text-align: left;animation: dictErrorFlicker 3.4s linear infinite;}@keyframes dictErrorFlicker {0%, 100% { opacity: 1; } 4% { opacity: .5; } 5% { opacity: 1; }61% { opacity: 1; } 62% { opacity: .3; } 63% { opacity: .85; }64% { opacity: 1; }}.dict-error-title {display: block;color: #9b75ab;text-transform: lowercase;letter-spacing: 0.08em;margin-bottom: 14px;}.dict-error-body { display: block; }.dict-error-line {display: block;width: max-content;max-width: none;white-space: nowrap;transform-origin: left center;transform: scale(var(--err-line-scale, 1));}.dict-error-cursor { display: inline-block; width: 8px; }.dict-error-cursor.blink { animation: dictErrCursorBlink 1s steps(1) infinite; }@keyframes dictErrCursorBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }.dict-void-footer {position: fixed;left: 0;right: 0;bottom: max(22px, env(safe-area-inset-bottom, 0px));z-index: 43;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 11px;letter-spacing: 0.04em;color: var(--muted);opacity: 0;pointer-events: none;transition: opacity 1.6s ease;}.dict-void-footer.show { opacity: 0.85; pointer-events: auto; }.dict-void-footer a, .dict-void-footer button {all: unset;cursor: pointer;color: var(--muted);display: inline-flex;align-items: center;gap: 5px;font-family: inherit;font-size: inherit;letter-spacing: inherit;}.dict-void-footer svg { flex-shrink: 0; }.dict-void-footer a:hover, .dict-void-footer button:hover { color: var(--accent); }.dict-void-footer-dot { margin: 0 8px; color: var(--rule); }.dict-void-footer-whisper {margin-top: 10px;font-size: 10px;letter-spacing: 0.06em;color: var(--muted);min-height: 1.4em;}body.dict-void-dead .dict-void-footer,body.dict-void-dead .dict-void-footer a,body.dict-void-dead .dict-void-footer button {color: #a888b5;}body.dict-void-dead .dict-void-footer a:hover,body.dict-void-dead .dict-void-footer button:hover { color: #d4c3db; }body.dict-void-dead .dict-void-footer-dot { color: #3d2b45; }body.dict-void-dead .dict-void-footer-whisper { color: #735480; }button, a, [role="button"] { touch-action: manipulation; }</style>
 <style>
   .speak-room{--thought-glow:#6b4a7a;--thought-cool:#60466b;position:fixed;inset:0;z-index:100020;overflow:hidden;background:var(--paper);background-image:radial-gradient(circle at 16% -8%,rgba(107,74,122,.08),transparent 48%),radial-gradient(circle at 88% 8%,rgba(96,70,107,.07),transparent 52%);box-shadow:inset 0 0 170px rgba(16,11,18,.09);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 1s ease;outline:none;}
   .speak-room.open{opacity:1;pointer-events:auto;}
@@ -293,6 +293,26 @@
   .speak-link svg{width:13px;height:13px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .speak-attach{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;margin-top:10px;}
   .speak-attach-name{font-size:12px;font-style:italic;color:var(--muted);overflow-wrap:anywhere;min-width:0;}
+  .thoughts-music-search{margin-top:8px;border:1px solid var(--rule);border-radius:12px;padding:8px;background:var(--paper);}
+  .thoughts-music-searchrow{display:flex;align-items:center;gap:8px;}
+  .thoughts-music-searchrow input{flex:1 1 auto;min-width:0;border:1px solid var(--rule);border-radius:8px;padding:6px 9px;font-family:'Source Serif 4',Georgia,serif;font-size:13px;color:var(--ink);background:var(--paper);}
+  .thoughts-music-searchrow input::placeholder{color:var(--muted);}
+  .thoughts-music-searchrow input:focus-visible{outline:2px solid var(--thought-glow, var(--accent));outline-offset:1px;}
+  .thoughts-music-searchrow button{flex:0 0 auto;}
+  .thoughts-music-results{display:flex;flex-direction:column;gap:4px;margin-top:8px;max-height:180px;overflow-y:auto;}
+  .thoughts-music-result{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:8px;padding:6px 7px;border-radius:8px;transition:background .15s ease;}
+  .thoughts-music-result:hover,.thoughts-music-result:focus-visible{background:rgba(112,78,127,.1);}
+  .thoughts-music-result img{width:32px;height:32px;border-radius:4px;flex:0 0 auto;object-fit:cover;}
+  .thoughts-music-result-meta{min-width:0;display:flex;flex-direction:column;}
+  .thoughts-music-result-title{font-size:12.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .thoughts-music-result-artist{font-size:11px;font-style:italic;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .thoughts-music-status{font-size:11.5px;font-style:italic;color:var(--muted);padding:4px 2px;}
+  .thought-music{display:flex;align-items:center;gap:8px;margin-top:8px;padding:6px 8px;border:1px solid var(--rule);border-radius:10px;background:rgba(112,78,127,.06);}
+  .thought-music img{width:30px;height:30px;border-radius:4px;flex:0 0 auto;object-fit:cover;}
+  .thought-music-meta{min-width:0;display:flex;flex-direction:column;flex:1 1 auto;}
+  .thought-music-title{font-size:12px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .thought-music-artist{font-size:10.5px;font-style:italic;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .thought-music audio{height:28px;max-width:120px;flex:0 0 auto;}
   .speak-radio{display:flex;align-items:center;gap:14px;margin-top:16px;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);box-shadow:0 2px 12px var(--card-shadow);}
   .speak-radio .say{flex:0 0 auto;}
   .speak-radio-meta{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px;}
@@ -508,7 +528,7 @@
 .speak-room #speak-feed > .speak-post:nth-of-type(even) .speak-post-text{align-self:flex-end;border-radius:20px 20px 5px 20px;}
 .speak-room #speak-feed > .speak-post:nth-of-type(even) .speak-post-text::after{left:auto;right:14px;}
 .speak-room .speak-post > .speak-time{order:-1;margin:0 0 2px;padding:0 2px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--accent);}
-.speak-room .speak-post:has(.speak-radio) > .speak-time::after{content:' \00b7  tape';opacity:.7;}
+.speak-room .speak-post:has(.speak-radio) > .speak-time::after{content:' \00b7  note';opacity:.7;}
 .speak-room .speak-post > .speak-radio{margin:0;padding:10px 14px 8px;border:1px solid var(--rule);border-radius:14px;background:var(--paper);box-shadow:0 2px 12px var(--card-shadow);}
 .speak-room .speak-post > .speak-radio.playing{border-color:var(--accent);}
 .speak-room .speak-actions{padding:0 2px;margin-top:0;}
@@ -580,6 +600,25 @@
 :root.dark-mode .speak-room .speak-media img,:root.dark-mode .speak-room .speak-media video,
 :root:has(#beyond-overlay[style*="display: block"]) .speak-room .speak-media img,
 :root:has(#beyond-overlay[style*="display: block"]) .speak-room .speak-media video{mix-blend-mode:screen;}
+/* picture + its own words, paired as one unit: the picture sits like
+   a sticker (keeps its own tilt/scatter), the note sits beside it,
+   left or right, reading like a quote */
+.speak-room .speak-media-note{display:flex;flex-direction:row;align-items:center;gap:12px;max-width:100%;margin:6px 2px;}
+.speak-room .speak-media-note.reverse{flex-direction:row-reverse;}
+.speak-room .speak-media-note .speak-media{margin:0;flex:0 0 auto;}
+.speak-room .speak-media-caption{margin:0;padding:0 2px;flex:1 1 auto;min-width:0;max-width:230px;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:14px;line-height:1.45;text-align:left;color:var(--ink);text-wrap:pretty;overflow-wrap:anywhere;}
+.speak-room .speak-media-note.reverse .speak-media-caption{text-align:right;}
+.speak-room .speak-media-caption::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+/* the same pairing, for a visitor's own attached picture on the
+   thoughts wall — the quote mark and type already come from the
+   stack item's own paragraph styling, so this just lays it out */
+.thoughts-stacked-room .thought-stack-item .thought-media-note{display:flex;flex-direction:row;align-items:center;gap:10px;max-width:100%;margin:2px 0;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note.reverse{flex-direction:row-reverse;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media{max-width:110px;margin:0;flex:0 0 auto;line-height:0;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media img,
+.thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media video{display:block;max-width:110px;max-height:110px;width:auto;height:auto;border-radius:10px;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note .speak-media-caption{flex:1 1 auto;min-width:0;text-align:left;}
+.thoughts-stacked-room .thought-stack-item .thought-media-note.reverse .speak-media-caption{text-align:right;}
 /* notes: no bubble, plain words placed at random; the tape sits at random too */
 .speak-room .speak-post-text,
 .speak-room #speak-feed > .speak-post .speak-post-text,
@@ -703,11 +742,91 @@
 }
 .speak-room #speak-post-input:focus-visible{outline:none;border:0;box-shadow:none;}
 
-/* end of the page */
-.speak-room .speak-foot::before{
-  content:'*   *   *';display:block;margin-bottom:6px;
-  color:var(--accent);opacity:.6;letter-spacing:.2em;
+</style>
+<style id="thoughts-diary">
+/* leave-a-thought: same paper feel as the room, with room to breathe. CSS only. */
+.thoughts-modal,.thoughts-stacked-room{
+  --diary-line:rgba(112,78,127,.10);
+  --diary-line-strong:rgba(112,78,127,.16);
+  --diary-margin:rgba(112,78,127,.28);
 }
+:root.dark-mode .thoughts-modal,:root.dark-mode .thoughts-stacked-room,
+:root:has(#beyond-overlay[style*="display: block"]) .thoughts-modal,
+:root:has(#beyond-overlay[style*="display: block"]) .thoughts-stacked-room{
+  --diary-line:rgba(200,170,215,.07);
+  --diary-line-strong:rgba(200,170,215,.16);
+  --diary-margin:rgba(170,123,178,.3);
+}
+
+/* the card */
+.thoughts-overlay .thoughts-modal{
+  border-radius:16px;padding:28px 24px 20px;max-height:min(640px,88vh);
+  outline:1px dashed var(--diary-line-strong);outline-offset:-8px;
+}
+.thoughts-modal .feedback-close{top:8px;right:8px;width:34px;height:34px;}
+.thoughts-modal .feedback-close svg{width:14px;height:14px;}
+
+/* titles: a small label, then air */
+#thoughts-panel-compose h3,#thoughts-panel-wall h3{margin:0 0 8px;padding-right:28px;line-height:1.2;}
+#thoughts-panel-compose h3::before,#thoughts-panel-wall h3::before{
+  display:block;margin-bottom:8px;
+  font:400 10px/1 'Courier Prime','Courier New',monospace;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+}
+#thoughts-panel-compose h3::before{content:'leave a thought';}
+#thoughts-panel-wall h3::before{content:'from other hands';}
+#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub{
+  margin:0 0 16px;font-size:14.5px;line-height:1.55;
+}
+
+/* writing: a ruled page (16px so phones don't zoom) */
+.thoughts-modal .thoughts-compose textarea{
+  display:block;min-height:0;padding:10px 12px;border-radius:6px;
+  font-size:16px;line-height:28px;
+  background-color:transparent;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 27px,var(--diary-line-strong) 27px,var(--diary-line-strong) 28px),linear-gradient(var(--field),var(--field));
+  background-origin:content-box,padding-box;background-clip:content-box,padding-box;background-attachment:local,scroll;
+}
+.thoughts-modal .thoughts-compose textarea:focus-visible{border-color:var(--accent);}
+.thoughts-compose .feedback-whisper.thoughts-whisper{margin:6px 0 0;}
+.thoughts-modal .thoughts-status{min-height:16px;margin:4px 0 0;}
+.thoughts-modal .thoughts-row{margin-top:10px;}
+.thoughts-modal .thoughts-row button.primary{padding:8px 16px;min-height:36px;font-size:13px;border-radius:18px;}
+
+/* links: proper tap size and space between them */
+.thoughts-modal .thoughts-link{margin-top:14px;padding:8px 14px;min-height:36px;font-size:12.5px;}
+#thoughts-panel-wall .thoughts-link{margin-top:6px;padding:4px 14px;min-height:22px;}
+#thoughts-panel-wall #thoughts-goto-compose{margin-top:0;}
+
+/* the wall: a calm page for one thought at a time */
+.thoughts-modal .thoughts-list{margin:0 0 10px;min-height:170px;border-radius:8px;}
+.thoughts-modal .thoughts-list .thought-line{top:44%;max-width:min(84%,300px);}
+.thoughts-modal .thoughts-list::after{bottom:10px;}
+
+/* full list: slips on a page, more air between them */
+.thoughts-stacked-header{padding-bottom:16px;border-bottom:3px double var(--rule);}
+.thoughts-stacked-header .thoughts-stacked-sub{line-height:1.5;}
+.thoughts-stacked-room .thoughts-stack-list{gap:18px;padding-top:24px;padding-bottom:max(48px,env(safe-area-inset-bottom,20px));}
+.thoughts-stacked-room .thought-stack-item:nth-of-type(n){
+  min-width:52%;max-width:88%;padding:16px 20px 12px;border-radius:6px;
+  background:var(--paper);border:1px solid var(--rule);box-shadow:0 2px 10px var(--card-shadow);
+}
+.thoughts-stacked-room .thought-stack-item p{line-height:1.6;}
+.thoughts-stacked-room .thought-stack-item time{margin-top:10px;}
+
+/* match the room: ruled page, margin line, due-date stamps, a closing mark */
+.thoughts-overlay .thoughts-panel{position:relative;padding-left:clamp(14px,4vw,20px);}
+.thoughts-overlay .thoughts-panel::before{
+  content:'';position:absolute;top:2px;bottom:2px;left:6px;width:1.5px;
+  background:var(--diary-margin,var(--rule));pointer-events:none;
+}
+.thoughts-modal .thought-line time,.thought-stack-item time{
+  display:inline-block;font-family:'Courier Prime','Courier New',monospace;
+  border:1px solid currentColor;border-radius:3px;padding:2px 6px 1px;
+  letter-spacing:.12em;opacity:.85;
+}
+.thoughts-stacked-room .thought-stack-item:nth-of-type(odd){transform:rotate(-.6deg);}
+.thoughts-stacked-room .thought-stack-item:nth-of-type(even){transform:rotate(.6deg);}
 </style>
 </head>
 <body>
@@ -725,7 +844,67 @@
     window.__topZBase += 1;
     el.style.zIndex = window.__topZBase;
   };
+
+  // Small floating-heart burst, used wherever a heart/like button goes
+  // from unliked to liked. Spawns a handful of little hearts from the
+  // button's center that drift up, drift sideways a bit, and fade out.
+  // Pure DOM + CSS animation, no dependencies, cleans up after itself.
+  window.spawnFloatingHearts = function (originEl, opts) {
+    try {
+      opts = opts || {};
+      const count = opts.count || (4 + Math.floor(Math.random() * 3));
+      const color = opts.color || null;
+      let x, y;
+      if (originEl && originEl.getBoundingClientRect) {
+        const r = originEl.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+      } else if (originEl && typeof originEl.x === 'number') {
+        x = originEl.x; y = originEl.y;
+      } else {
+        return;
+      }
+      let layer = document.getElementById('floating-heart-layer');
+      if (!layer) {
+        layer = document.createElement('div');
+        layer.id = 'floating-heart-layer';
+        layer.style.position = 'fixed';
+        layer.style.inset = '0';
+        layer.style.pointerEvents = 'none';
+        layer.style.zIndex = '999998';
+        document.body.appendChild(layer);
+      }
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart-particle';
+        heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+        const dx = (Math.random() * 2 - 1) * (24 + Math.random() * 26);
+        const dy = -(46 + Math.random() * 56);
+        const rot = (Math.random() * 2 - 1) * 26;
+        const scale = 0.7 + Math.random() * 0.6;
+        const delay = Math.random() * 90;
+        const dur = 700 + Math.random() * 500;
+        heart.style.position = 'fixed';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        heart.style.setProperty('--fh-dx', dx + 'px');
+        heart.style.setProperty('--fh-dy', dy + 'px');
+        heart.style.setProperty('--fh-rot', rot + 'deg');
+        heart.style.setProperty('--fh-scale', scale);
+        heart.style.animationDuration = dur + 'ms';
+        heart.style.animationDelay = delay + 'ms';
+        if (color) heart.style.color = color;
+        layer.appendChild(heart);
+        setTimeout(() => { if (heart.parentNode) heart.parentNode.removeChild(heart); }, dur + delay + 120);
+      }
+    } catch (e) {}
+  };
 </script>
+<style>
+  .floating-heart-particle{position:fixed;width:15px;height:15px;margin:-7px 0 0 -7px;pointer-events:none;color:var(--accent, #704e7f);opacity:0;transform:translate(0,0) scale(0.6) rotate(0deg);animation-name:floatingHeartRise;animation-timing-function:cubic-bezier(.2,.7,.3,1);animation-fill-mode:forwards;will-change:transform,opacity;}
+  .floating-heart-particle svg{width:100%;height:100%;fill:currentColor;stroke:none;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));}
+  @keyframes floatingHeartRise{0%{opacity:0;transform:translate(0,0) scale(0.5) rotate(0deg);}12%{opacity:1;transform:translate(calc(var(--fh-dx) * 0.15),calc(var(--fh-dy) * 0.2)) scale(var(--fh-scale)) rotate(calc(var(--fh-rot) * 0.3));}75%{opacity:0.85;}100%{opacity:0;transform:translate(var(--fh-dx),var(--fh-dy)) scale(calc(var(--fh-scale) * 0.85)) rotate(var(--fh-rot));}}
+</style>
 
 <main class="card">
   <div class="word-row">
@@ -5274,6 +5453,24 @@
 
       <div class="thoughts-compose">
         <textarea id="thoughts-input" maxlength="280" rows="4" placeholder="write it here. you can write it again tomorrow."></textarea>
+        <div class="speak-attach" id="thoughts-media-wrap">
+          <input type="file" id="thoughts-media-input" accept="image/*,video/*" hidden>
+          <button type="button" class="speak-link" id="thoughts-media-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z"/></svg><span class="lbl">attach a gif, photo, or video</span></button>
+          <span class="speak-attach-name" id="thoughts-media-name" hidden></span>
+          <button type="button" class="speak-link" id="thoughts-media-clear" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">take it off</span></button>
+        </div>
+        <div class="speak-attach" id="thoughts-music-wrap">
+          <button type="button" class="speak-link" id="thoughts-music-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="lbl">attach a song</span></button>
+          <span class="speak-attach-name" id="thoughts-music-name" hidden></span>
+          <button type="button" class="speak-link" id="thoughts-music-clear" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">take it off</span></button>
+        </div>
+        <div class="thoughts-music-search" id="thoughts-music-search" hidden>
+          <div class="thoughts-music-searchrow">
+            <input type="text" id="thoughts-music-input" maxlength="80" placeholder="search a song or artist&hellip;">
+            <button type="button" class="speak-link" id="thoughts-music-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="lbl">search</span></button>
+          </div>
+          <div class="thoughts-music-results" id="thoughts-music-results"></div>
+        </div>
         <p class="feedback-whisper thoughts-whisper" id="thoughts-whisper" aria-hidden="true">write down what you remember</p>
         <p class="thoughts-status" id="thoughts-status" aria-live="polite"></p>
         <div class="thoughts-row">
@@ -5360,10 +5557,16 @@
       <div class="speak-compose speak-owner-only" id="speak-compose">
         <textarea class="speak-field" id="speak-post-input" maxlength="600" rows="3" placeholder="write it down here&hellip;"></textarea>
         <div class="speak-attach">
-          <input type="file" id="speak-audio-input" accept="audio/*" hidden>
-          <button type="button" class="speak-link" id="speak-audio-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11l-8.5 8.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L14 7"/></svg><span class="lbl">attach music</span></button>
+          <button type="button" class="speak-link" id="speak-audio-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="lbl">attach music</span></button>
           <span class="speak-attach-name" id="speak-audio-name" hidden></span>
           <button type="button" class="speak-link" id="speak-audio-clear" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">take it off</span></button>
+        </div>
+        <div class="thoughts-music-search" id="speak-music-search" hidden>
+          <div class="thoughts-music-searchrow">
+            <input type="text" id="speak-music-input" maxlength="80" placeholder="search a song or artist&hellip;">
+            <button type="button" class="speak-link" id="speak-music-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="lbl">search</span></button>
+          </div>
+          <div class="thoughts-music-results" id="speak-music-results"></div>
         </div>
         <input class="speak-field speak-audio-title" type="text" id="speak-audio-title" maxlength="80" placeholder="title of the music&hellip;" hidden>
         <div class="speak-attach" id="speak-media-wrap">
@@ -6080,18 +6283,37 @@
   //        alter table thoughts enable row level security;
   //        create policy "public read" on thoughts for select using (true);
   //        create policy "public insert" on thoughts for insert with check (true);
-  //      Optional, so Selrick's likes on the "everything that was written
-  //      here" list are saved for every visitor to see (only the signed-in
-  //      owner can set them; use the same OWNER_UUID as the room below).
-  //      Without it, a like is remembered on the owner's device only:
-  //        alter table thoughts add column liked_by_owner boolean not null default false;
-  //        alter table thoughts add column liked_at timestamptz;
-  //        create policy "owner likes" on thoughts for update to authenticated
-  //          using (auth.uid() = 'OWNER_UUID') with check (auth.uid() = 'OWNER_UUID');
+  //      Optional, so anyone reading can like a thought and everyone sees
+  //      the running count (each visitor's own like is remembered on
+  //      their device only — there's no sign-in for likes). Without this
+  //      column, likes still work but the count is remembered locally
+  //      and isn't shared between visitors:
+  //        alter table thoughts add column likes_count integer not null default 0;
+  //        create policy "public likes" on thoughts for update
+  //          using (true) with check (true);
+  //      (That update policy only ever needs to touch likes_count from the
+  //      client above — nothing stops a visitor from editing other columns
+  //      via the API directly, so don't rely on it for anything sensitive.)
+  //      Optional, so a visitor can attach their own gif / photo / video to
+  //      a thought (separate from — and open to everyone, unlike — the
+  //      music/picture Selrick attaches to his own notes in the room, which
+  //      stays behind his sign-in):
+  //        alter table thoughts add column media_url text;
+  //      and a public storage bucket for it (Storage → New bucket → public):
+  //        create policy "public thought media read" on storage.objects
+  //          for select using (bucket_id = 'thought-media');
+  //        create policy "public thought media insert" on storage.objects
+  //          for insert with check (bucket_id = 'thought-media');
+  //      Optional, so a visitor can attach a song to a thought — found by
+  //      searching the internet (the iTunes Search API, which needs no key
+  //      and no sign-in), never uploaded from their own device:
+  //        alter table thoughts add column music_url text;
+  //        alter table thoughts add column music_title text;
   //   3. In Project Settings → API, copy the Project URL and the
   //      "anon public" key into the two constants below.
   // Until that's done, thoughts still work — they just save to this
-  // browser only, and only this browser sees them.
+  // browser only, and only this browser sees them (and any attached
+  // media is left out, since there's nowhere to upload it to yet).
   (function setupThoughtsRoom() {
     const SUPABASE_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
@@ -6118,6 +6340,152 @@
     const statusEl = document.getElementById('thoughts-status');
     const rateBtn = document.getElementById('rate-btn');
     if (!overlay || !rateBtn || !composePanel || !wallPanel) return;
+
+    // A visitor can attach their own gif, photo, or video to a thought —
+    // separate from, and open to everyone unlike, the music/picture
+    // Selrick attaches to his own notes back in the room (that stays
+    // behind his sign-in; this doesn't need one, same as the thought
+    // itself). Uploads go straight to a public bucket with the anon
+    // key, the same way the thought's own text is posted below.
+    const THOUGHT_MEDIA_BUCKET = 'thought-media';
+    const THOUGHT_MEDIA_PUBLIC = `${SUPABASE_URL}/storage/v1/object/public/${THOUGHT_MEDIA_BUCKET}/`;
+    const MAX_THOUGHT_MEDIA_BYTES = 20 * 1024 * 1024;
+    const THOUGHT_MEDIA_ONLY = '[media]'; // stored as the content when there are no words, hidden on screen
+    const isThoughtVideoUrl = (u) => /\.(mp4|webm|mov|m4v|ogv)(\?|$)/i.test(u || '');
+    const mediaInput = document.getElementById('thoughts-media-input');
+    const mediaPick = document.getElementById('thoughts-media-pick');
+    const mediaName = document.getElementById('thoughts-media-name');
+    const mediaClear = document.getElementById('thoughts-media-clear');
+    const mediaWrap = document.getElementById('thoughts-media-wrap');
+    let pendingMedia = null, mediaPreview = null;
+
+    function uploadThoughtMedia(file, onProgress) {
+      return new Promise((resolve, reject) => {
+        const ext = ((file.name.split('.').pop() || 'gif').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5)) || 'gif';
+        const path = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `${SUPABASE_URL}/storage/v1/object/${THOUGHT_MEDIA_BUCKET}/${path}`);
+        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON_KEY);
+        xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+        xhr.upload.onprogress = (ev) => { if (ev.lengthComputable && onProgress) onProgress(Math.round(ev.loaded / ev.total * 100)); };
+        xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? resolve(THOUGHT_MEDIA_PUBLIC + path) : reject(new Error('upload ' + xhr.status));
+        xhr.onerror = () => reject(new Error('network'));
+        xhr.send(file);
+      });
+    }
+    function setPendingMedia(file) {
+      pendingMedia = file || null;
+      if (mediaPreview) { try { URL.revokeObjectURL(mediaPreview.src); } catch (e) {} mediaPreview.remove(); mediaPreview = null; }
+      if (file && mediaWrap) {
+        const isVid = (file.type && file.type.indexOf('video/') === 0) || /\.(mp4|webm|mov|m4v|ogv)$/i.test(file.name);
+        mediaPreview = document.createElement(isVid ? 'video' : 'img');
+        if (isVid) { mediaPreview.controls = true; mediaPreview.muted = true; mediaPreview.playsInline = true; mediaPreview.preload = 'metadata'; }
+        else { mediaPreview.alt = ''; }
+        mediaPreview.className = 'speak-media-preview';
+        mediaPreview.src = URL.createObjectURL(file);
+        mediaWrap.appendChild(mediaPreview);
+      }
+      if (mediaName) mediaName.hidden = mediaClear.hidden = !file;
+      if (mediaName) mediaName.textContent = file ? file.name : '';
+      if (mediaPick) mediaPick.querySelector('.lbl').textContent = file ? 'change gif / photo / video' : 'attach a gif, photo, or video';
+      if (!file && mediaInput) mediaInput.value = '';
+      if (submitBtn) submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
+    }
+    if (mediaPick) mediaPick.addEventListener('click', () => mediaInput.click());
+    if (mediaClear) mediaClear.addEventListener('click', () => setPendingMedia(null));
+    if (mediaInput) mediaInput.addEventListener('change', () => {
+      const f = mediaInput.files && mediaInput.files[0];
+      if (!f) return;
+      const looksMedia = (f.type && (f.type.indexOf('image/') === 0 || f.type.indexOf('video/') === 0)) || /\.(gif|png|jpe?g|webp|mp4|webm|mov|m4v)$/i.test(f.name);
+      if (!looksMedia) { setPendingMedia(null); statusEl.textContent = 'that is not a gif, photo, or video.'; statusEl.classList.add('error'); return; }
+      if (f.size > MAX_THOUGHT_MEDIA_BYTES) { setPendingMedia(null); statusEl.textContent = 'too big. keep it under 20 MB.'; statusEl.classList.add('error'); return; }
+      statusEl.textContent = ''; statusEl.classList.remove('error');
+      setPendingMedia(f);
+    });
+
+    // A visitor can also attach a song to a thought — but only one found
+    // by searching the internet, never a file off their own device. This
+    // uses the iTunes Search API: free, needs no key, no sign-in, and
+    // returns a short public preview clip for whatever's found.
+    const musicWrap = document.getElementById('thoughts-music-wrap');
+    const musicPickBtn = document.getElementById('thoughts-music-pick');
+    const musicNameEl = document.getElementById('thoughts-music-name');
+    const musicClearBtn = document.getElementById('thoughts-music-clear');
+    const musicSearchBox = document.getElementById('thoughts-music-search');
+    const musicInput = document.getElementById('thoughts-music-input');
+    const musicGoBtn = document.getElementById('thoughts-music-go');
+    const musicResultsEl = document.getElementById('thoughts-music-results');
+    let pendingMusic = null, musicSearchToken = 0;
+
+    function setPendingMusic(track) {
+      pendingMusic = track || null;
+      if (musicNameEl) {
+        musicNameEl.hidden = musicClearBtn.hidden = !track;
+        musicNameEl.textContent = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')) : '';
+      }
+      if (musicPickBtn) musicPickBtn.querySelector('.lbl').textContent = track ? 'change song' : 'attach a song';
+      if (submitBtn) submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
+    }
+    function closeMusicSearch() {
+      if (musicSearchBox) musicSearchBox.hidden = true;
+      if (musicResultsEl) musicResultsEl.innerHTML = '';
+      if (musicInput) musicInput.value = '';
+    }
+    if (musicPickBtn) musicPickBtn.addEventListener('click', () => {
+      if (!musicSearchBox) return;
+      musicSearchBox.hidden = !musicSearchBox.hidden;
+      if (!musicSearchBox.hidden && musicInput) musicInput.focus();
+    });
+    if (musicClearBtn) musicClearBtn.addEventListener('click', () => setPendingMusic(null));
+    async function runMusicSearch() {
+      const term = (musicInput && musicInput.value || '').trim();
+      if (!term || !musicResultsEl) return;
+      const myToken = ++musicSearchToken;
+      musicResultsEl.innerHTML = '<p class="thoughts-music-status">looking&hellip;</p>';
+      try {
+        const res = await fetch('https://itunes.apple.com/search?media=music&limit=6&term=' + encodeURIComponent(term));
+        if (myToken !== musicSearchToken) return;
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        if (myToken !== musicSearchToken) return;
+        const results = (data && data.results || []).filter(r => r.previewUrl);
+        musicResultsEl.innerHTML = '';
+        if (!results.length) {
+          musicResultsEl.innerHTML = '<p class="thoughts-music-status">nothing found. try another search.</p>';
+          return;
+        }
+        results.forEach(r => {
+          const row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'thoughts-music-result';
+          const art = document.createElement('img');
+          art.src = r.artworkUrl60 || r.artworkUrl100 || '';
+          art.alt = '';
+          art.loading = 'lazy';
+          const meta = document.createElement('span');
+          meta.className = 'thoughts-music-result-meta';
+          const t = document.createElement('span');
+          t.className = 'thoughts-music-result-title';
+          t.textContent = r.trackName || 'untitled';
+          const a = document.createElement('span');
+          a.className = 'thoughts-music-result-artist';
+          a.textContent = r.artistName || '';
+          meta.appendChild(t); meta.appendChild(a);
+          row.appendChild(art); row.appendChild(meta);
+          row.addEventListener('click', () => {
+            setPendingMusic({ title: r.trackName || 'untitled', artist: r.artistName || '', previewUrl: r.previewUrl, artwork: r.artworkUrl60 || r.artworkUrl100 || '' });
+            closeMusicSearch();
+          });
+          musicResultsEl.appendChild(row);
+        });
+      } catch (e) {
+        if (myToken !== musicSearchToken) return;
+        musicResultsEl.innerHTML = '<p class="thoughts-music-status">could not search just now. try again.</p>';
+      }
+    }
+    if (musicGoBtn) musicGoBtn.addEventListener('click', runMusicSearch);
+    if (musicInput) musicInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runMusicSearch(); } });
 
     // Borrows the rate card's own disturbance vocabulary — shake,
     // title letter-glitch, a whispered line, ghost typing in the box —
@@ -6592,49 +6960,111 @@
     // Same data as the wall, just laid out plainly: one column, every
     // thought its own block, aligned the same way as the one before
     // it, and nothing here ever fades back out on its own.
+    function buildThoughtMedia(entry) {
+      const box = document.createElement('div');
+      box.className = 'speak-media';
+      let node;
+      if (isThoughtVideoUrl(entry.media_url)) {
+        node = document.createElement('video');
+        node.muted = true; node.autoplay = true; node.loop = true; node.playsInline = true; node.preload = 'auto';
+        node.setAttribute('muted', ''); node.setAttribute('playsinline', '');
+        node.addEventListener('click', () => { if (node.paused) node.play().catch(() => {}); else node.pause(); });
+      } else {
+        node = document.createElement('img');
+        node.alt = ''; node.loading = 'lazy';
+      }
+      node.src = entry.media_url;
+      box.appendChild(node);
+      const seedKey = String(entry.media_url || entry.id || entry.created_at || '');
+      const seed = hashSeed(seedKey);
+      const rot = (seed % 17) - 8;
+      const tx = (hashSeed(seedKey + '|x') % 27) - 13;
+      const ty = (hashSeed(seedKey + '|y') % 21) - 10;
+      box.style.transform = 'rotate(' + rot + 'deg) translate(' + tx + 'px, ' + ty + 'px)';
+      return box;
+    }
+    // A song, found on the internet by whoever left the thought (never a
+    // file off their device) — a small player with its title and a tiny
+    // artwork thumbnail, playable right where the thought is read.
+    function buildThoughtMusic(entry) {
+      const box = document.createElement('div');
+      box.className = 'thought-music';
+      const audio = document.createElement('audio');
+      audio.controls = true; audio.preload = 'none'; audio.src = entry.music_url;
+      const meta = document.createElement('span');
+      meta.className = 'thought-music-meta';
+      const parts = String(entry.music_title || '').split(' \u2014 ');
+      const t = document.createElement('span');
+      t.className = 'thought-music-title';
+      t.textContent = parts[0] || entry.music_title || 'a song';
+      meta.appendChild(t);
+      if (parts[1]) {
+        const a = document.createElement('span');
+        a.className = 'thought-music-artist';
+        a.textContent = parts[1];
+        meta.appendChild(a);
+      }
+      box.appendChild(meta);
+      box.appendChild(audio);
+      return box;
+    }
     function buildStackItem(entry, isNew) {
       const item = document.createElement('div');
       item.className = 'thought-stack-item' + (isNew ? ' thought-stack-item-new' : '');
-      const p = document.createElement('p');
-      p.textContent = entry.content;
+      const wordless = (entry.media_url || entry.music_url) && entry.content === THOUGHT_MEDIA_ONLY;
+      if (entry.media_url) {
+        // picture + its own words, paired side by side — the picture
+        // stays a tilted sticker, the words sit next to it like a quote
+        const group = document.createElement('div');
+        group.className = 'speak-media-note thought-media-note';
+        const mediaSide = hashSeed('m' + (entry.id != null ? entry.id : entry.media_url)) % 2 ? 'right' : 'left';
+        if (mediaSide === 'right') group.classList.add('reverse');
+        group.appendChild(buildThoughtMedia(entry));
+        if (!wordless) {
+          const cap = document.createElement('p');
+          cap.className = 'speak-media-caption';
+          cap.textContent = entry.content;
+          group.appendChild(cap);
+        }
+        item.appendChild(group);
+      } else if (!wordless) {
+        const p = document.createElement('p');
+        p.textContent = entry.content;
+        item.appendChild(p);
+      }
+      if (entry.music_url) item.appendChild(buildThoughtMusic(entry));
       const time = document.createElement('time');
       time.textContent = (isNew ? 'you' : pseudoHandle(entry)) + ' · ' + (isNew ? 'just now' : timeAgo(entry.created_at));
       if (entry.created_at) { time.dateTime = entry.created_at; time.title = fmtDate(entry.created_at); }
-      item.appendChild(p);
       item.appendChild(time);
       if (!isNew) item.appendChild(buildLikeButton(entry));
       return item;
     }
 
-    // Only Selrick (signed in through the room) can like a thought.
-    // Everyone else just sees a filled heart on the ones he liked.
-    const OWNER_LIKES_KEY = 'selrick-thoughts-owner-likes';
-    function readOwnerLikes() {
-      try { return JSON.parse(localStorage.getItem(OWNER_LIKES_KEY)) || {}; } catch (e) { return {}; }
+    // Anyone reading can like a thought. The count is public and visible
+    // to everyone; each visitor's own like is just remembered locally
+    // (per browser) so their heart matches what they've already done.
+    const VISITOR_LIKES_KEY = 'selrick-thoughts-my-likes';
+    function readVisitorLikes() {
+      try { return JSON.parse(localStorage.getItem(VISITOR_LIKES_KEY)) || {}; } catch (e) { return {}; }
     }
-    function writeOwnerLikes(map) {
-      try { localStorage.setItem(OWNER_LIKES_KEY, JSON.stringify(map)); } catch (e) {}
+    function writeVisitorLikes(map) {
+      try { localStorage.setItem(VISITOR_LIKES_KEY, JSON.stringify(map)); } catch (e) {}
     }
     function likeKey(entry) {
       return entry.id != null ? 'id:' + entry.id : 'k:' + hashSeed((entry.content || '') + '|' + (entry.created_at || ''));
     }
-    function ownerSignedIn() {
-      return document.documentElement.classList.contains('selrick-owner');
-    }
-    async function saveOwnerLike(entry, on, likedAt) {
-      if (typeof window.selrickGetToken !== 'function') return false;
-      const token = await window.selrickGetToken();
-      if (!token) return false;
+    async function saveLikeCount(entry, count) {
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${encodeURIComponent(entry.id)}`, {
           method: 'PATCH',
           headers: {
             apikey: SUPABASE_ANON_KEY,
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
             Prefer: 'return=representation'
           },
-          body: JSON.stringify(entry.liked_at !== undefined ? { liked_by_owner: on, liked_at: likedAt } : { liked_by_owner: on })
+          body: JSON.stringify({ likes_count: count })
         });
         if (!res.ok) return false;
         const rows = await res.json();
@@ -6643,44 +7073,48 @@
     }
     function buildLikeButton(entry) {
       const key = likeKey(entry);
-      const backed = backendReady && entry.id != null && typeof entry.liked_by_owner === 'boolean';
-      const localMap = readOwnerLikes();
-      let liked = backed ? entry.liked_by_owner : !!localMap[key];
-      let likedAt = backed ? (entry.liked_at || null) : (typeof localMap[key] === 'string' ? localMap[key] : null);
+      const backed = backendReady && entry.id != null;
+      let count = typeof entry.likes_count === 'number' ? entry.likes_count : (typeof entry._localLikes === 'number' ? entry._localLikes : 0);
+      let liked = !!readVisitorLikes()[key];
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'thought-like';
       btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="thought-like-time"></span>';
-      const timeEl = btn.querySelector('.thought-like-time');
+      const countEl = btn.querySelector('.thought-like-time');
+      function label() { return count === 1 ? '1 like' : count + ' likes'; }
       function paint() {
         btn.classList.toggle('liked', liked);
         btn.setAttribute('aria-pressed', liked ? 'true' : 'false');
-        const when = liked && likedAt ? timeAgo(likedAt) : '';
-        timeEl.textContent = when ? 'liked ' + when : '';
-        btn.title = liked ? ('liked by selrick' + (likedAt ? ' \u00b7 ' + fmtDate(likedAt) : '')) : 'like';
-        btn.setAttribute('aria-label', liked ? ('liked by selrick' + (when ? ' ' + when : '')) : 'like this');
+        countEl.textContent = count > 0 ? String(count) : '';
+        btn.title = (liked ? 'you liked this' : 'like this') + ' \u00b7 ' + label();
+        btn.setAttribute('aria-label', (liked ? 'unlike' : 'like') + ', ' + label());
       }
       btn.addEventListener('click', async () => {
-        if (!ownerSignedIn()) return;
         const next = !liked;
-        const prevAt = likedAt;
+        const prevCount = count;
         liked = next;
-        likedAt = next ? new Date().toISOString() : null;
+        count = Math.max(0, count + (next ? 1 : -1));
         paint();
+        const map = readVisitorLikes();
+        if (next) map[key] = true; else delete map[key];
+        writeVisitorLikes(map);
+        if (next) window.spawnFloatingHearts(btn);
         if (backed) {
-          entry.liked_by_owner = next;
-          if (entry.liked_at !== undefined) entry.liked_at = likedAt;
-          const ok = await saveOwnerLike(entry, next, likedAt);
+          entry.likes_count = count;
+          const ok = await saveLikeCount(entry, count);
           if (!ok) {
-            liked = !next; likedAt = prevAt;
-            entry.liked_by_owner = liked;
-            if (entry.liked_at !== undefined) entry.liked_at = likedAt;
+            liked = !next; count = prevCount;
+            entry.likes_count = count;
+            const map2 = readVisitorLikes();
+            if (liked) map2[key] = true; else delete map2[key];
+            writeVisitorLikes(map2);
             paint();
           }
         } else {
-          const map = readOwnerLikes();
-          if (next) map[key] = likedAt; else delete map[key];
-          writeOwnerLikes(map);
+          entry._localLikes = count;
+          const local = readLocal();
+          const idx = local.findIndex(t => likeKey(t) === key);
+          if (idx !== -1) { local[idx]._localLikes = count; writeLocal(local); }
         }
       });
       paint();
@@ -6711,9 +7145,27 @@
         try {
           const hdrs = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` };
           let res = await fetch(
-            `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner,liked_at&order=created_at.desc&limit=50`,
+            `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,likes_count,liked_by_owner,liked_at,media_url,music_url,music_title&order=created_at.desc&limit=50`,
             { headers: hdrs }
           );
+          if (!res.ok) {
+            res = await fetch(
+              `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner,liked_at,media_url,music_url,music_title&order=created_at.desc&limit=50`,
+              { headers: hdrs }
+            );
+          }
+          if (!res.ok) {
+            res = await fetch(
+              `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner,liked_at,media_url&order=created_at.desc&limit=50`,
+              { headers: hdrs }
+            );
+          }
+          if (!res.ok) {
+            res = await fetch(
+              `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner,liked_at&order=created_at.desc&limit=50`,
+              { headers: hdrs }
+            );
+          }
           if (!res.ok) {
             res = await fetch(
               `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner&order=created_at.desc&limit=50`,
@@ -6808,7 +7260,7 @@
     function updateCount() {
       const left = MAX_LEN - inputEl.value.length;
       countEl.textContent = left + ' left';
-      submitBtn.disabled = inputEl.value.trim().length === 0;
+      submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
     }
 
     async function submitThought() {
@@ -6816,8 +7268,20 @@
       // is read out of it — a submission can never accidentally carry
       // words the visitor never actually wrote.
       stopThoughtsPhantomTyping(true);
-      const content = inputEl.value.trim();
-      if (!content) return;
+      const typed = inputEl.value.trim();
+      const mfile = pendingMedia;
+      const track = pendingMusic;
+      if (!typed && !mfile && !track) return;
+      if (!typed && mfile && !backendReady) {
+        statusEl.textContent = 'a picture on its own needs a word or two as well, for now.';
+        statusEl.classList.add('error');
+        return;
+      }
+      if (!typed && track && !mfile && !backendReady) {
+        statusEl.textContent = 'a song on its own needs a word or two as well, for now.';
+        statusEl.classList.add('error');
+        return;
+      }
 
       const lastPost = parseInt(localStorage.getItem(LAST_POST_KEY) || '0', 10);
       if (Date.now() - lastPost < 8000) {
@@ -6831,14 +7295,32 @@
       setTimeout(() => submitBtn.classList.remove('flicker'), 260);
       if (typeof noiseFlicker === 'function') noiseFlicker();
       statusEl.classList.remove('error');
+      statusEl.textContent = mfile ? 'sending the picture\u2026 0%' : 'leaving it here\u2026';
+
+      let mediaUrl = null;
+      if (mfile && backendReady) {
+        try {
+          mediaUrl = await uploadThoughtMedia(mfile, (pct) => { statusEl.textContent = 'sending the picture\u2026 ' + pct + '%'; });
+        } catch (e) {
+          statusEl.textContent = 'the picture did not go through. try again, or leave it off.';
+          statusEl.classList.add('error');
+          submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
+          return;
+        }
+      }
       statusEl.textContent = 'leaving it here\u2026';
 
-      const entry = { content, created_at: new Date().toISOString() };
+      const entry = { content: typed || THOUGHT_MEDIA_ONLY, created_at: new Date().toISOString() };
+      if (mediaUrl) entry.media_url = mediaUrl;
+      if (track) { entry.music_url = track.previewUrl; entry.music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : ''); }
       let saved = false;
 
       if (backendReady) {
         try {
-          const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
+          const body = { content: entry.content };
+          if (mediaUrl) body.media_url = mediaUrl;
+          if (track) { body.music_url = track.previewUrl; body.music_title = entry.music_title; }
+          const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
             method: 'POST',
             headers: {
               apikey: SUPABASE_ANON_KEY,
@@ -6846,8 +7328,17 @@
               'Content-Type': 'application/json',
               Prefer: 'return=representation'
             },
-            body: JSON.stringify({ content })
+            body: JSON.stringify(b)
           });
+          let res = await send(body);
+          if (res.status === 400 && (body.music_url || body.music_title)) { // columns not set up yet: post without them
+            delete body.music_url; delete body.music_title;
+            res = await send(body);
+          }
+          if (res.status === 400 && body.media_url) { // column not set up yet: post without it
+            delete body.media_url;
+            res = await send(body);
+          }
           saved = res.ok;
           if (saved) {
             try {
@@ -6877,11 +7368,15 @@
       await new Promise(r => setTimeout(r, 460));
       inputEl.value = '';
       inputEl.classList.remove('thought-leaving');
+      setPendingMedia(null);
+      setPendingMusic(null);
+      closeMusicSearch();
       statusEl.textContent = '';
       updateCount();
       switchPanel(wallPanel, composePanel);
       setTimeout(() => injectNewThought(entry), loaded ? 60 : 420);
     }
+
 
     // Fetch the wall ahead of time so it appears the moment it's opened.
     (function prewarmThoughts(){
@@ -7018,8 +7513,10 @@
   // Visitors have no insert policy on room_posts at all, so the
   // database itself refuses a top-level thought from anyone but you.
   //
-  // MUSIC (optional) — lets Selrick attach an audio file to a thought.
-  // Visitors hear it through the "radio" filter below. Run once, again
+  // MUSIC (optional) — lets Selrick attach a song to a thought, found by
+  // searching the internet (the iTunes Search API — free, no key, no
+  // sign-in) rather than uploading a file of his own. Visitors hear the
+  // short preview clip through the "radio" filter below. Run once, again
   // replacing OWNER_UUID:
   //
   //   alter table room_posts add column audio_url text;
@@ -7043,6 +7540,10 @@
   //     returning likes_count;
   //   $$;
   //   grant execute on function increment_post_likes(bigint, integer) to anon, authenticated;
+  //   -- No storage bucket is needed for music anymore: audio_url now holds
+  //   -- a link to an internet preview clip, not a file uploaded here. The
+  //   -- lines below are only for a pre-existing "room-audio" bucket from
+  //   -- before this changed; leave them out on a fresh setup.
   //   insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
   //     values ('room-audio', 'room-audio', true, 15728640, array['audio/*']);
   //   create policy "read room audio" on storage.objects for select using (bucket_id = 'room-audio');
@@ -7250,16 +7751,18 @@
       setTimeout(() => { node.remove(); if (then) then(); }, 420);
     }
 
-    /* ---------- music: upload (owner) + the radio (everyone) ---------- */
+    /* ---------- music: search the internet (owner) + the radio (everyone) ---------- */
     const AUDIO_BUCKET = 'room-audio';
     const AUDIO_PUBLIC = `${SUPABASE_URL}/storage/v1/object/public/${AUDIO_BUCKET}/`;
-    const MAX_AUDIO_BYTES = 15 * 1024 * 1024;
-    const audioInput = $id('speak-audio-input');
     const audioPick = $id('speak-audio-pick');
     const audioName = $id('speak-audio-name');
     const audioClear = $id('speak-audio-clear');
     const audioTitleInput = $id('speak-audio-title');
-    let pendingAudio = null;
+    const musicSearchBox = $id('speak-music-search');
+    const musicInput = $id('speak-music-input');
+    const musicGoBtn = $id('speak-music-go');
+    const musicResultsEl = $id('speak-music-results');
+    let pendingAudio = null, musicSearchToken = 0;
     let pendingMedia = null, mediaPreview = null;
     const MEDIA_BUCKET = 'room-media';
     const MEDIA_PUBLIC = `${SUPABASE_URL}/storage/v1/object/public/${MEDIA_BUCKET}/`;
@@ -7508,21 +8011,6 @@
       return box;
     }
 
-    function uploadAudio(file, token, onProgress) {
-      return new Promise((resolve, reject) => {
-        const ext = ((file.name.split('.').pop() || 'mp3').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5)) || 'mp3';
-        const path = Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', `${SUPABASE_URL}/storage/v1/object/${AUDIO_BUCKET}/${path}`);
-        xhr.setRequestHeader('apikey', SUPABASE_ANON_KEY);
-        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-        xhr.setRequestHeader('Content-Type', file.type || 'audio/mpeg');
-        xhr.upload.onprogress = (ev) => { if (ev.lengthComputable && onProgress) onProgress(Math.round(ev.loaded / ev.total * 100)); };
-        xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? resolve(AUDIO_PUBLIC + path) : reject(new Error('upload ' + xhr.status));
-        xhr.onerror = () => reject(new Error('network'));
-        xhr.send(file);
-      });
-    }
     function uploadMedia(file, token, onProgress) {
       return new Promise((resolve, reject) => {
         const ext = ((file.name.split('.').pop() || 'gif').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5)) || 'gif';
@@ -7564,34 +8052,80 @@
     function refreshPostBtn() {
       postSubmit.disabled = postInput.value.trim().length === 0 && !pendingAudio && !pendingMedia;
     }
-    function setPendingAudio(file) {
-      pendingAudio = file || null;
-      if (audioPreview) { try { audioPreview.pause(); URL.revokeObjectURL(audioPreview.src); } catch (e) {} audioPreview.remove(); audioPreview = null; }
-      if (file) {
+    function setPendingAudio(track) {
+      pendingAudio = track || null;
+      if (audioPreview) { try { audioPreview.pause(); } catch (e) {} audioPreview.remove(); audioPreview = null; }
+      if (track) {
         audioPreview = document.createElement('audio');
-        audioPreview.controls = true; audioPreview.preload = 'metadata'; audioPreview.className = 'speak-audio-preview';
-        audioPreview.src = URL.createObjectURL(file);
+        audioPreview.controls = true; audioPreview.preload = 'none'; audioPreview.className = 'speak-audio-preview';
+        audioPreview.src = track.previewUrl;
         audioTitleInput.parentNode.insertBefore(audioPreview, audioTitleInput);
       }
-      audioName.hidden = audioClear.hidden = !file;
-      audioTitleInput.hidden = !file;
-      audioTitleInput.value = file ? file.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim().slice(0, 80) : '';
-      audioName.textContent = file ? file.name : '';
-      setBtnLabel(audioPick, file ? 'change music' : 'attach music');
-      if (!file) audioInput.value = '';
+      audioName.hidden = audioClear.hidden = !track;
+      audioTitleInput.hidden = !track;
+      audioTitleInput.value = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')).slice(0, 80) : '';
+      audioName.textContent = track ? '' : '';
+      setBtnLabel(audioPick, track ? 'change music' : 'attach music');
       refreshPostBtn();
     }
-    audioPick.addEventListener('click', () => audioInput.click());
-    audioClear.addEventListener('click', () => setPendingAudio(null));
-    audioInput.addEventListener('change', () => {
-      const f = audioInput.files && audioInput.files[0];
-      if (!f) return;
-      const looksAudio = (f.type && f.type.indexOf('audio/') === 0) || /\.(mp3|m4a|aac|wav|ogg|oga|opus|flac|webm)$/i.test(f.name);
-      if (!looksAudio) { setPendingAudio(null); setStatus(postStatus, 'that is not a sound file.', true); return; }
-      if (f.size > MAX_AUDIO_BYTES) { setPendingAudio(null); setStatus(postStatus, 'too big. keep it under 15 MB.', true); return; }
-      setStatus(postStatus, '');
-      setPendingAudio(f);
+    audioPick.addEventListener('click', () => {
+      if (!musicSearchBox) return;
+      musicSearchBox.hidden = !musicSearchBox.hidden;
+      if (!musicSearchBox.hidden && musicInput) musicInput.focus();
     });
+    audioClear.addEventListener('click', () => setPendingAudio(null));
+    function closeSpeakMusicSearch() {
+      if (musicSearchBox) musicSearchBox.hidden = true;
+      if (musicResultsEl) musicResultsEl.innerHTML = '';
+      if (musicInput) musicInput.value = '';
+    }
+    async function runSpeakMusicSearch() {
+      const term = (musicInput && musicInput.value || '').trim();
+      if (!term || !musicResultsEl) return;
+      const myToken = ++musicSearchToken;
+      musicResultsEl.innerHTML = '<p class="thoughts-music-status">looking&hellip;</p>';
+      try {
+        const res = await fetch('https://itunes.apple.com/search?media=music&limit=6&term=' + encodeURIComponent(term));
+        if (myToken !== musicSearchToken) return;
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        if (myToken !== musicSearchToken) return;
+        const results = (data && data.results || []).filter(r => r.previewUrl);
+        musicResultsEl.innerHTML = '';
+        if (!results.length) {
+          musicResultsEl.innerHTML = '<p class="thoughts-music-status">nothing found. try another search.</p>';
+          return;
+        }
+        results.forEach(r => {
+          const row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'thoughts-music-result';
+          const art = document.createElement('img');
+          art.src = r.artworkUrl60 || r.artworkUrl100 || '';
+          art.alt = ''; art.loading = 'lazy';
+          const meta = document.createElement('span');
+          meta.className = 'thoughts-music-result-meta';
+          const t = document.createElement('span');
+          t.className = 'thoughts-music-result-title';
+          t.textContent = r.trackName || 'untitled';
+          const a = document.createElement('span');
+          a.className = 'thoughts-music-result-artist';
+          a.textContent = r.artistName || '';
+          meta.appendChild(t); meta.appendChild(a);
+          row.appendChild(art); row.appendChild(meta);
+          row.addEventListener('click', () => {
+            setPendingAudio({ title: r.trackName || 'untitled', artist: r.artistName || '', previewUrl: r.previewUrl });
+            closeSpeakMusicSearch();
+          });
+          musicResultsEl.appendChild(row);
+        });
+      } catch (e) {
+        if (myToken !== musicSearchToken) return;
+        musicResultsEl.innerHTML = '<p class="thoughts-music-status">could not search just now. try again.</p>';
+      }
+    }
+    if (musicGoBtn) musicGoBtn.addEventListener('click', runSpeakMusicSearch);
+    if (musicInput) musicInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runSpeakMusicSearch(); } });
 
     function setPendingMedia(file) {
       pendingMedia = file || null;
@@ -7631,7 +8165,7 @@
       return h >>> 0;
     }
     const SIDES = ['flex-start', 'center', 'flex-end'];
-    function buildMedia(post) {
+    function buildMediaNode(post) {
       const box = el('div', 'speak-media');
       let node;
       if (isVideoUrl(post.media_url)) {
@@ -7645,9 +8179,33 @@
       }
       node.src = post.media_url;
       box.appendChild(node);
-      // a small tilt, seeded from the file so it stays the same
-      box.style.transform = 'rotate(' + ((scatterHash(post.media_url || post.id) % 17) - 8) + 'deg)';
       return box;
+    }
+    // the tilt + scatter offset, seeded from the file so it stays the
+    // same across reloads instead of jumping around on every re-render.
+    function scatterTransform(post) {
+      const seedKey = String(post.media_url || post.id || '');
+      const rot = (scatterHash(seedKey) % 17) - 8;
+      const tx = (scatterHash(seedKey + '|x') % 27) - 13;
+      const ty = (scatterHash(seedKey + '|y') % 21) - 10;
+      return 'rotate(' + rot + 'deg) translate(' + tx + 'px, ' + ty + 'px)';
+    }
+    function buildMedia(post) {
+      const box = buildMediaNode(post);
+      box.style.transform = scatterTransform(post);
+      return box;
+    }
+    // when a note has both a picture and its own words, pair them up
+    // side by side — the picture stays a tilted sticker, the words sit
+    // next to it (left or right) reading like a quote.
+    function buildMediaWithCaption(post, side) {
+      const group = el('div', 'speak-media-note');
+      const mediaSide = side === 'flex-end' ? 'right' : side === 'flex-start' ? 'left'
+        : (scatterHash('m' + (post.id != null ? post.id : post.media_url || '')) % 2 ? 'right' : 'left');
+      if (mediaSide === 'right') group.classList.add('reverse');
+      group.appendChild(buildMedia(post));
+      group.appendChild(el('p', 'speak-media-caption', post.content));
+      return group;
     }
     function showEmptyIfNeeded() {
       if (feedEl.querySelector('.speak-post')) return;
@@ -7696,7 +8254,7 @@
             ok = Array.isArray(rows) && rows.length > 0;
           }
         } catch (e) {}
-        if (ok) { liked = next; like.classList.toggle('liked', liked); like.setAttribute('aria-label', liked ? 'liked by Selrick' : 'like'); }
+        if (ok) { liked = next; like.classList.toggle('liked', liked); like.setAttribute('aria-label', liked ? 'liked by Selrick' : 'like'); if (next) window.spawnFloatingHearts(like); }
         else { like.classList.add('failed'); setTimeout(() => like.classList.remove('failed'), 1200); }
         busy = false;
       });
@@ -7748,6 +8306,7 @@
         liked = next;
         count = known ? Math.max(0, count + (next ? 1 : -1)) : count;
         paint();
+        if (next) window.spawnFloatingHearts(btn);
         try {
           const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_post_likes`, {
             method: 'POST',
@@ -7785,8 +8344,14 @@
       const side = post.media_url ? SIDES[scatterHash('p' + seedBase) % 3] : 'flex-start';
       wrap.style.alignItems = side;
       wrap.style.textAlign = side === 'flex-start' ? 'left' : side === 'flex-end' ? 'right' : 'center';
-      if (!wordless) wrap.appendChild(el('p', 'speak-post-text', post.content));
-      if (post.media_url) wrap.appendChild(buildMedia(post));
+      if (post.media_url && !wordless) {
+        // words + picture: pair them into one caption unit instead of
+        // two separately-placed elements
+        wrap.appendChild(buildMediaWithCaption(post, side));
+      } else {
+        if (!wordless) wrap.appendChild(el('p', 'speak-post-text', post.content));
+        if (post.media_url) wrap.appendChild(buildMedia(post));
+      }
       const when = el('time', 'speak-time', 'Selrick \u00b7 ' + fmtDate(post.created_at));
       if (!isNew && isFresh(post.created_at)) when.appendChild(el('span', 'speak-new', 'new'));
       if (post.audio_url && post.media_url) {
@@ -7989,17 +8554,14 @@
       if (!typed && !pendingAudio && !pendingMedia) return;
       const token = await getToken();
       if (!token) { setStatus(postStatus, 'you were signed out. come back in.', true); return; }
-      const file = pendingAudio;
-      const title = file ? audioTitleInput.value.trim().slice(0, 80) : '';
+      const track = pendingAudio;
+      const title = track ? (audioTitleInput.value.trim().slice(0, 80) || (track.title + (track.artist ? ' \u2014 ' + track.artist : '')).slice(0, 80)) : '';
       const mfile = pendingMedia;
-      const content = typed || (file ? (title || file.name.replace(/\.[^.]+$/, '').slice(0, MAX_POST) || 'music') : (mfile ? MEDIA_ONLY : ''));
+      const content = typed || (track ? (title || track.title || 'music') : (mfile ? MEDIA_ONLY : ''));
       postSubmit.disabled = true;
       let audioUrl = null, mediaUrl = null;
       try {
-        if (file) {
-          setStatus(postStatus, 'sending the tape\u2026 0%');
-          audioUrl = await uploadAudio(file, token, (pct) => setStatus(postStatus, 'sending the tape\u2026 ' + pct + '%'));
-        }
+        if (track) audioUrl = track.previewUrl;
         if (mfile) {
           setStatus(postStatus, 'sending the picture\u2026 0%');
           mediaUrl = await uploadMedia(mfile, token, (pct) => setStatus(postStatus, 'sending the picture\u2026 ' + pct + '%'));
@@ -8045,13 +8607,13 @@
         postCount.textContent = MAX_POST + ' left';
         setPendingAudio(null);
         setPendingMedia(null);
+        closeSpeakMusicSearch();
         setStatus(postStatus, '');
       } catch (e) {
-        if (audioUrl) deleteAudio(audioUrl);
         if (mediaUrl) deleteMedia(mediaUrl);
         const msg = e && e.columnMissing
           ? (mediaUrl ? "the room is not set up for gifs and videos yet. see the note in the code." : "the room is not set up for music yet. see the note in the code.")
-          : (e && /^upload/.test(e.message || '') ? ((mfile && !audioUrl) ? "the picture did not go through. try again." : "the tape did not go through. try again.") : "it did not go through. try again.");
+          : (e && /^upload/.test(e.message || '') ? "the picture did not go through. try again." : "it did not go through. try again.");
         setStatus(postStatus, msg, true);
         refreshPostBtn();
       }
