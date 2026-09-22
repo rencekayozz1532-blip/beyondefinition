@@ -8813,15 +8813,15 @@
       if (!isNew && index) wrap.style.animationDelay = Math.min(index, 8) * 90 + 'ms';
       const wordless = (post.audio_url && post.audio_title && post.audio_title === post.content) || (post.media_url && post.content === MEDIA_ONLY);
       const seedBase = (post.id != null ? post.id : '') + '|' + (post.created_at || '') + '|' + (post.content || '').length;
-      // One side per note: its date, words, sticker, tape and buttons all
-      // line up on that same side. Seeded, so it never jumps around on
-      // reload, but every note gets a bit of variety instead of always
-      // sitting flush left — text-only and tape-only notes included. The
-      // one exception: a sticker with no note beside it — just a tape,
-      // nothing typed — has no text to balance against, so it stays
-      // centered instead of landing on a random side.
+      // One side per note: its words, sticker, tape and buttons all line up
+      // on that same side. Seeded, so it never jumps around. Only a note
+      // with a sticker gets a random side; a note on its own, or with just
+      // a tape, always sits in the same place (left). But if the sticker
+      // has no note beside it — just a tape, nothing typed — there's no
+      // text to balance against, so keep it centered instead of leaving it
+      // stranded on a random side.
       const audioOnlyWordless = !!(post.audio_url && post.audio_title && post.audio_title === post.content);
-      const side = (post.media_url && audioOnlyWordless) ? 'center' : SIDES[scatterHash('p' + seedBase) % 3];
+      const side = post.media_url ? (audioOnlyWordless ? 'center' : SIDES[scatterHash('p' + seedBase) % 3]) : 'flex-start';
       wrap.style.alignItems = side;
       wrap.style.textAlign = side === 'flex-start' ? 'left' : side === 'flex-end' ? 'right' : 'center';
       if (post.media_url && !wordless) {
@@ -8834,12 +8834,11 @@
       }
       const when = el('time', 'speak-time', 'Selrick \u00b7 ' + fmtDate(post.created_at));
       if (!isNew && isFresh(post.created_at)) when.appendChild(el('span', 'speak-new', 'new'));
+      // The date always sits centered, whatever side the note itself lands on.
+      when.style.alignSelf = 'center';
+      when.style.textAlign = 'center';
       if (post.audio_url && post.media_url) {
-        // Tape + sticker: the date sits right above the tape card, on the
-        // empty side (opposite the sticker) so the white space gets used.
-        const dateSide = side === 'flex-start' ? 'flex-end' : side === 'flex-end' ? 'flex-start' : (scatterHash('d' + seedBase) % 2 ? 'flex-end' : 'flex-start');
-        when.style.alignSelf = dateSide;
-        when.style.textAlign = dateSide === 'flex-end' ? 'right' : 'left';
+        // Tape + sticker: the date sits right above the tape card.
         when.classList.add('speak-time-tape');
         wrap.appendChild(when);
         wrap.appendChild(buildRadio(post));
