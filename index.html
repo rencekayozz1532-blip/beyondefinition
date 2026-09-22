@@ -293,6 +293,7 @@
   .speak-link svg{width:13px;height:13px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
   .speak-attach{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;margin-top:10px;}
   .speak-attach-name{font-size:12px;font-style:italic;color:var(--muted);overflow-wrap:anywhere;min-width:0;}
+  .speak-attach-hint{display:block;margin-top:6px;}
   .thoughts-music-search{margin-top:8px;border:1px solid var(--rule);border-radius:12px;padding:8px;background:var(--paper);}
   .thoughts-music-searchrow{display:flex;align-items:center;gap:8px;}
   .thoughts-music-searchrow input{flex:1 1 auto;min-width:0;border:1px solid var(--rule);border-radius:8px;padding:6px 9px;font-family:'Source Serif 4',Georgia,serif;font-size:13px;color:var(--ink);background:var(--paper);}
@@ -6392,8 +6393,9 @@
   //        create policy "public thought media insert" on storage.objects
   //          for insert with check (bucket_id = 'thought-media');
   //      Optional, so a visitor can attach a song to a thought — found by
-  //      searching the internet (the iTunes Search API, which needs no key
-  //      and no sign-in), never uploaded from their own device:
+  //      searching iTunes and stored as the 30-second preview link
+  //      iTunes hands back (no key or sign-in needed, and the clip is
+  //      already the right length, so nothing needs scrubbing):
   //        alter table thoughts add column music_url text;
   //        alter table thoughts add column music_title text;
   //   3. In Project Settings → API, copy the Project URL and the
@@ -6401,6 +6403,31 @@
   // Until that's done, thoughts still work — they just save to this
   // browser only, and only this browser sees them (and any attached
   // media is left out, since there's nowhere to upload it to yet).
+
+  // ---- Shared "find a song on iTunes" helper. Used by both the thoughts
+  // room and the speak room below, since both attach songs the same way.
+  // Uses Apple's public iTunes Search API — no key and no sign-in needed.
+  // Each result already comes with a ready-to-play 30-second preview
+  // clip (an .m4a URL), so there's nothing to scrub or trim: whichever
+  // track the visitor picks is exactly what gets attached and played
+  // back, through a plain <audio> element.
+  window.selrickITunes = (function () {
+    const fmt = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+    async function search(term) {
+      const url = 'https://itunes.apple.com/search?entity=song&limit=8&term=' + encodeURIComponent(term);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('search failed');
+      const data = await res.json();
+      return (data.results || []).map((it) => ({
+        title: it.trackName || 'untitled',
+        artist: it.artistName || '',
+        previewUrl: it.previewUrl || '',
+        artwork: it.artworkUrl60 || it.artworkUrl100 || ''
+      })).filter((r) => r.previewUrl);
+    }
+    return { search, fmt };
+  })();
+
   (function setupThoughtsRoom() {
     const SUPABASE_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
@@ -6493,8 +6520,8 @@
 
     // A visitor can also attach a song to a thought — but only one found
     // by searching the internet, never a file off their own device. This
-    // uses the iTunes Search API: free, needs no key, no sign-in, and
-    // returns a short public preview clip for whatever's found.
+    // searches iTunes and attaches the 30-second preview clip it returns
+    // directly, so there's nothing to scrub or trim.
     const musicWrap = document.getElementById('thoughts-music-wrap');
     const musicPickBtn = document.getElementById('thoughts-music-pick');
     const musicNameEl = document.getElementById('thoughts-music-name');
@@ -6504,41 +6531,14 @@
     const musicGoBtn = document.getElementById('thoughts-music-go');
     const musicResultsEl = document.getElementById('thoughts-music-results');
     let pendingMusic = null, musicSearchToken = 0;
-    let musicPreviewEl = null, musicStartBtn = null, musicStartLabel = null;
-    const fmtStart = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
 
     function setPendingMusic(track) {
       pendingMusic = track || null;
-      if (musicPreviewEl) { try { musicPreviewEl.pause(); } catch (e) {} musicPreviewEl.remove(); musicPreviewEl = null; }
-      if (musicStartBtn) { musicStartBtn.parentNode && musicStartBtn.parentNode.remove(); musicStartBtn = null; musicStartLabel = null; }
       if (musicNameEl) {
         musicNameEl.hidden = musicClearBtn.hidden = !track;
         musicNameEl.textContent = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')) : '';
       }
       if (musicPickBtn) musicPickBtn.querySelector('.lbl').textContent = track ? 'change song' : 'attach a song';
-      if (track && musicWrap) {
-        // let the visitor listen to the 30-second clip and choose where
-        // in it the attached card should start playing from.
-        musicPreviewEl = document.createElement('audio');
-        musicPreviewEl.controls = true; musicPreviewEl.preload = 'none'; musicPreviewEl.className = 'speak-audio-preview';
-        musicPreviewEl.src = track.previewUrl;
-        musicWrap.parentNode.insertBefore(musicPreviewEl, musicWrap.nextSibling);
-        const row = document.createElement('div');
-        row.className = 'speak-attach';
-        musicStartBtn = document.createElement('button');
-        musicStartBtn.type = 'button'; musicStartBtn.className = 'speak-link';
-        musicStartBtn.innerHTML = '<span class="lbl">start the clip here</span>';
-        musicStartLabel = document.createElement('span');
-        musicStartLabel.className = 'speak-attach-name';
-        musicStartLabel.textContent = 'starts at the beginning';
-        musicStartBtn.addEventListener('click', () => {
-          const t = musicPreviewEl.currentTime || 0;
-          pendingMusic.startAt = t;
-          musicStartLabel.textContent = t > 0.15 ? ('starts at ' + fmtStart(t)) : 'starts at the beginning';
-        });
-        row.appendChild(musicStartBtn); row.appendChild(musicStartLabel);
-        musicPreviewEl.insertAdjacentElement('afterend', row);
-      }
       if (submitBtn) submitBtn.disabled = inputEl.value.trim().length === 0 && !pendingMedia && !pendingMusic;
     }
     function closeMusicSearch() {
@@ -6558,12 +6558,8 @@
       const myToken = ++musicSearchToken;
       musicResultsEl.innerHTML = '<p class="thoughts-music-status">looking&hellip;</p>';
       try {
-        const res = await fetch('https://itunes.apple.com/search?media=music&limit=6&term=' + encodeURIComponent(term));
+        const results = await window.selrickITunes.search(term);
         if (myToken !== musicSearchToken) return;
-        if (!res.ok) throw new Error('bad response');
-        const data = await res.json();
-        if (myToken !== musicSearchToken) return;
-        const results = (data && data.results || []).filter(r => r.previewUrl);
         musicResultsEl.innerHTML = '';
         if (!results.length) {
           musicResultsEl.innerHTML = '<p class="thoughts-music-status">nothing found. try another search.</p>';
@@ -6574,21 +6570,21 @@
           row.type = 'button';
           row.className = 'thoughts-music-result';
           const art = document.createElement('img');
-          art.src = r.artworkUrl60 || r.artworkUrl100 || '';
+          art.src = r.artwork || '';
           art.alt = '';
           art.loading = 'lazy';
           const meta = document.createElement('span');
           meta.className = 'thoughts-music-result-meta';
           const t = document.createElement('span');
           t.className = 'thoughts-music-result-title';
-          t.textContent = r.trackName || 'untitled';
+          t.textContent = r.title;
           const a = document.createElement('span');
           a.className = 'thoughts-music-result-artist';
-          a.textContent = r.artistName || '';
+          a.textContent = r.artist || '';
           meta.appendChild(t); meta.appendChild(a);
           row.appendChild(art); row.appendChild(meta);
           row.addEventListener('click', () => {
-            setPendingMusic({ title: r.trackName || 'untitled', artist: r.artistName || '', previewUrl: r.previewUrl, artwork: r.artworkUrl60 || r.artworkUrl100 || '' });
+            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
             closeMusicSearch();
           });
           musicResultsEl.appendChild(row);
@@ -7550,7 +7546,7 @@
       const entry = { content: typed || THOUGHT_MEDIA_ONLY, created_at: new Date().toISOString() };
       if (mediaUrl) entry.media_url = mediaUrl;
       if (track) {
-        entry.music_url = track.previewUrl + (track.startAt > 0.15 ? '#start=' + Math.round(track.startAt) : '');
+        entry.music_url = track.previewUrl;
         entry.music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : '');
       }
       let saved = false;
@@ -7753,11 +7749,11 @@
   // Visitors have no insert policy on room_posts at all, so the
   // database itself refuses a top-level thought from anyone but you.
   //
-  // MUSIC (optional) — lets Selrick attach a song to a thought, found by
-  // searching the internet (the iTunes Search API — free, no key, no
-  // sign-in) rather than uploading a file of his own. Visitors hear the
-  // short preview clip through the "radio" filter below. Run once, again
-  // replacing OWNER_UUID:
+  // MUSIC (optional) — lets Selrick attach a song to a post, found by
+  // searching iTunes (no key or sign-in needed) rather than uploading a
+  // file of his own. The attached card plays the 30-second preview clip
+  // iTunes returns, through a plain audio element.
+  // Run once, again replacing OWNER_UUID:
   //
   //   alter table room_posts add column audio_url text;
   //   alter table room_posts add column audio_title text;
@@ -8297,26 +8293,6 @@
     }
     function setPendingAudio(track) {
       pendingAudio = track || null;
-      if (audioPreview) { try { audioPreview.pause(); } catch (e) {} audioPreview.remove(); audioPreview = null; }
-      if (audioStartBtn) { audioStartBtn.parentNode && audioStartBtn.parentNode.remove(); audioStartBtn = null; audioStartLabel = null; }
-      if (track) {
-        audioPreview = document.createElement('audio');
-        audioPreview.controls = true; audioPreview.preload = 'none'; audioPreview.className = 'speak-audio-preview';
-        audioPreview.src = track.previewUrl;
-        audioTitleInput.parentNode.insertBefore(audioPreview, audioTitleInput);
-        const row = el('div', 'speak-attach');
-        audioStartBtn = el('button', 'speak-link');
-        audioStartBtn.type = 'button';
-        audioStartBtn.innerHTML = '<span class="lbl">start the clip here</span>';
-        audioStartLabel = el('span', 'speak-attach-name', 'starts at the beginning');
-        audioStartBtn.addEventListener('click', () => {
-          const t = audioPreview.currentTime || 0;
-          pendingAudio.startAt = t;
-          audioStartLabel.textContent = t > 0.15 ? ('starts at ' + fmtRadioStart(t)) : 'starts at the beginning';
-        });
-        row.appendChild(audioStartBtn); row.appendChild(audioStartLabel);
-        audioPreview.insertAdjacentElement('afterend', row);
-      }
       audioName.hidden = audioClear.hidden = !track;
       audioTitleInput.hidden = !track;
       audioTitleInput.value = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')).slice(0, 80) : '';
@@ -8341,12 +8317,8 @@
       const myToken = ++musicSearchToken;
       musicResultsEl.innerHTML = '<p class="thoughts-music-status">looking&hellip;</p>';
       try {
-        const res = await fetch('https://itunes.apple.com/search?media=music&limit=6&term=' + encodeURIComponent(term));
+        const results = await window.selrickITunes.search(term);
         if (myToken !== musicSearchToken) return;
-        if (!res.ok) throw new Error('bad response');
-        const data = await res.json();
-        if (myToken !== musicSearchToken) return;
-        const results = (data && data.results || []).filter(r => r.previewUrl);
         musicResultsEl.innerHTML = '';
         if (!results.length) {
           musicResultsEl.innerHTML = '<p class="thoughts-music-status">nothing found. try another search.</p>';
@@ -8357,20 +8329,20 @@
           row.type = 'button';
           row.className = 'thoughts-music-result';
           const art = document.createElement('img');
-          art.src = r.artworkUrl60 || r.artworkUrl100 || '';
+          art.src = r.artwork || '';
           art.alt = ''; art.loading = 'lazy';
           const meta = document.createElement('span');
           meta.className = 'thoughts-music-result-meta';
           const t = document.createElement('span');
           t.className = 'thoughts-music-result-title';
-          t.textContent = r.trackName || 'untitled';
+          t.textContent = r.title;
           const a = document.createElement('span');
           a.className = 'thoughts-music-result-artist';
-          a.textContent = r.artistName || '';
+          a.textContent = r.artist || '';
           meta.appendChild(t); meta.appendChild(a);
           row.appendChild(art); row.appendChild(meta);
           row.addEventListener('click', () => {
-            setPendingAudio({ title: r.trackName || 'untitled', artist: r.artistName || '', previewUrl: r.previewUrl });
+            setPendingAudio({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
             closeSpeakMusicSearch();
           });
           musicResultsEl.appendChild(row);
@@ -8470,8 +8442,7 @@
     }
 
     const SEEN_KEY = 'selrick-room-seen', POST_DRAFT = 'selrick-draft-post';
-    let seenBefore = null, audioPreview = null, audioStartBtn = null, audioStartLabel = null;
-    const fmtRadioStart = (t) => { t = Math.max(0, Math.round(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+    let seenBefore = null;
     try { seenBefore = localStorage.getItem(SEEN_KEY); } catch (e) {}
     const isFresh = (iso) => !!seenBefore && !!iso && new Date(iso) > new Date(seenBefore);
     const mineIds = () => { try { return JSON.parse(localStorage.getItem('selrick-my-replies') || '[]'); } catch (e) { return []; } };
@@ -8818,7 +8789,7 @@
       postSubmit.disabled = true;
       let audioUrl = null, mediaUrl = null;
       try {
-        if (track) audioUrl = track.previewUrl + (track.startAt > 0.15 ? '#start=' + Math.round(track.startAt) : '');
+        if (track) audioUrl = track.previewUrl;
         if (mfile) {
           setStatus(postStatus, 'sending the picture\u2026 0%');
           mediaUrl = await uploadMedia(mfile, token, (pct) => setStatus(postStatus, 'sending the picture\u2026 ' + pct + '%'));
