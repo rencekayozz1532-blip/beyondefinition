@@ -3285,6 +3285,56 @@
     el.style.setProperty('--line-scale', scale.toFixed(3));
   }
 
+  // Word-by-word fade-in for the empty room's lines (#void-empty).
+  // Injects its one small keyframe via JS instead of touching the
+  // page's big stylesheet, then renders a line as one span per word
+  // so each fades in with a slight stagger instead of the whole line
+  // appearing at once. Same technique as the outer dictionary page.
+  (function injectWordFadeStyle(){
+    const s = document.createElement('style');
+    s.id = 'word-fade-style-beyond';
+    s.textContent = '.word-fade-line .wf-word{display:inline-block;opacity:0;animation:wfWordIn .7s ease forwards;animation-delay:calc(var(--wi,0) * .22s);}@keyframes wfWordIn{from{opacity:0;}to{opacity:1;}}';
+    document.head.appendChild(s);
+  })();
+  function setWordFadeText(el, text) {
+    el.textContent = '';
+    el.classList.add('word-fade-line');
+    const words = String(text).split(' ');
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'wf-word';
+      span.style.setProperty('--wi', i);
+      span.textContent = word;
+      el.appendChild(span);
+      if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+    });
+    return words.length;
+  }
+
+  // Full-screen chromatic-blur glitch pulse — a brief blur with a
+  // red/cyan channel split flashed over the whole screen, like a
+  // camera glitch. Separate from the existing text-level rgbGlitch()
+  // above/below: this one covers the viewport, not just one line.
+  // One shared overlay element, reused every time, and its one
+  // keyframe is injected via JS for the same reason as the word-fade
+  // style above — nothing in the page's big stylesheet has to move.
+  let screenRgbEl = null;
+  (function injectScreenRgbStyle(){
+    const s = document.createElement('style');
+    s.textContent = '#screen-rgb-flash{position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:0;}#screen-rgb-flash.show{animation:screenRgbFlash .55s ease-out forwards;}#screen-rgb-flash::before,#screen-rgb-flash::after{content:&quot;&quot;;position:absolute;inset:-6px;mix-blend-mode:screen;}#screen-rgb-flash::before{background:rgba(255,45,80,.4);transform:translateX(-5px);}#screen-rgb-flash::after{background:rgba(60,190,255,.4);transform:translateX(5px);}@keyframes screenRgbFlash{0%{opacity:0;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);}18%{opacity:1;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);}45%{opacity:.65;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}65%{opacity:.9;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);}100%{opacity:0;backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);}}';
+    document.head.appendChild(s);
+    screenRgbEl = document.createElement('div');
+    screenRgbEl.id = 'screen-rgb-flash';
+    document.body.appendChild(screenRgbEl);
+  })();
+  function screenRgbBlur(){
+    if (!screenRgbEl) return;
+    screenRgbEl.classList.remove('show');
+    void screenRgbEl.offsetWidth;
+    screenRgbEl.classList.add('show');
+    setTimeout(() => screenRgbEl.classList.remove('show'), 560);
+  }
+
   /* ---- shared: random placement that can't run off the screen ----
      The drift and empty rooms both throw their line at a wide random
      spot instead of holding it dead-center. That's still the goal
@@ -4045,6 +4095,7 @@
     page.classList.add('active');
     page.innerHTML = '';
     page.style.opacity = '';
+    screenRgbBlur();
 
     const lineEl = document.createElement('div');
     lineEl.className = 'void-line';
@@ -4146,7 +4197,7 @@
       if (useExit) sinceExit = 0;
       exitShowing = useExit;
       lineEl.classList.remove('glitch-in', 'glitch-out');
-      lineEl.textContent = useExit ? exitLine : nextLine();
+      const wordCount = setWordFadeText(lineEl, useExit ? exitLine : nextLine());
       fitVoidLine(lineEl);
       placeLineCentered();
       void lineEl.offsetWidth;
@@ -4156,14 +4207,25 @@
       // instead of just sitting there waiting for the next tick.
       if (Math.random() < 0.25 + h * 0.25) rgbGlitch(lineEl);
       if (Math.random() < 0.15 + h * 0.2) voiceGhost(lineEl);
+      if (Math.random() < 0.18 + h * 0.12) screenRgbBlur();
       clearTimeout(hideTimer);
+      // Full reveal, then a real pause to actually read the line —
+      // not just enough time for the last word to finish fading in —
+      // before it's allowed to start leaving.
+      const revealMs = (wordCount - 1) * 220 + 700;
+      const holdMs = Math.max(1100, 2400 - h * 1300, revealMs + 1700);
       hideTimer = setTimeout(() => {
         lineEl.classList.remove('glitch-in');
         lineEl.classList.add('glitch-out');
-        setTimeout(() => lineEl.classList.remove('show', 'glitch-out'), 520);
-        exitShowing = false;
-      }, Math.max(1100, 2400 - h * 1300));
-      scheduleNext();
+        setTimeout(() => {
+          lineEl.classList.remove('show', 'glitch-out');
+          exitShowing = false;
+          // The next line is only scheduled once this one has
+          // actually finished leaving, so a new line can no longer
+          // cut the current one's reading time short.
+          scheduleNext();
+        }, 520);
+      }, holdMs);
     }
     scheduleNext();
 
