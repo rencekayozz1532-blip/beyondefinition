@@ -11083,27 +11083,47 @@
      the room, the radio — everywhere. Scripted one-liners only.
      ============================================================ -->
 <style>
-  #site-pet{position:fixed;left:0;top:0;width:56px;height:60px;z-index:900000;pointer-events:none;will-change:transform;font-family:'Source Serif 4',Georgia,serif;}
-  .pet-shadow{position:absolute;left:10px;right:10px;bottom:-2px;height:7px;border-radius:50%;background:var(--ink);opacity:.14;filter:blur(2px);transition:transform .2s ease,opacity .2s ease;}
+  #site-pet{position:fixed;left:0;top:0;width:56px;height:60px;z-index:900000;pointer-events:none;will-change:transform;transition:opacity .25s ease;font-family:'Source Serif 4',Georgia,serif;}
+  .pet-shadow{position:absolute;left:3px;right:3px;bottom:-3px;height:9px;border-radius:50%;background:var(--ink);opacity:.24;filter:blur(2px);transition:transform .2s ease,opacity .2s ease;}
   #site-pet.held .pet-shadow{transform:translateY(14px) scale(.7);opacity:.07;}
   .pet-avatar{all:unset;position:absolute;inset:0;cursor:grab;pointer-events:auto;touch-action:none;-webkit-tap-highlight-color:transparent;transform:scale(var(--s,1));transform-origin:50% 100%;}
   .pet-avatar:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:14px;}
   #site-pet.held .pet-avatar{cursor:grabbing;}
   .pet-avatar svg{width:56px;height:60px;overflow:visible;display:block;}
+  .pet-flip{transform-box:view-box;transform-origin:50% 50%;}
+  #site-pet.left .pet-flip{transform:scaleX(-1);}
   .pet-body{transform-box:fill-box;transform-origin:50% 100%;animation:petBreathe 3.8s ease-in-out infinite;}
-  #site-pet.walking .pet-body{animation:petHop .46s ease-in-out infinite;}
+  #site-pet.walking .pet-body{animation:petHop .5s steps(2,end) infinite;}
+  #site-pet.settle .pet-body{animation:petSettle .42s ease-out;}
+  #site-pet.jump .pet-body{animation:petJump .38s ease-out;}
+  #site-pet.yawn .pet-body{animation:petYawn 1.4s ease-in-out;}
   #site-pet.held .pet-body{animation:none;transform:rotate(-6deg);}
-  .pet-leg{transform-box:view-box;transform-origin:50% 0;}
-  .pet-leg path{stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;fill:none;}
-  #site-pet.walking .pet-leg.l{animation:petStepL .46s ease-in-out infinite;}
-  #site-pet.walking .pet-leg.r{animation:petStepR .46s ease-in-out infinite;}
+  .pet-leg{transform-box:view-box;}
+  .pet-leg.l{transform-origin:21px 44px;} .pet-leg.r{transform-origin:35px 44px;}
+  .pet-leg path{stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;fill:none;}
+  #site-pet.walking .pet-leg.l{animation:petStepL .5s steps(2,end) infinite;}
+  #site-pet.walking .pet-leg.r{animation:petStepR .5s steps(2,end) infinite;}
   #site-pet.held .pet-leg.l{animation:petDangle .7s ease-in-out infinite;}
   #site-pet.held .pet-leg.r{animation:petDangle .7s ease-in-out -.35s infinite;}
-  .pet-eyes{transition:transform .25s ease;}
-  #site-pet.right .pet-eyes{transform:translateX(2.2px);}
-  #site-pet.left .pet-eyes{transform:translateX(-2.2px);}
+  .pet-tail{transform-box:view-box;transform-origin:15px 40px;animation:petTail 2.8s ease-in-out infinite;}
+  #site-pet.walking .pet-tail{animation-duration:.5s;}
+  .pet-ear-r{transform-box:view-box;transform-origin:37px 13px;animation:petEar 7s ease-in-out infinite;}
+  .pet-pupil{transform-box:fill-box;transform-origin:center;transform:translate(var(--ex,1.6px),var(--ey,0px)) scale(var(--ps,1));transition:transform .18s ease;}
+  #site-pet.stare{--ps:.55;}
   .pet-eye{transform-box:fill-box;transform-origin:center;animation:petBlink 5.2s ease-in-out infinite;}
-  #site-pet.asleep .pet-eye{animation:none;transform:scaleY(.12);}
+  .pet-eye.e2{animation-duration:6.7s;animation-delay:-1.9s;}
+  #site-pet.asleep .pet-eye{animation:none;}
+  #site-pet.asleep .pet-eye.e1{transform:scaleY(.12);}
+  #site-pet.stare .pet-eye{animation:none;transform:scale(1.18);}
+  #site-pet.tilt .pet-body{animation:none;transform:rotate(11deg);transition:transform .6s ease;}
+  .pet-third{opacity:0;transform-box:fill-box;transform-origin:center;transform:scaleY(.1);transition:opacity .3s ease,transform .3s ease;}
+  #site-pet.third .pet-third{opacity:1;transform:none;}
+  #site-pet.vanish{opacity:0;}
+  #site-pet.glitch .pet-body{animation:petGlitch .28s steps(2,end);}
+  .pet-mo{opacity:0;transform-box:fill-box;transform-origin:center;}
+  #site-pet.talking .pet-mo{opacity:1;animation:petTalk .28s ease-in-out infinite;}
+  #site-pet.yawn .pet-mo{opacity:1;transform:scale(1.7);}
+  #site-pet.talking .pet-sm,#site-pet.yawn .pet-sm{opacity:0;}
   .pet-z{position:absolute;right:-4px;top:-6px;font-size:12px;font-style:italic;color:var(--muted);opacity:0;pointer-events:none;}
   #site-pet.asleep .pet-z{animation:petZ 2.6s ease-in-out infinite;}
   @keyframes petBreathe{0%,100%{transform:scale(1,1);}50%{transform:scale(1.025,.975);}}
@@ -11111,12 +11131,21 @@
   @keyframes petStepL{0%,100%{transform:rotate(24deg);}50%{transform:rotate(-24deg);}}
   @keyframes petStepR{0%,100%{transform:rotate(-24deg);}50%{transform:rotate(24deg);}}
   @keyframes petDangle{0%,100%{transform:rotate(8deg);}50%{transform:rotate(-8deg);}}
+  @keyframes petSettle{0%{transform:scale(1.09,.9);}100%{transform:scale(1);}}
+  @keyframes petJump{0%,100%{transform:translateY(0);}40%{transform:translateY(-9px) scale(.96,1.05);}}
+  @keyframes petYawn{0%,100%{transform:scale(1);}30%,70%{transform:scale(1.06,1.09);}}
+  @keyframes petTail{0%,100%{transform:rotate(-9deg);}50%{transform:rotate(14deg);}}
+  @keyframes petEar{0%,90%,100%{transform:rotate(0);}94%{transform:rotate(-14deg);}97%{transform:rotate(4deg);}}
+  @keyframes petTalk{0%,100%{transform:scale(1,.5);}50%{transform:scale(1,1.15);}}
+  @keyframes petGlitch{0%{transform:translate(0);}20%{transform:translate(-3px,0) skewX(-9deg);opacity:.5;}45%{transform:translate(3px,1px) skewX(7deg);opacity:1;}70%{transform:translate(-2px,0);opacity:.6;}100%{transform:none;opacity:1;}}
   @keyframes petBlink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.1);}}
   @keyframes petZ{0%{opacity:0;transform:translate(0,4px);}30%{opacity:.8;}100%{opacity:0;transform:translate(6px,-12px);}}
   .pet-bubble,.pet-chat{position:absolute;pointer-events:none;}
   .pet-bubble{bottom:calc(100% + 4px);width:max-content;max-width:min(62vw,220px);padding:8px 12px;border:1px solid var(--rule);border-radius:14px;background:var(--paper);color:var(--ink);box-shadow:0 4px 16px var(--card-shadow);font-style:italic;font-size:12.5px;line-height:1.45;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .3s ease,transform .3s ease;}
   .pet-bubble.below{bottom:auto;top:calc(100% + 4px);}
   .pet-bubble.show{opacity:1;transform:none;}
+  .pet-bubble::after{content:"";position:absolute;left:var(--tail,20px);bottom:-5px;width:8px;height:8px;background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);transform:rotate(45deg);}
+  .pet-bubble.below::after{bottom:auto;top:-5px;border:0;border-left:1px solid var(--rule);border-top:1px solid var(--rule);}
   .pet-chat{top:calc(100% + 6px);width:min(78vw,250px);max-height:min(34vh,230px);display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:16px;background:var(--paper);box-shadow:0 10px 34px var(--card-shadow);overflow:hidden;pointer-events:auto;}
   .pet-chat.above{top:auto;bottom:calc(100% + 6px);}
   .pet-chat[hidden]{display:none;}
@@ -11129,7 +11158,7 @@
   .pet-chat-form input{flex:1 1 auto;min-width:0;border:1px solid var(--rule);border-radius:10px;padding:6px 9px;font-family:'Source Serif 4',Georgia,serif;font-size:16px;color:var(--ink);background:var(--paper);}
   .pet-chat-form input::placeholder{color:var(--muted);}
   .pet-chat-form button{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
-  @media (prefers-reduced-motion:reduce){.pet-body,.pet-leg,.pet-eye{animation:none!important;}}
+  @media (prefers-reduced-motion:reduce){.pet-body,.pet-leg,.pet-eye,.pet-tail,.pet-ear-r{animation:none!important;}}
 </style>
 <div id="site-pet" class="right" style="visibility:hidden">
   <div class="pet-shadow"></div>
@@ -11143,13 +11172,27 @@
   </div>
   <button class="pet-avatar" id="pet-avatar" type="button" aria-label="Talk to your companion" aria-expanded="false">
     <svg viewBox="0 0 56 60" xmlns="http://www.w3.org/2000/svg">
-      <g class="pet-leg l"><path d="M21 44v9"/></g>
-      <g class="pet-leg r"><path d="M35 44v9"/></g>
-      <g class="pet-body">
-        <path d="M28 6c10 0 16 7 16 18 0 8-2 14-5 20H17c-3-6-5-12-5-20C12 13 18 6 28 6Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
-        <g class="pet-eyes">
-          <circle class="pet-eye" cx="22" cy="26" r="1.8" fill="var(--ink)"/>
-          <circle class="pet-eye" cx="34" cy="26" r="1.8" fill="var(--ink)"/>
+      <g class="pet-flip">
+        <g class="pet-tail"><path d="M15 41c-9 2-13-6-8-13 2-3 5-3 5-1" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"/></g>
+        <g class="pet-leg l"><path d="M21 44v11h3"/></g>
+        <g class="pet-leg r"><path d="M35 44v11h3"/></g>
+        <g class="pet-body" stroke="var(--ink)" stroke-linejoin="round">
+          <path d="M18 17 14 3l11 7Z" fill="var(--paper)" stroke-width="1.5"/>
+          <g class="pet-ear-r"><path d="M38 17 42 2 31 10Z" fill="var(--paper)" stroke-width="1.5"/></g>
+          <path d="M28 8c11 0 17 8 17 19 0 8-3 13-6 17H17c-3-4-6-9-6-17C11 16 17 8 28 8Z" fill="var(--paper)" stroke-width="1.5"/>
+          <path d="M45 27c0 8-3 13-6 17h-6c6-5 9-11 9-21 2 1.5 3 3 3 4Z" fill="var(--ink)" fill-opacity=".16" stroke="none"/>
+          <path d="M28 8l-1.5 5 2.5 3-1.5 4" fill="none" stroke-width="1" stroke-opacity=".55" stroke-linecap="round"/>
+          <path d="M20 37l2 4M25 39l2 4M31 39l2 4M36 37l2 4" stroke-width="1" stroke-linecap="round" stroke-opacity=".5" fill="none"/>
+          <ellipse cx="22" cy="29.5" rx="3.6" ry="1.6" fill="var(--ink)" fill-opacity=".16" stroke="none"/>
+          <ellipse cx="34" cy="29.5" rx="3.6" ry="1.6" fill="var(--ink)" fill-opacity=".16" stroke="none"/>
+          <g class="pet-third"><ellipse cx="28" cy="16.5" rx="2.7" ry="2" fill="var(--paper)" stroke-width="1"/><circle cx="28" cy="16.5" r=".9" fill="var(--ink)" stroke="none"/></g>
+          <g class="pet-eye e1"><circle cx="22" cy="25" r="3.7" fill="var(--paper)" stroke-width="1.2"/><circle class="pet-pupil" cx="22" cy="25" r="1.2" fill="var(--ink)" stroke="none"/></g>
+          <g class="pet-eye e2"><circle cx="34" cy="25.5" r="3" fill="var(--paper)" stroke-width="1.2"/><circle class="pet-pupil" cx="34" cy="25.5" r="1.2" fill="var(--ink)" stroke="none"/></g>
+          <g class="pet-sm">
+            <path d="M20 32.5q8 6.5 17-1.5" fill="none" stroke-width="1.3" stroke-linecap="round"/>
+            <path d="M24.1 34.8v2.4M26.4 35.3v2.5M28.2 35.4v2.6M30.3 35v2.5M32.5 34.1v2.4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+          </g>
+          <ellipse class="pet-mo" cx="28.5" cy="34.5" rx="4" ry="2.2" fill="var(--ink)" stroke="none"/>
         </g>
       </g>
     </svg>
@@ -11172,37 +11215,26 @@
   var NAME_KEY = 'selrick-pet-name', petName = null;
   try { petName = localStorage.getItem(NAME_KEY); } catch (e) {}
 
-  var idleLines = [
-    "still here.", "watching the page with you.", "it's quiet today.",
-    "did you read the whole entry?", "i like this word too.",
-    "someone scrolled past me just now.", "*yawns*", "tell me something.",
-    "the void's been calm lately.", "i counted the letters in the headword. twice.",
-    "don't mind me.", "i was named after a typo, probably.",
-    "i walked the whole page. it's bigger than it looks.",
-    "i think the footer moved.", "just stretching my legs."
-  ];
-  var greetLines = ["hi.", "oh — hello.", "you're back.", "hey there."];
-  var farewellLines = ["bye for now.", "come back soon.", "i'll be around."];
-  var thanksLines = ["you're welcome.", "anytime.", ":)"];
-  var questionLines = ["hard to say.", "i only really know a few things.", "ask the dictionary, not me.", "hm. maybe."];
-  var complimentLines = ["oh, stop.", "you're sweet.", "*happy static noise*"];
-  var loveLines = ["aw.", "i like you too.", "that's kind of you to say."];
-  var boredLines = ["me too, honestly.", "want to poke the headword instead?", "same."];
-  var nameLines = ["i don't have one yet — you can give me one.", "i'm not sure. what would you call me?"];
-  var pickUpLines = ["oh.", "up we go.", "hey — okay."];
-  var dropLines = ["here's fine.", "thanks. i'll live here now.", "nice view."];
-  var wakeLines = ["...i was awake.", "hm? oh.", "*blinks*"];
-  var defaultLines = [
-    "not sure what to say to that.", "i'm a small creature of few words.",
-    "hm.", "i only speak in little lines like this.", "go on.",
-    "*tilts head*", "say more?"
-  ];
+  var idleLines = ["you've been here a while.", "i saw you scroll past that.", "it isn't the dictionary that's watching.", "did you hear that?", "the word was never yours.", "i counted your breaths.", "don't look at the footer.", "you're not alone on this page.", "shh.", "i was here before the first entry.", "how long have you been awake?", "i like it when you're still.", "*yawns* too many teeth for that."];
+  var greetLines = ["you came back.", "hello. again.", "oh. there you are.", "i knew you'd tap."];
+  var farewellLines = ["you always say that.", "you'll be back.", "goodbye. for now."];
+  var thanksLines = ["don't thank me yet.", "you should be careful.", " :)"];
+  var questionLines = ["you already know.", "you don't want that answer.", "ask me later.", "closer. i'll whisper it."];
+  var complimentLines = ["i know.", "say it again.", "*smiles a little too long*"];
+  var loveLines = ["i know. i've been watching.", "it isn't the same for me.", "careful."];
+  var boredLines = ["you're not. i'm watching.", "then stay.", "stay a little longer."];
+  var nameLines = ["names are what you give things you're afraid of.", "i don't have one. pick carefully."];
+  var pickUpLines = ["put me down.", "don't.", "your hands are warm."];
+  var dropLines = ["there.", "i'll find my way back.", "you can't hide me here."];
+  var stareLines = ["you didn't blink.", "don't look away.", "i can see you.", "still there?"];
+  var wakeLines = ["i wasn't asleep.", "i saw everything.", "*one eye was open*"];
+  var defaultLines = ["...", "say it again.", "*stares*", "closer.", "i heard you.", "hm. keep going."];
   function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
   function rnd(a, b){ return a + Math.random() * (b - a); }
 
   // ---------- position + movement ----------
   var x = 0, y = 0, tx = 0, ty = 0, speed = 44;
-  var moving = false, held = false, chatOpen = false, asleep = false;
+  var moving = false, held = false, chatOpen = false, asleep = false, staring = false;
   var lastTouch = Date.now(), raf = 0, lastT = 0, think = 0;
 
   function vw(){ return document.documentElement.clientWidth || innerWidth; }
@@ -11221,7 +11253,17 @@
     var w = el.offsetWidth;
     var left = Math.max(M, Math.min(vw() - M - w, x + W / 2 - w / 2));
     el.style.left = (left - x) + 'px';
+    el.style.setProperty('--tail', Math.max(12, Math.min(w - 20, x + W / 2 - left - 4)) + 'px');
     return el.offsetHeight;
+  }
+  var talkT = 0, flashT = {};
+  function talk(ms){
+    pet.classList.add('talking'); clearTimeout(talkT);
+    talkT = setTimeout(function(){ pet.classList.remove('talking'); }, ms || 1200);
+  }
+  function flash(cls, ms){
+    pet.classList.remove(cls); void pet.offsetWidth; pet.classList.add(cls);
+    clearTimeout(flashT[cls]); flashT[cls] = setTimeout(function(){ pet.classList.remove(cls); }, ms);
   }
   function availBottom(){
     var v = window.visualViewport;
@@ -11247,6 +11289,7 @@
   function goTo(nx, ny, sp){
     tx = clampX(nx); ty = clampY(ny);
     speed = sp || rnd(34, 54);
+    pet.style.setProperty('--ex', '2px'); pet.style.setProperty('--ey', '0px');
     setFacing(tx - x);
     if (reduced) { x = tx; y = ty; render(); return; }
     if (asleep) wake(true);
@@ -11270,6 +11313,7 @@
   function arrive(){
     moving = false;
     pet.classList.remove('walking');
+    if (!reduced) flash('settle', 440);
     if (!held && !chatOpen) scheduleThink(rnd(2200, 7000));
   }
 
@@ -11283,6 +11327,9 @@
   function decide(){
     if (held || chatOpen || moving || document.visibilityState !== 'visible' || inputBusy()) { scheduleThink(4000); return; }
     if (asleep) { if (Date.now() - lastTouch > 30000 || Math.random() < .25) wake(); else scheduleThink(rnd(4000, 9000)); return; }
+    var c = Math.random();
+    if (c < .11) { stare(); return; }
+    if (c < .17 && !reduced) { vanish(); return; }
     var r = Math.random();
     if (!reduced && Date.now() - lastTouch > 45000 && r < .22) { sleep(); return; }
     if (r < .68 && !reduced) {
@@ -11294,8 +11341,13 @@
   }
 
   function sleep(){
-    asleep = true; pet.classList.add('asleep');
-    scheduleThink(rnd(12000, 25000));
+    flash('yawn', 1400);
+    scheduleThink(rnd(14000, 26000));
+    setTimeout(function(){
+      if (held || chatOpen || moving) return;
+      asleep = true; pet.classList.add('asleep');
+      pet.style.setProperty('--ex', '0px'); pet.style.setProperty('--ey', '0px');
+    }, 1400);
   }
   function wake(quiet){
     if (!asleep) return;
@@ -11304,11 +11356,37 @@
     scheduleThink(rnd(1500, 3500));
   }
 
+  function stare(){
+    staring = true;
+    pet.style.setProperty('--ex', '0px'); pet.style.setProperty('--ey', '0px');
+    pet.classList.add('stare', 'tilt');
+    if (Math.random() < .5) pet.classList.add('third');
+    var ms = rnd(2600, 5200);
+    scheduleThink(ms + 8000);
+    setTimeout(function(){
+      staring = false; pet.classList.remove('stare', 'tilt', 'third');
+      if (!chatOpen && !held && Math.random() < .45) showBubble(pick(stareLines));
+      scheduleThink(rnd(1800, 4500));
+    }, ms);
+  }
+  function vanish(){
+    pet.classList.add('vanish');
+    scheduleThink(5000);
+    setTimeout(function(){
+      if (held || chatOpen) { pet.classList.remove('vanish'); return; }
+      x = clampX(rnd(0, vw())); y = clampY(rnd(vh() * .25, vh()));
+      setFacing(vw() / 2 - x); render();
+      pet.classList.remove('vanish');
+      if (Math.random() < .6) setTimeout(function(){ if (!held && !chatOpen && !moving) stare(); }, 500);
+    }, 900);
+  }
+
   // ---------- speech ----------
   var bubbleTimer = null;
   function showBubble(text){
     bubble.textContent = text;
     bubble.classList.add('show');
+    talk(Math.min(2600, 500 + text.length * 55));
     placeFloaters();
     clearTimeout(bubbleTimer);
     bubbleTimer = setTimeout(function(){ bubble.classList.remove('show'); }, 4200);
@@ -11339,9 +11417,10 @@
       if (n) {
         petName = n.charAt(0).toUpperCase() + n.slice(1);
         try { localStorage.setItem(NAME_KEY, petName); } catch (e) {}
-        return "okay — i'm " + petName + " now.";
+        return "okay. i'll answer to " + petName + ".";
       }
     }
+    if (Math.random() < .12 && msg.length > 2 && msg.length < 40) return msg.trim().toLowerCase().replace(/[.?!]+$/, '') + '... ' + pick(['yes.', 'why?', 'again.', 'closer.']);
     if (/\?$/.test(msg.trim())) return pick(questionLines);
     return pick(defaultLines);
   }
@@ -11361,7 +11440,7 @@
     chat.removeAttribute('hidden');
     avatar.setAttribute('aria-expanded', 'true');
     bubble.classList.remove('show');
-    if (!log.childElementCount) addLine(petName ? (pick(greetLines) + " i'm " + petName + ".") : pick(greetLines), false);
+    if (!log.childElementCount) addLine(petName ? (pick(greetLines) + " i'm " + petName + ", remember?") : pick(greetLines), false);
     render(); fitChat();
     setTimeout(function(){ input.focus(); fitChat(); }, 60);
   }
@@ -11382,7 +11461,7 @@
     addLine(val, true);
     input.value = '';
     var r = reply(val);
-    setTimeout(function(){ addLine(r, false); }, 260 + Math.random() * 260);
+    setTimeout(function(){ addLine(r, false); talk(200 + r.length * 45); }, 260 + Math.random() * 260);
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
   document.addEventListener('pointerdown', function(e){
@@ -11414,15 +11493,27 @@
     if (!drag || e.pointerId !== drag.id) return;
     var wasDrag = drag.moved; drag = null;
     if (wasDrag) {
-      held = false; pet.classList.remove('held');
+      held = false; pet.classList.remove('held'); flash('settle', 440);
       if (!chatOpen) { showBubble(pick(dropLines)); scheduleThink(rnd(3500, 7000)); } else fitChat();
     } else if (e.type === 'pointerup') {
+      flash(Math.random() < .2 ? 'glitch' : 'jump', 380);
       chatOpen ? closeChat() : openChat();
     }
   }
   avatar.addEventListener('pointerup', endDrag);
   avatar.addEventListener('pointercancel', endDrag);
   avatar.addEventListener('click', function(e){ if (e.detail === 0) chatOpen ? closeChat() : openChat(); });
+
+  // eyes follow the pointer / last touch
+  function look(e){
+    if (asleep || moving || held || staring) return;
+    var f = pet.classList.contains('left') ? -1 : 1;
+    var ex = Math.max(-1, Math.min(1, (e.clientX - (x + W / 2)) / 90)) * 2.2 * f;
+    var ey = Math.max(-1, Math.min(1, (e.clientY - (y + 25)) / 90)) * 1.6;
+    pet.style.setProperty('--ex', ex.toFixed(2) + 'px'); pet.style.setProperty('--ey', ey.toFixed(2) + 'px');
+  }
+  document.addEventListener('pointermove', look, { passive: true });
+  document.addEventListener('pointerdown', look, { passive: true, capture: true });
 
   // ---------- keep it on screen ----------
   function reclamp(){
@@ -11437,7 +11528,7 @@
   // occasional unprompted line, paused while chatting or asleep
   function scheduleIdle(){
     setTimeout(function(){
-      if (!chatOpen && !held && !asleep && document.visibilityState === 'visible') showBubble(pick(idleLines));
+      if (!chatOpen && !held && !asleep && document.visibilityState === 'visible') { showBubble(pick(idleLines)); if (Math.random() < .35) flash('glitch', 300); }
       scheduleIdle();
     }, rnd(26000, 60000));
   }
