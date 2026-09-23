@@ -11074,5 +11074,382 @@
     });
   })();
 </script>
+
+<!-- ============================================================
+     SITE PET: a small creature that roams the whole screen on its
+     own — wanders, pauses, looks around, naps. Tap it to talk,
+     drag it to pick it up and put it somewhere else. It lives at
+     body level (fixed), so it walks across every page, the void,
+     the room, the radio — everywhere. Scripted one-liners only.
+     ============================================================ -->
+<style>
+  #site-pet{position:fixed;left:0;top:0;width:56px;height:60px;z-index:900000;pointer-events:none;will-change:transform;font-family:'Source Serif 4',Georgia,serif;}
+  .pet-shadow{position:absolute;left:10px;right:10px;bottom:-2px;height:7px;border-radius:50%;background:var(--ink);opacity:.14;filter:blur(2px);transition:transform .2s ease,opacity .2s ease;}
+  #site-pet.held .pet-shadow{transform:translateY(14px) scale(.7);opacity:.07;}
+  .pet-avatar{all:unset;position:absolute;inset:0;cursor:grab;pointer-events:auto;touch-action:none;-webkit-tap-highlight-color:transparent;transform:scale(var(--s,1));transform-origin:50% 100%;}
+  .pet-avatar:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:14px;}
+  #site-pet.held .pet-avatar{cursor:grabbing;}
+  .pet-avatar svg{width:56px;height:60px;overflow:visible;display:block;}
+  .pet-body{transform-box:fill-box;transform-origin:50% 100%;animation:petBreathe 3.8s ease-in-out infinite;}
+  #site-pet.walking .pet-body{animation:petHop .46s ease-in-out infinite;}
+  #site-pet.held .pet-body{animation:none;transform:rotate(-6deg);}
+  .pet-leg{transform-box:view-box;transform-origin:50% 0;}
+  .pet-leg path{stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;fill:none;}
+  #site-pet.walking .pet-leg.l{animation:petStepL .46s ease-in-out infinite;}
+  #site-pet.walking .pet-leg.r{animation:petStepR .46s ease-in-out infinite;}
+  #site-pet.held .pet-leg.l{animation:petDangle .7s ease-in-out infinite;}
+  #site-pet.held .pet-leg.r{animation:petDangle .7s ease-in-out -.35s infinite;}
+  .pet-eyes{transition:transform .25s ease;}
+  #site-pet.right .pet-eyes{transform:translateX(2.2px);}
+  #site-pet.left .pet-eyes{transform:translateX(-2.2px);}
+  .pet-eye{transform-box:fill-box;transform-origin:center;animation:petBlink 5.2s ease-in-out infinite;}
+  #site-pet.asleep .pet-eye{animation:none;transform:scaleY(.12);}
+  .pet-z{position:absolute;right:-4px;top:-6px;font-size:12px;font-style:italic;color:var(--muted);opacity:0;pointer-events:none;}
+  #site-pet.asleep .pet-z{animation:petZ 2.6s ease-in-out infinite;}
+  @keyframes petBreathe{0%,100%{transform:scale(1,1);}50%{transform:scale(1.025,.975);}}
+  @keyframes petHop{0%,100%{transform:translateY(0) scale(1.03,.97);}50%{transform:translateY(-3px) scale(.98,1.02);}}
+  @keyframes petStepL{0%,100%{transform:rotate(24deg);}50%{transform:rotate(-24deg);}}
+  @keyframes petStepR{0%,100%{transform:rotate(-24deg);}50%{transform:rotate(24deg);}}
+  @keyframes petDangle{0%,100%{transform:rotate(8deg);}50%{transform:rotate(-8deg);}}
+  @keyframes petBlink{0%,92%,100%{transform:scaleY(1);}95%{transform:scaleY(.1);}}
+  @keyframes petZ{0%{opacity:0;transform:translate(0,4px);}30%{opacity:.8;}100%{opacity:0;transform:translate(6px,-12px);}}
+  .pet-bubble,.pet-chat{position:absolute;pointer-events:none;}
+  .pet-bubble{bottom:calc(100% + 4px);width:max-content;max-width:min(62vw,220px);padding:8px 12px;border:1px solid var(--rule);border-radius:14px;background:var(--paper);color:var(--ink);box-shadow:0 4px 16px var(--card-shadow);font-style:italic;font-size:12.5px;line-height:1.45;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .3s ease,transform .3s ease;}
+  .pet-bubble.below{bottom:auto;top:calc(100% + 4px);}
+  .pet-bubble.show{opacity:1;transform:none;}
+  .pet-chat{top:calc(100% + 6px);width:min(78vw,250px);max-height:min(34vh,230px);display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:16px;background:var(--paper);box-shadow:0 10px 34px var(--card-shadow);overflow:hidden;pointer-events:auto;}
+  .pet-chat.above{top:auto;bottom:calc(100% + 6px);}
+  .pet-chat[hidden]{display:none;}
+  .pet-chat-log{flex:1 1 auto;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:6px;scrollbar-width:none;min-height:60px;}
+  .pet-chat-log::-webkit-scrollbar{display:none;}
+  .pet-line{font-size:12.5px;line-height:1.45;max-width:88%;overflow-wrap:anywhere;}
+  .pet-line.mine{align-self:flex-end;color:var(--muted);}
+  .pet-line.theirs{align-self:flex-start;font-style:italic;color:var(--ink);}
+  .pet-chat-form{display:flex;gap:6px;border-top:1px solid var(--rule);padding:8px;}
+  .pet-chat-form input{flex:1 1 auto;min-width:0;border:1px solid var(--rule);border-radius:10px;padding:6px 9px;font-family:'Source Serif 4',Georgia,serif;font-size:16px;color:var(--ink);background:var(--paper);}
+  .pet-chat-form input::placeholder{color:var(--muted);}
+  .pet-chat-form button{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+  @media (prefers-reduced-motion:reduce){.pet-body,.pet-leg,.pet-eye{animation:none!important;}}
+</style>
+<div id="site-pet" class="right" style="visibility:hidden">
+  <div class="pet-shadow"></div>
+  <div class="pet-bubble" id="pet-bubble" role="status" aria-live="polite"></div>
+  <div class="pet-chat" id="pet-chat" hidden>
+    <div class="pet-chat-log" id="pet-chat-log"></div>
+    <form class="pet-chat-form" id="pet-chat-form">
+      <input id="pet-chat-input" type="text" maxlength="80" placeholder="say something…" autocomplete="off">
+      <button type="submit" aria-label="Send">↵</button>
+    </form>
+  </div>
+  <button class="pet-avatar" id="pet-avatar" type="button" aria-label="Talk to your companion" aria-expanded="false">
+    <svg viewBox="0 0 56 60" xmlns="http://www.w3.org/2000/svg">
+      <g class="pet-leg l"><path d="M21 44v9"/></g>
+      <g class="pet-leg r"><path d="M35 44v9"/></g>
+      <g class="pet-body">
+        <path d="M28 6c10 0 16 7 16 18 0 8-2 14-5 20H17c-3-6-5-12-5-20C12 13 18 6 28 6Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+        <g class="pet-eyes">
+          <circle class="pet-eye" cx="22" cy="26" r="1.8" fill="var(--ink)"/>
+          <circle class="pet-eye" cx="34" cy="26" r="1.8" fill="var(--ink)"/>
+        </g>
+      </g>
+    </svg>
+    <span class="pet-z" aria-hidden="true">z</span>
+  </button>
+</div>
+<script>
+(function(){
+  var pet = document.getElementById('site-pet');
+  var avatar = document.getElementById('pet-avatar');
+  var bubble = document.getElementById('pet-bubble');
+  var chat = document.getElementById('pet-chat');
+  var log = document.getElementById('pet-chat-log');
+  var form = document.getElementById('pet-chat-form');
+  var input = document.getElementById('pet-chat-input');
+  if (!pet || !avatar || !bubble || !chat || !form || !input) return;
+
+  var W = 56, H = 60, M = 8;
+  var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NAME_KEY = 'selrick-pet-name', petName = null;
+  try { petName = localStorage.getItem(NAME_KEY); } catch (e) {}
+
+  var idleLines = [
+    "still here.", "watching the page with you.", "it's quiet today.",
+    "did you read the whole entry?", "i like this word too.",
+    "someone scrolled past me just now.", "*yawns*", "tell me something.",
+    "the void's been calm lately.", "i counted the letters in the headword. twice.",
+    "don't mind me.", "i was named after a typo, probably.",
+    "i walked the whole page. it's bigger than it looks.",
+    "i think the footer moved.", "just stretching my legs."
+  ];
+  var greetLines = ["hi.", "oh — hello.", "you're back.", "hey there."];
+  var farewellLines = ["bye for now.", "come back soon.", "i'll be around."];
+  var thanksLines = ["you're welcome.", "anytime.", ":)"];
+  var questionLines = ["hard to say.", "i only really know a few things.", "ask the dictionary, not me.", "hm. maybe."];
+  var complimentLines = ["oh, stop.", "you're sweet.", "*happy static noise*"];
+  var loveLines = ["aw.", "i like you too.", "that's kind of you to say."];
+  var boredLines = ["me too, honestly.", "want to poke the headword instead?", "same."];
+  var nameLines = ["i don't have one yet — you can give me one.", "i'm not sure. what would you call me?"];
+  var pickUpLines = ["oh.", "up we go.", "hey — okay."];
+  var dropLines = ["here's fine.", "thanks. i'll live here now.", "nice view."];
+  var wakeLines = ["...i was awake.", "hm? oh.", "*blinks*"];
+  var defaultLines = [
+    "not sure what to say to that.", "i'm a small creature of few words.",
+    "hm.", "i only speak in little lines like this.", "go on.",
+    "*tilts head*", "say more?"
+  ];
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  function rnd(a, b){ return a + Math.random() * (b - a); }
+
+  // ---------- position + movement ----------
+  var x = 0, y = 0, tx = 0, ty = 0, speed = 44;
+  var moving = false, held = false, chatOpen = false, asleep = false;
+  var lastTouch = Date.now(), raf = 0, lastT = 0, think = 0;
+
+  function vw(){ return document.documentElement.clientWidth || innerWidth; }
+  function vh(){ return innerHeight; }
+  function clampX(v){ return Math.max(M, Math.min(vw() - W - M, v)); }
+  function clampY(v){ return Math.max(M + 56, Math.min(vh() - H - M, v)); }
+
+  function render(){
+    pet.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    var depth = 0.86 + 0.24 * Math.max(0, Math.min(1, y / Math.max(1, vh() - H)));
+    avatar.style.setProperty('--s', depth.toFixed(3));
+    placeFloaters();
+  }
+
+  function placeFloat(el){
+    var w = el.offsetWidth;
+    var left = Math.max(M, Math.min(vw() - M - w, x + W / 2 - w / 2));
+    el.style.left = (left - x) + 'px';
+    return el.offsetHeight;
+  }
+  function availBottom(){
+    var v = window.visualViewport;
+    return v ? v.offsetTop + v.height : vh();
+  }
+  function placeFloaters(){
+    if (bubble.classList.contains('show')) {
+      var bh = placeFloat(bubble);
+      bubble.classList.toggle('below', y < bh + M + 60);
+    }
+    if (!chat.hasAttribute('hidden')) {
+      var ch = placeFloat(chat);
+      chat.classList.toggle('above', y + H + ch + 12 > availBottom() && y > ch + 70);
+    }
+  }
+
+  function setFacing(dx){
+    if (Math.abs(dx) < 2) return;
+    pet.classList.toggle('right', dx > 0);
+    pet.classList.toggle('left', dx < 0);
+  }
+
+  function goTo(nx, ny, sp){
+    tx = clampX(nx); ty = clampY(ny);
+    speed = sp || rnd(34, 54);
+    setFacing(tx - x);
+    if (reduced) { x = tx; y = ty; render(); return; }
+    if (asleep) wake(true);
+    moving = true;
+    pet.classList.add('walking');
+    if (!raf) { lastT = 0; raf = requestAnimationFrame(step); }
+  }
+
+  function step(t){
+    raf = 0;
+    if (!moving) return;
+    var dt = lastT ? Math.min(0.05, (t - lastT) / 1000) : 0.016;
+    lastT = t;
+    var dx = tx - x, dy = ty - y, d = Math.hypot(dx, dy), s = speed * dt;
+    if (d <= s) { x = tx; y = ty; arrive(); }
+    else { x += dx / d * s; y += dy / d * s; }
+    render();
+    if (moving) raf = requestAnimationFrame(step);
+  }
+
+  function arrive(){
+    moving = false;
+    pet.classList.remove('walking');
+    if (!held && !chatOpen) scheduleThink(rnd(2200, 7000));
+  }
+
+  function inputBusy(){
+    var a = document.activeElement;
+    return a && a !== input && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName || '');
+  }
+
+  function scheduleThink(ms){ clearTimeout(think); think = setTimeout(decide, ms); }
+
+  function decide(){
+    if (held || chatOpen || moving || document.visibilityState !== 'visible' || inputBusy()) { scheduleThink(4000); return; }
+    if (asleep) { if (Date.now() - lastTouch > 30000 || Math.random() < .25) wake(); else scheduleThink(rnd(4000, 9000)); return; }
+    var r = Math.random();
+    if (!reduced && Date.now() - lastTouch > 45000 && r < .22) { sleep(); return; }
+    if (r < .68 && !reduced) {
+      var far = Math.random() < .2, a = rnd(0, Math.PI * 2), d = far ? rnd(220, 520) : rnd(70, 230);
+      goTo(x + Math.cos(a) * d, y + Math.sin(a) * d * .7);
+    } else if (r < .85) {
+      setFacing(Math.random() < .5 ? -1 : 1); scheduleThink(rnd(2000, 5000));
+    } else scheduleThink(rnd(3000, 6000));
+  }
+
+  function sleep(){
+    asleep = true; pet.classList.add('asleep');
+    scheduleThink(rnd(12000, 25000));
+  }
+  function wake(quiet){
+    if (!asleep) return;
+    asleep = false; pet.classList.remove('asleep');
+    if (!quiet && !chatOpen) showBubble(pick(wakeLines));
+    scheduleThink(rnd(1500, 3500));
+  }
+
+  // ---------- speech ----------
+  var bubbleTimer = null;
+  function showBubble(text){
+    bubble.textContent = text;
+    bubble.classList.add('show');
+    placeFloaters();
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(function(){ bubble.classList.remove('show'); }, 4200);
+  }
+  function addLine(text, mine){
+    var div = document.createElement('div');
+    div.className = 'pet-line ' + (mine ? 'mine' : 'theirs');
+    div.textContent = text;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function reply(msg){
+    var m = msg.toLowerCase();
+    if (/\b(bye|goodnight|good night|see ya|later)\b/.test(m)) return pick(farewellLines);
+    if (/\b(thank|thanks|thx)\b/.test(m)) return pick(thanksLines);
+    if (/\b(hi|hello|hey|yo)\b/.test(m)) return pick(greetLines);
+    if (/\b(love|adore)\b/.test(m)) return pick(loveLines);
+    if (/\b(cute|sweet|nice|good (pet|boy|girl)|pretty)\b/.test(m)) return pick(complimentLines);
+    if (/\b(bored|boring)\b/.test(m)) return pick(boredLines);
+    if (/\b(your name|what.*call you|who are you)\b/.test(m)) {
+      if (!petName) return pick(nameLines);
+      return "i'm " + petName + ".";
+    }
+    var nameMatch = m.match(/name you (\w+)|call you (\w+)|you(?:'re| are) (\w+)/);
+    if (nameMatch) {
+      var n = (nameMatch[1] || nameMatch[2] || nameMatch[3] || '').replace(/[^a-z-]/g, '');
+      if (n) {
+        petName = n.charAt(0).toUpperCase() + n.slice(1);
+        try { localStorage.setItem(NAME_KEY, petName); } catch (e) {}
+        return "okay — i'm " + petName + " now.";
+      }
+    }
+    if (/\?$/.test(msg.trim())) return pick(questionLines);
+    return pick(defaultLines);
+  }
+
+  // ---------- chat open / close ----------
+  function fitChat(){
+    if (!chatOpen) return;
+    var need = H + Math.min(230, vh() * .34) + 22;
+    var room = availBottom() - y;
+    if (room < need) goTo(x, Math.max(M + 56, availBottom() - need), 70);
+    else render();
+  }
+  function openChat(){
+    chatOpen = true; moving = false; pet.classList.remove('walking');
+    if (asleep) wake(true);
+    clearTimeout(think);
+    chat.removeAttribute('hidden');
+    avatar.setAttribute('aria-expanded', 'true');
+    bubble.classList.remove('show');
+    if (!log.childElementCount) addLine(petName ? (pick(greetLines) + " i'm " + petName + ".") : pick(greetLines), false);
+    render(); fitChat();
+    setTimeout(function(){ input.focus(); fitChat(); }, 60);
+  }
+  function closeChat(){
+    if (!chatOpen) return;
+    chatOpen = false;
+    chat.setAttribute('hidden', '');
+    avatar.setAttribute('aria-expanded', 'false');
+    input.blur();
+    scheduleThink(rnd(1500, 3500));
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = input.value.trim();
+    if (!val) return;
+    lastTouch = Date.now();
+    addLine(val, true);
+    input.value = '';
+    var r = reply(val);
+    setTimeout(function(){ addLine(r, false); }, 260 + Math.random() * 260);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
+  document.addEventListener('pointerdown', function(e){
+    if (chatOpen && !pet.contains(e.target)) closeChat();
+  }, true);
+
+  // ---------- tap to talk, drag to carry ----------
+  var drag = null;
+  avatar.addEventListener('pointerdown', function(e){
+    if (e.button > 0) return;
+    lastTouch = Date.now();
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: e.clientX - x, oy: e.clientY - y, moved: false };
+    try { avatar.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  avatar.addEventListener('pointermove', function(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.moved) {
+      if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 7) return;
+      drag.moved = true; held = true; moving = false;
+      pet.classList.remove('walking'); pet.classList.add('held');
+      if (asleep) wake(true);
+      clearTimeout(think);
+      if (!chatOpen) showBubble(pick(pickUpLines));
+    }
+    x = clampX(e.clientX - drag.ox); y = clampY(e.clientY - drag.oy);
+    render();
+  });
+  function endDrag(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    var wasDrag = drag.moved; drag = null;
+    if (wasDrag) {
+      held = false; pet.classList.remove('held');
+      if (!chatOpen) { showBubble(pick(dropLines)); scheduleThink(rnd(3500, 7000)); } else fitChat();
+    } else if (e.type === 'pointerup') {
+      chatOpen ? closeChat() : openChat();
+    }
+  }
+  avatar.addEventListener('pointerup', endDrag);
+  avatar.addEventListener('pointercancel', endDrag);
+  avatar.addEventListener('click', function(e){ if (e.detail === 0) chatOpen ? closeChat() : openChat(); });
+
+  // ---------- keep it on screen ----------
+  function reclamp(){
+    x = clampX(x); y = clampY(y);
+    if (moving) { tx = clampX(tx); ty = clampY(ty); }
+    render(); fitChat();
+  }
+  addEventListener('resize', reclamp);
+  addEventListener('orientationchange', reclamp);
+  if (window.visualViewport) visualViewport.addEventListener('resize', fitChat);
+
+  // occasional unprompted line, paused while chatting or asleep
+  function scheduleIdle(){
+    setTimeout(function(){
+      if (!chatOpen && !held && !asleep && document.visibilityState === 'visible') showBubble(pick(idleLines));
+      scheduleIdle();
+    }, rnd(26000, 60000));
+  }
+
+  // ---------- entrance: walks in from the right edge ----------
+  y = clampY(vh() * rnd(.55, .8));
+  x = reduced ? clampX(vw()) : vw() + 10;
+  render();
+  pet.style.visibility = 'visible';
+  if (reduced) scheduleThink(8000); else goTo(vw() - 120, y + rnd(-40, 40), 48);
+  setTimeout(scheduleIdle, rnd(9000, 15000));
+})();
+</script>
 </body>
 </html>
