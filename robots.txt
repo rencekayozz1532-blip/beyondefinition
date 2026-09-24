@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://beyondefinition.vercel.app/sitemap.xml
+Sitemap: https://beyondefinition.onrender.com/sitemap.xml

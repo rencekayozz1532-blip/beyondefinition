@@ -1,10 +1,11 @@
 {
-  "name": "Selrick",
+  "name": "leave something",
   "short_name": "Selrick",
+  "description": "A small place to leave something short, made by Selrick.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#fbf9fc",
+  "background_color": "#e2dce8",
   "theme_color": "#e4dce8",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },

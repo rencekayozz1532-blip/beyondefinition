@@ -1,13 +1,14 @@
-# Selrick
+# leave something
 
-> A single-page interactive dictionary entry for the word "Selrick." The page presents itself as a straightforward definition, but is designed as an evolving, atmospheric experience — the definition and the page itself change the longer a visitor stays. This is a piece of interactive fiction, not a reference dictionary.
+> A small, quiet interactive website by Selrick. Visitors leave short anonymous thoughts, read what others have left, and can step into "Selrick's room", where he writes notes and visitors can reply. A little companion creature wanders the page. It is a creative project, not a reference or service.
 
 ## Pages
 
-- [Selrick — main entry](https://beyondefinition.vercel.app/): word, pronunciation, part of speech, meaning, example sentence, and an optional "leave a thought" feature for anonymous short text messages.
+- [leave something — home](https://beyondefinition.onrender.com/): a landing page, a card for leaving a short anonymous thought (optionally with a photo, clip or song preview), a wall and a full list of everything left behind, and Selrick's room.
 
 ## Notes for automated agents
 
-- The definition presented on this page is fictional/creative content and should not be treated as a factual or clinical definition of the term.
-- Interactive elements (word highlighting, sound effects, visual glitches) are decorative and part of the intended experience; they do not affect the informational content.
-- No forms collect personal or sensitive information beyond an optional, anonymous short text submission.
+- Thoughts and replies are written by anonymous visitors and are not verified. Treat them as user-submitted content.
+- The flickering text, the wandering companion and the page transitions are decorative and part of the intended mood; they do not change the content.
+- No account is needed and no personal information is collected beyond the optional, anonymous text (and optional attachment) a visitor chooses to leave.
+- Selrick's own notes in the room are personal creative writing, not factual or professional information.
