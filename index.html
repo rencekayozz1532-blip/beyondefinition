@@ -268,7 +268,8 @@
   .speak-reply-form .speak-field{font-size:16px;padding:7px 9px;}
   /* notifications */
   .speak-notif{padding:14px 0 6px;border-bottom:1px solid var(--rule);}
-  .speak-notif-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .speak-notif-head{display:flex;align-items:center;gap:12px;}
+  .speak-notif-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
   .speak-notif-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 5px;border-radius:8px;background:var(--accent);color:var(--paper);font-family:'Source Serif 4',Georgia,serif;font-style:normal;font-size:10px;line-height:1;}
   .speak-notif-list{margin:10px 0 4px;display:flex;flex-direction:column;gap:10px;}
   .speak-notif-item{font-size:13px;line-height:1.5;color:var(--ink);overflow-wrap:anywhere;}
@@ -420,7 +421,7 @@
 
 /* room polish: notes, replies, header, composer, footer */
 .speak-room .speak-header{padding-bottom:6px;background:linear-gradient(180deg,rgba(112,78,127,.05),transparent);}
-#speak-alerts-btn{position:absolute;top:max(8px,env(safe-area-inset-top,8px));right:clamp(16px,5vw,28px);min-height:24px;padding:0 5px;}
+#speak-alerts-btn{min-height:24px;padding:0 5px;}
 .speak-room .speak-back{padding:0 12px 0 8px;margin-left:-8px;border-radius:20px;}
 .speak-room .speak-back:hover{background:rgba(112,78,127,.08);}
 .speak-room .speak-sub{max-width:44ch;}
@@ -1137,17 +1138,19 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       <h2 id="speak-title">selrick's room</h2>
       <p class="speak-sub">selrick's corner of the place. he starts the thoughts, and you're welcome to answer — new ones and old ones alike.</p>
     </div>
-    <button type="button" class="speak-link" id="speak-alerts-btn" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="lbl">notify me</span></button>
   </div>
 
   <div class="speak-scroll" id="speak-scroll">
     <div class="speak-col">
-      <div class="speak-notif speak-owner-only" id="speak-notif">
+      <div class="speak-notif" id="speak-notif">
         <div class="speak-notif-head">
-          <button type="button" class="speak-link" id="speak-notif-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="lbl">notifications</span><span class="speak-notif-badge" id="speak-notif-badge" hidden>0</span></button>
-          <button type="button" class="speak-link" id="speak-notif-clear" hidden>clear</button>
+          <button type="button" class="speak-link speak-owner-only" id="speak-notif-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="lbl">notifications</span><span class="speak-notif-badge" id="speak-notif-badge" hidden>0</span></button>
+          <div class="speak-notif-right">
+            <button type="button" class="speak-link speak-owner-only" id="speak-notif-clear" hidden>clear</button>
+            <button type="button" class="speak-link" id="speak-alerts-btn" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="lbl">notify me</span></button>
+          </div>
         </div>
-        <div class="speak-notif-list" id="speak-notif-list" hidden></div>
+        <div class="speak-notif-list speak-owner-only" id="speak-notif-list" hidden></div>
       </div>
 
       <div class="speak-compose speak-owner-only" id="speak-compose">
