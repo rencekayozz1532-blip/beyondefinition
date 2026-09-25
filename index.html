@@ -1233,6 +1233,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     <div class="thoughts-compose">
       <input type="text" class="diary-field" id="diary-new-name" enterkeyhint="next" maxlength="40" placeholder="a name for it&hellip;" autocapitalize="none" autocorrect="off" spellcheck="false">
       <input type="text" class="diary-field" id="diary-new-code" enterkeyhint="go" maxlength="40" placeholder="a private code&hellip;" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <input type="text" class="diary-field" id="diary-new-tagline" enterkeyhint="done" maxlength="100" placeholder="a line about it, under the name (optional)&hellip;" autocorrect="off" spellcheck="false">
       <p class="thoughts-status" id="diary-new-status" aria-live="polite"></p>
       <div class="thoughts-row" style="justify-content:center;">
         <button type="button" class="primary" id="diary-new-submit">start it</button>
@@ -1267,9 +1268,9 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
   <div class="thoughts-compose diary-view-compose">
     <button type="button" class="speak-link" id="diary-view-code-toggle"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span class="lbl">know the code? this way</span></button>
-    <button type="button" class="speak-link" id="diary-view-logout" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"/><path d="M16 8l4 4-4 4M20 12H9"/></svg><span class="lbl">log out</span></button>
     <div id="diary-view-code-wrap" hidden>
       <input type="text" class="diary-field" id="diary-view-code" enterkeyhint="done" maxlength="40" placeholder="the private code, to write here&hellip;" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <button type="button" class="speak-link" id="diary-view-logout" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"/><path d="M16 8l4 4-4 4M20 12H9"/></svg><span class="lbl">log out</span></button>
       <p class="thoughts-status" id="diary-view-status" aria-live="polite"></p>
       <div id="diary-write-fields" hidden>
       <textarea id="diary-view-input" enterkeyhint="done" maxlength="500" rows="3" placeholder="write something here&hellip;"></textarea>
@@ -1326,7 +1327,8 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   .diary-meta{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-style:italic;}
   .diary-view-compose{border-top:1px solid var(--rule);padding:12px clamp(20px,6vw,52px) max(12px,env(safe-area-inset-bottom,0px));max-width:720px;width:100%;margin:0 auto;flex:0 0 auto;}
   .diary-view-compose > .speak-link{margin-top:0;}
-  #diary-view-code-toggle,#diary-view-logout{display:flex;width:fit-content;margin:0 auto;}
+  #diary-view-code-toggle{display:flex;width:fit-content;margin:0 auto;}
+  #diary-view-logout:not([hidden]){display:flex;width:fit-content;margin:8px auto 0;}
   .diary-view-compose #diary-view-code-wrap > .diary-field{margin-top:8px;}
   #diary-view-code{text-align:center;font-family:'Courier Prime','Courier New',Courier,monospace;font-size:15px;letter-spacing:.35em;}
   #diary-view-code::placeholder{font-family:'Source Serif 4',Georgia,serif;font-style:italic;letter-spacing:normal;}
@@ -5239,7 +5241,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 <style id="one-line-style">
   /* titles and subtitles: one line when it fits legibly; otherwise clean, even wrapping (never broken mid-word) */
   .fit1{white-space:nowrap !important;max-width:none !important;overflow-wrap:normal !important;word-break:normal !important;hyphens:manual !important;}
-  .fitwrap{text-wrap:balance !important;overflow-wrap:normal !important;word-break:normal !important;hyphens:manual !important;}
+  .fitwrap{white-space:normal !important;text-wrap:balance !important;overflow-wrap:normal !important;word-break:normal !important;hyphens:manual !important;}
 </style>
 <script id="one-line-script">
 (function(){
@@ -5527,12 +5529,14 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     const newCancel = document.getElementById('diary-new-cancel');
     const newName = document.getElementById('diary-new-name');
     const newCode = document.getElementById('diary-new-code');
+    const newTagline = document.getElementById('diary-new-tagline');
     const newSubmit = document.getElementById('diary-new-submit');
     const newStatus = document.getElementById('diary-new-status');
     const viewRoom = document.getElementById('diary-view-room');
     const viewBack = document.getElementById('diary-view-back');
     const viewTitle = document.getElementById('diary-view-title');
     const viewSub = document.getElementById('diary-view-sub');
+    const DEFAULT_DIARY_SUB = 'reading and writing here needs no account \u2014 just the name, and the code to add to it.';
     const viewList = document.getElementById('diary-view-list');
     const viewLoading = document.getElementById('diary-view-loading');
     const viewInput = document.getElementById('diary-view-input');
@@ -5559,8 +5563,6 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
     let current = null;      // { id, name } of the diary being viewed
     let lastCode = '';       // remembered only for this tab, so writing twice doesn't retype it
-    let codeVerified = false; // true only once that code has actually been accepted server-side (a post or delete succeeded with it) — typing alone doesn't count
-    let verifiedName = '';    // which diary that verified code belongs to, so opening a different diary doesn't inherit it
     let pendingMedia = null, mediaPreview = null;   // a photo or clip attached to the entry being written
     let pendingMusic = null, musicSearchToken = 0;  // a song attached to the entry being written
 
@@ -5628,7 +5630,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
     // ---------- create a diary ----------
     function openNew() {
-      newName.value = ''; newCode.value = ''; newStatus.textContent = ''; newStatus.classList.remove('error');
+      newName.value = ''; newCode.value = ''; newTagline.value = ''; newStatus.textContent = ''; newStatus.classList.remove('error');
       if (window.bringOverlayToFront) window.bringOverlayToFront(newOverlay);
       newOverlay.classList.add('open');
       newOverlay.removeAttribute('inert');
@@ -5659,11 +5661,19 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       newStatus.textContent = 'starting it\u2026';
       try {
         const code_hash = await sha256Hex(code);
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/diaries`, {
+        const tagline = newTagline.value.trim();
+        const body = { name, code_hash };
+        if (tagline) body.tagline = tagline;
+        const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/diaries`, {
           method: 'POST',
           headers: { ...H, Prefer: 'return=representation' },
-          body: JSON.stringify({ name, code_hash })
+          body: JSON.stringify(b)
         });
+        let res = await send(body);
+        if (res.status === 400 && body.tagline) { // column not set up yet: post without it
+          delete body.tagline;
+          res = await send(body);
+        }
         if (res.status === 409) {
           newStatus.textContent = 'that name is already taken. try another.';
           newStatus.classList.add('error');
@@ -5683,6 +5693,11 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       }
     }
     newSubmit.addEventListener('click', submitNew);
+
+    // Each diary can set its own line under the name, shown instead of the
+    // generic default. Degrades to the default text via the same
+    // 400-and-retry pattern until the column exists:
+    //   alter table diaries add column tagline text;
 
     // A diary entry can attach a photo/clip or a song, the same way a
     // thought or a room note can — reusing the existing "thought-media"
@@ -5891,9 +5906,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         const ok = await deleteDiaryEntry(entry);
         if (ok) {
           lastCode = viewCode.value;
-          codeVerified = true;
-          verifiedName = current.name;
-          updateCodeGate();
+          setKnown(true);
           card.style.transition = 'opacity .4s ease';
           card.style.opacity = '0';
           setTimeout(() => card.remove(), 420);
@@ -6031,20 +6044,20 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       viewRoom.classList.add('open');
       viewRoom.setAttribute('aria-hidden', 'false');
       viewTitle.textContent = name;
-      viewSub.textContent = 'reading and writing here needs no account \u2014 just the name, and the code to add to it.';
+      viewSub.textContent = DEFAULT_DIARY_SUB;
       viewInput.value = ''; viewCode.value = lastCode; viewStatus.textContent = ''; viewStatus.classList.remove('error');
-      codeVerified = codeVerified && verifiedName === name;
       if (viewCodeWrap) viewCodeWrap.hidden = !lastCode;
       setPendingMedia(null);
       setPendingMusic(null);
       closeViewMusicSearch();
       updateViewCount();
-      updateCodeGate();
+      setKnown(false);
       viewLoading.hidden = false;
       viewList.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
       current = null;
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/diaries?select=id,name&name=eq.${encodeURIComponent(name)}`, { headers: H });
+        let res = await fetch(`${SUPABASE_URL}/rest/v1/diaries?select=id,name,tagline&name=eq.${encodeURIComponent(name)}`, { headers: H });
+        if (res.status === 400) res = await fetch(`${SUPABASE_URL}/rest/v1/diaries?select=id,name&name=eq.${encodeURIComponent(name)}`, { headers: H }); // tagline column not set up yet
         const rows = res.ok ? await res.json() : [];
         if (!rows.length) {
           viewLoading.hidden = true;
@@ -6052,7 +6065,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           return;
         }
         current = rows[0];
-        updateCodeGate();
+        viewSub.textContent = (current.tagline && current.tagline.trim()) || DEFAULT_DIARY_SUB;
+        // a code carried over from another diary hasn't been checked
+        // against this one yet, so it's re-confirmed, not trusted
+        if (lastCode) confirmCode();
         loadEntries(current.id);
       } catch {
         viewLoading.hidden = true;
@@ -6073,18 +6089,61 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     viewInput.addEventListener('input', updateViewCount);
 
     // the write fields (textarea, attachments, submit) stay hidden until
-    // a code is typed \u2014 there is nothing to unlock without one anyway
+    // the typed code has actually been checked against this diary \u2014
+    // same real check post_diary_entry already does server-side, not
+    // just "did they type something." A read-only RPC asks that
+    // question without posting anything:
+    //   create or replace function verify_diary_code(p_name text, p_code_hash text)
+    //   returns boolean language sql security definer set search_path = public as $$
+    //     select exists(select 1 from diaries where name = p_name and code_hash = p_code_hash);
+    //   $$;
+    //   grant execute on function verify_diary_code(text, text) to anon, authenticated;
     const writeFields = document.getElementById('diary-write-fields');
-    function updateCodeGate() {
-      const known = viewCode.value.trim().length > 0;
-      if (viewCode.value !== lastCode) codeVerified = false;
+    let codeVerified = false;
+    let verifyToken = 0;
+
+    function setKnown(known) {
+      codeVerified = known;
       if (writeFields) writeFields.hidden = !known;
       if (viewList) viewList.classList.toggle('code-known', known);
       if (notifWrap) notifWrap.hidden = !known;
-      if (viewLogout) viewLogout.hidden = !codeVerified;
+      if (viewLogout) viewLogout.hidden = !known;
       if (known) { refreshDiaryAlertsBtn(); renderDiaryNotifs(false); }
     }
+
+    // typing (or a fresh diary) invalidates whatever was confirmed
+    // before \u2014 nothing shows again until the new code is checked
+    function updateCodeGate() {
+      if (codeVerified) setKnown(false);
+    }
     viewCode.addEventListener('input', updateCodeGate);
+
+    async function confirmCode() {
+      const code = viewCode.value;
+      if (!code || !current) { setKnown(false); return; }
+      const token = ++verifyToken;
+      viewStatus.textContent = 'checking the code\u2026';
+      viewStatus.classList.remove('error');
+      let ok = false, failed = false;
+      try {
+        const code_hash = await sha256Hex(code);
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/verify_diary_code`, {
+          method: 'POST', headers: H,
+          body: JSON.stringify({ p_name: current.name, p_code_hash: code_hash })
+        });
+        if (token !== verifyToken) return; // a newer attempt has since started
+        ok = res.ok && (await res.json()) === true;
+        failed = !res.ok;
+      } catch (e) {
+        if (token !== verifyToken) return;
+        failed = true;
+      }
+      setKnown(ok);
+      viewStatus.textContent = ok ? '' : (failed ? 'could not confirm the code just now. try again.' : 'that code doesn\u2019t match this diary.');
+      viewStatus.classList.toggle('error', !ok);
+    }
+    viewCode.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); confirmCode(); } });
+    viewCode.addEventListener('blur', () => { if (viewCode.value) confirmCode(); });
 
     if (viewCodeToggle) viewCodeToggle.addEventListener('click', () => {
       viewCodeWrap.hidden = !viewCodeWrap.hidden;
@@ -6092,12 +6151,16 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     });
 
     if (viewLogout) viewLogout.addEventListener('click', () => {
+      verifyToken++; // cancel any in-flight code check so it can't re-open access after logout
       lastCode = '';
-      codeVerified = false;
       viewCode.value = '';
       viewStatus.textContent = '';
       viewStatus.classList.remove('error');
-      updateCodeGate();
+      viewInput.value = '';
+      setPendingMedia(null);
+      setPendingMusic(null);
+      closeViewMusicSearch();
+      setKnown(false);
     });
 
     // a photo or clip on an entry, same upload as "leave a thought" uses
@@ -6251,9 +6314,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           return;
         }
         lastCode = code;
-        codeVerified = true;
-        verifiedName = current.name;
-        updateCodeGate();
+        setKnown(true);
         viewInput.value = '';
         setPendingMedia(null);
         setPendingMusic(null);
