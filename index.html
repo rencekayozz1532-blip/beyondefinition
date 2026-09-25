@@ -5930,7 +5930,12 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           res = await send(args);
         }
         if (!res.ok) {
-          viewStatus.textContent = 'that code doesn\u2019t match this diary.';
+          let detail = '';
+          try { detail = (await res.json()).message || ''; } catch (e) {}
+          console.error('post_diary_entry failed', res.status, detail);
+          viewStatus.textContent = (res.status === 400 || res.status === 401 || res.status === 403)
+            ? 'that code doesn\u2019t match this diary.'
+            : 'could not send that just now (error ' + res.status + '). try again in a bit.';
           viewStatus.classList.add('error');
           return;
         }
