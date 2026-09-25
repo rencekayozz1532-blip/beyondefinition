@@ -1263,6 +1263,28 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
   <div class="thoughts-compose diary-view-compose">
     <textarea id="diary-view-input" enterkeyhint="done" maxlength="500" rows="3" placeholder="write something here&hellip;"></textarea>
+    <div class="attach-row">
+      <div class="attach-slot">
+        <button type="button" class="speak-link" id="diary-view-media-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z"/></svg><span class="lbl">add a photo or clip</span></button>
+        <span class="speak-attach-name" id="diary-view-media-name" hidden></span>
+        <button type="button" class="speak-link attach-x" id="diary-view-media-clear" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">take it off</span></button>
+      </div>
+      <div class="attach-slot">
+        <button type="button" class="speak-link" id="diary-view-music-pick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="lbl">add a song</span></button>
+        <span class="speak-attach-name" id="diary-view-music-name" hidden></span>
+        <button type="button" class="speak-link attach-x" id="diary-view-music-clear" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="lbl">take it off</span></button>
+      </div>
+    </div>
+    <div class="speak-attach" id="diary-view-media-wrap">
+      <input type="file" id="diary-view-media-input" accept="image/*,video/*" hidden>
+    </div>
+    <div class="thoughts-music-search" id="diary-view-music-search" hidden>
+      <div class="thoughts-music-searchrow">
+        <input type="text" id="diary-view-music-input" enterkeyhint="search" maxlength="80" placeholder="search a song or artist&hellip;">
+        <button type="button" class="speak-link" id="diary-view-music-go"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="lbl">search</span></button>
+      </div>
+      <div class="thoughts-music-results" id="diary-view-music-results"></div>
+    </div>
     <input type="text" class="diary-field" id="diary-view-code" enterkeyhint="go" maxlength="40" placeholder="the private code&hellip;" autocapitalize="none" autocorrect="off" spellcheck="false">
     <p class="thoughts-status" id="diary-view-status" aria-live="polite"></p>
     <div class="thoughts-row">
@@ -1392,6 +1414,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         xhr.send(file);
       });
     }
+    // Shared with the "someone else's diary" compose box below, so a
+    // diary entry can attach a photo or clip the same way a thought does,
+    // without a second bucket or a second copy of the upload code.
+    window.selrickThoughtMedia = { upload: uploadThoughtMedia, MAX_BYTES: MAX_THOUGHT_MEDIA_BYTES, isVideoUrl: isThoughtVideoUrl };
     function setPendingMedia(file) {
       pendingMedia = file || null;
       if (mediaPreview) { try { URL.revokeObjectURL(mediaPreview.src); } catch (e) {} mediaPreview.remove(); mediaPreview = null; }
@@ -5494,10 +5520,24 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     const viewCount = document.getElementById('diary-view-count');
     const viewSubmit = document.getElementById('diary-view-submit');
     const viewStatus = document.getElementById('diary-view-status');
+    const viewMediaInput = document.getElementById('diary-view-media-input');
+    const viewMediaPick = document.getElementById('diary-view-media-pick');
+    const viewMediaName = document.getElementById('diary-view-media-name');
+    const viewMediaClear = document.getElementById('diary-view-media-clear');
+    const viewMediaWrap = document.getElementById('diary-view-media-wrap');
+    const viewMusicPick = document.getElementById('diary-view-music-pick');
+    const viewMusicName = document.getElementById('diary-view-music-name');
+    const viewMusicClear = document.getElementById('diary-view-music-clear');
+    const viewMusicSearchBox = document.getElementById('diary-view-music-search');
+    const viewMusicInput = document.getElementById('diary-view-music-input');
+    const viewMusicGo = document.getElementById('diary-view-music-go');
+    const viewMusicResults = document.getElementById('diary-view-music-results');
     if (!room || !viewRoom) return;
 
     let current = null;      // { id, name } of the diary being viewed
     let lastCode = '';       // remembered only for this tab, so writing twice doesn't retype it
+    let pendingMedia = null, mediaPreview = null;   // a photo or clip attached to the entry being written
+    let pendingMusic = null, musicSearchToken = 0;  // a song attached to the entry being written
 
     async function sha256Hex(text) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -5624,15 +5664,38 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     }
     newSubmit.addEventListener('click', submitNew);
 
+    // A diary entry can attach a photo/clip or a song, the same way a
+    // thought or a room note can — reusing the existing "thought-media"
+    // storage bucket and the shared iTunes search, no new ones. Needs
+    // matching columns on the table and parameters on the insert
+    // function; until then this degrades to text-only, same
+    // 400-and-retry pattern as the other optional columns above.
+    //   alter table diary_entries add column media_url text;
+    //   alter table diary_entries add column music_url text;
+    //   alter table diary_entries add column music_title text;
+    //   create or replace function post_diary_entry(p_name text, p_code_hash text, p_content text,
+    //     p_media_url text default null, p_music_url text default null, p_music_title text default null)
+    //   returns void language plpgsql security definer as $$
+    //     -- keep the existing body's code_hash check, then:
+    //     insert into diary_entries (diary_id, content, media_url, music_url, music_title)
+    //     values (<found id>, p_content, p_media_url, p_music_url, p_music_title);
+    //   $$;
+
     // ---------- a single diary ----------
     async function loadEntries(diaryId) {
       viewLoading.hidden = false;
       viewList.querySelectorAll('.thought-stack-item').forEach((n) => n.remove());
       try {
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
+        let res = await fetch(
+          `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at,media_url,music_url,music_title&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
           { headers: H }
         );
+        if (res.status === 400) { // media_url/music_url columns not set up yet
+          res = await fetch(
+            `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
+            { headers: H }
+          );
+        }
         const rows = res.ok ? await res.json() : [];
         viewLoading.hidden = true;
         if (!rows.length) {
@@ -5646,6 +5709,30 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           const card = document.createElement('div');
           card.className = 'thought-stack-item';
           card.innerHTML = `<p>${escapeHtml(e.content)}</p><time>${fmtDate(e.created_at)}</time>`;
+          if (e.media_url) {
+            const isVid = window.selrickThoughtMedia && window.selrickThoughtMedia.isVideoUrl(e.media_url);
+            const media = document.createElement(isVid ? 'video' : 'img');
+            media.className = 'speak-media-preview';
+            if (isVid) { media.controls = true; media.muted = true; media.playsInline = true; }
+            else media.alt = '';
+            media.src = e.media_url;
+            card.insertBefore(media, card.querySelector('time'));
+          }
+          if (e.music_url) {
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.src = e.music_url;
+            audio.style.display = 'block';
+            audio.style.marginTop = '8px';
+            audio.style.width = '100%';
+            if (e.music_title) {
+              const cap = document.createElement('div');
+              cap.className = 'diary-meta';
+              cap.textContent = e.music_title;
+              card.insertBefore(cap, card.querySelector('time'));
+            }
+            card.insertBefore(audio, card.querySelector('time'));
+          }
           viewList.appendChild(card);
         });
       } catch {
@@ -5664,6 +5751,9 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       viewTitle.textContent = name;
       viewSub.textContent = 'reading and writing here needs no account \u2014 just the name, and the code to add to it.';
       viewInput.value = ''; viewCode.value = lastCode; viewStatus.textContent = ''; viewStatus.classList.remove('error');
+      setPendingMedia(null);
+      setPendingMusic(null);
+      closeViewMusicSearch();
       updateViewCount();
       viewLoading.hidden = false;
       viewList.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
@@ -5692,14 +5782,114 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
     function updateViewCount() {
       viewCount.textContent = (MAX_LEN - viewInput.value.length) + ' left';
-      viewSubmit.disabled = viewInput.value.trim().length === 0;
+      viewSubmit.disabled = viewInput.value.trim().length === 0 && !pendingMedia && !pendingMusic;
     }
     viewInput.addEventListener('input', updateViewCount);
+
+    // a photo or clip on an entry, same upload as "leave a thought" uses
+    function setPendingMedia(file) {
+      pendingMedia = file || null;
+      if (mediaPreview) { try { URL.revokeObjectURL(mediaPreview.src); } catch (e) {} mediaPreview.remove(); mediaPreview = null; }
+      if (file && viewMediaWrap) {
+        const isVid = (file.type && file.type.indexOf('video/') === 0) || /\.(mp4|webm|mov|m4v|ogv)$/i.test(file.name);
+        mediaPreview = document.createElement(isVid ? 'video' : 'img');
+        if (isVid) { mediaPreview.controls = true; mediaPreview.muted = true; mediaPreview.playsInline = true; mediaPreview.preload = 'metadata'; }
+        else { mediaPreview.alt = ''; }
+        mediaPreview.className = 'speak-media-preview';
+        mediaPreview.src = URL.createObjectURL(file);
+        viewMediaWrap.appendChild(mediaPreview);
+      }
+      if (viewMediaName) viewMediaName.hidden = viewMediaClear.hidden = !file;
+      if (viewMediaName) viewMediaName.textContent = file ? file.name : '';
+      if (viewMediaPick) viewMediaPick.querySelector('.lbl').textContent = file ? 'change photo / clip' : 'add a photo or clip';
+      if (!file && viewMediaInput) viewMediaInput.value = '';
+      updateViewCount();
+    }
+    if (viewMediaPick) viewMediaPick.addEventListener('click', () => viewMediaInput.click());
+    if (viewMediaClear) viewMediaClear.addEventListener('click', () => setPendingMedia(null));
+    if (viewMediaInput) viewMediaInput.addEventListener('change', () => {
+      const f = viewMediaInput.files && viewMediaInput.files[0];
+      if (!f) return;
+      const looksMedia = (f.type && (f.type.indexOf('image/') === 0 || f.type.indexOf('video/') === 0)) || /\.(gif|png|jpe?g|webp|mp4|webm|mov|m4v)$/i.test(f.name);
+      const tooBig = window.selrickThoughtMedia && f.size > window.selrickThoughtMedia.MAX_BYTES;
+      if (!looksMedia) { setPendingMedia(null); viewStatus.textContent = 'that is not a gif, photo, or video.'; viewStatus.classList.add('error'); return; }
+      if (tooBig) { setPendingMedia(null); viewStatus.textContent = 'too big. keep it under 20 MB.'; viewStatus.classList.add('error'); return; }
+      viewStatus.textContent = ''; viewStatus.classList.remove('error');
+      setPendingMedia(f);
+    });
+
+    // a song on an entry — same shared iTunes search as the other two pages
+    function setPendingMusic(track) {
+      pendingMusic = track || null;
+      if (viewMusicName) {
+        viewMusicName.hidden = viewMusicClear.hidden = !track;
+        viewMusicName.textContent = track ? (track.title + (track.artist ? ' \u2014 ' + track.artist : '')) : '';
+      }
+      if (viewMusicPick) viewMusicPick.querySelector('.lbl').textContent = track ? 'change song' : 'add a song';
+      updateViewCount();
+    }
+    function closeViewMusicSearch() {
+      if (viewMusicSearchBox) viewMusicSearchBox.hidden = true;
+      if (viewMusicResults) viewMusicResults.innerHTML = '';
+      if (viewMusicInput) viewMusicInput.value = '';
+    }
+    if (viewMusicPick) viewMusicPick.addEventListener('click', () => {
+      if (!viewMusicSearchBox) return;
+      viewMusicSearchBox.hidden = !viewMusicSearchBox.hidden;
+      if (!viewMusicSearchBox.hidden && viewMusicInput) viewMusicInput.focus();
+    });
+    if (viewMusicClear) viewMusicClear.addEventListener('click', () => setPendingMusic(null));
+    async function runViewMusicSearch() {
+      const term = (viewMusicInput && viewMusicInput.value || '').trim();
+      if (!term || !viewMusicResults) return;
+      const myToken = ++musicSearchToken;
+      viewMusicResults.innerHTML = '<p class="thoughts-music-status">looking&hellip;</p>';
+      try {
+        const results = await window.selrickITunes.search(term);
+        if (myToken !== musicSearchToken) return;
+        viewMusicResults.innerHTML = '';
+        if (!results.length) {
+          viewMusicResults.innerHTML = '<p class="thoughts-music-status">nothing found. try another search.</p>';
+          return;
+        }
+        results.forEach(r => {
+          const row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'thoughts-music-result';
+          const art = document.createElement('img');
+          art.src = r.artwork || '';
+          art.alt = '';
+          art.loading = 'lazy';
+          const meta = document.createElement('span');
+          meta.className = 'thoughts-music-result-meta';
+          const t = document.createElement('span');
+          t.className = 'thoughts-music-result-title';
+          t.textContent = r.title;
+          const a = document.createElement('span');
+          a.className = 'thoughts-music-result-artist';
+          a.textContent = r.artist || '';
+          meta.appendChild(t); meta.appendChild(a);
+          row.appendChild(art); row.appendChild(meta);
+          row.addEventListener('click', () => {
+            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
+            closeViewMusicSearch();
+          });
+          viewMusicResults.appendChild(row);
+        });
+      } catch (e) {
+        if (myToken !== musicSearchToken) return;
+        viewMusicResults.innerHTML = '<p class="thoughts-music-status">could not search just now. try again.</p>';
+      }
+    }
+    if (viewMusicGo) viewMusicGo.addEventListener('click', runViewMusicSearch);
+    if (viewMusicInput) viewMusicInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); runViewMusicSearch(); } });
 
     async function submitEntry() {
       const content = viewInput.value.trim();
       const code = viewCode.value;
-      if (!content || !current) return;
+      const mfile = pendingMedia;
+      const track = pendingMusic;
+      if ((!content && !mfile && !track) || !current) return;
       if (!code) {
         viewStatus.textContent = 'the code goes here too, or it won\u2019t be let in.';
         viewStatus.classList.add('error');
@@ -5707,14 +5897,35 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       }
       viewSubmit.disabled = true;
       viewStatus.classList.remove('error');
+
+      let mediaUrl = null;
+      if (mfile) {
+        viewStatus.textContent = 'sending the picture\u2026';
+        try {
+          mediaUrl = await window.selrickThoughtMedia.upload(mfile);
+        } catch (e) {
+          viewStatus.textContent = 'the picture did not go through. try again, or leave it off.';
+          viewStatus.classList.add('error');
+          viewSubmit.disabled = false;
+          return;
+        }
+      }
       viewStatus.textContent = 'writing it down\u2026';
       try {
         const code_hash = await sha256Hex(code);
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/post_diary_entry`, {
-          method: 'POST',
-          headers: H,
-          body: JSON.stringify({ p_name: current.name, p_code_hash: code_hash, p_content: content })
-        });
+        const args = { p_name: current.name, p_code_hash: code_hash, p_content: content || '[media]' };
+        if (mediaUrl) args.p_media_url = mediaUrl;
+        if (track) { args.p_music_url = track.previewUrl; args.p_music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : ''); }
+        const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/rpc/post_diary_entry`, { method: 'POST', headers: H, body: JSON.stringify(b) });
+        let res = await send(args);
+        if (!res.ok && (args.p_music_url || args.p_music_title)) { // the backend function doesn't take a song yet
+          delete args.p_music_url; delete args.p_music_title;
+          res = await send(args);
+        }
+        if (!res.ok && args.p_media_url) { // the backend function doesn't take a photo yet either
+          delete args.p_media_url;
+          res = await send(args);
+        }
         if (!res.ok) {
           viewStatus.textContent = 'that code doesn\u2019t match this diary.';
           viewStatus.classList.add('error');
@@ -5722,6 +5933,9 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         }
         lastCode = code;
         viewInput.value = '';
+        setPendingMedia(null);
+        setPendingMusic(null);
+        closeViewMusicSearch();
         viewStatus.textContent = '';
         updateViewCount();
         loadEntries(current.id);
@@ -5729,7 +5943,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         viewStatus.textContent = 'could not send that just now. try again.';
         viewStatus.classList.add('error');
       } finally {
-        viewSubmit.disabled = viewInput.value.trim().length === 0;
+        viewSubmit.disabled = viewInput.value.trim().length === 0 && !pendingMedia && !pendingMusic;
       }
     }
     viewSubmit.addEventListener('click', submitEntry);
