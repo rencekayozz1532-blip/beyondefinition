@@ -6419,6 +6419,16 @@ html body #landing-page #landing-room:hover{opacity:1;}
     function closeDiaryView() {
       viewRoom.classList.remove('open', 'diary-view-open');
       viewRoom.setAttribute('aria-hidden', 'true');
+      // openDiaryView forces the room visible with inline styles (so it
+      // never looks blank while its fetch is in flight); those inline
+      // styles outrank the CSS class rules, so they have to be cleared
+      // here too, or removing the class above doesn't actually hide it.
+      viewRoom.style.display = '';
+      viewRoom.style.visibility = '';
+      viewRoom.style.opacity = '';
+      viewRoom.style.transform = '';
+      viewRoom.style.pointerEvents = '';
+      viewRoom.style.zIndex = '';
     }
     viewBack.addEventListener('click', closeDiaryView);
     window.openDiaryView = openDiaryView;
