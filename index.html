@@ -169,10 +169,10 @@
 <style id="unified-palette">
   /* ONE palette for every page and room. */
   :root {
-    --paper:#e2dce8; --ink:#29232f; --rule:#aaa0b3; --accent:#76507f; --muted:#645b6f;
+    --paper:#e4dce8; --ink:#2b232f; --rule:#ada0b3; --accent:#71507f; --muted:#645b6f;
     --room:#ded7e5; --room-glow:rgba(250,245,255,.76); --room-wash:rgba(102,71,119,.13);
     --field:rgba(244,238,249,.66); --scrim:rgba(34,25,42,.58);
-    --thought-glow:#76507f; --thought-cool:#70677a;
+    --thought-glow:#71507f; --thought-cool:#70677a;
     --card-shadow:rgba(45,34,53,.16);
   }
   .thoughts-overlay { background: var(--scrim); }
@@ -844,6 +844,16 @@
   }
 }
 </script>
+<style>
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
 <body>
 <script>
