@@ -223,7 +223,7 @@
   .speak-radio{display:flex;align-items:center;gap:14px;margin-top:16px;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);box-shadow:0 2px 12px var(--card-shadow);}
   .speak-radio .say{flex:0 0 auto;}
   .speak-radio-meta{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px;}
-  .speak-radio-title{margin:0;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:15px;line-height:1.35;color:var(--ink);overflow-wrap:anywhere;}
+  .speak-radio-title{margin:0;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:15px;line-height:1.35;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .speak-audio-title{margin-top:10px;}
   .speak-radio-dial{font-family:'Courier Prime','Courier New',Courier,monospace;font-size:12px;letter-spacing:.08em;color:var(--muted);transition:color .3s ease;}
   .speak-radio.playing .speak-radio-dial{color:var(--accent);}
@@ -242,10 +242,18 @@
      layout untouched, just with a faint full-card icon watermark
      behind the controls, so old cards still read as old cards. */
   .speak-radio{position:relative;}
-  .speak-radio-art{width:44px;height:44px;flex:0 0 auto;border-radius:8px;object-fit:cover;border:1px solid var(--rule);box-shadow:0 1px 3px var(--card-shadow);background:var(--paper);}
-  .speak-radio.playing .speak-radio-art{box-shadow:0 0 0 2px var(--accent);}
+  .speak-radio-art{width:44px;height:44px;flex:0 0 auto;border-radius:8px;object-fit:cover;border:1px solid rgba(50,36,56,.14);box-shadow:0 1px 4px var(--card-shadow),inset 0 0 0 1px rgba(255,255,255,.25);background:var(--paper);transition:box-shadow .2s ease;}
+  .speak-radio.playing .speak-radio-art{box-shadow:0 0 0 2px var(--accent),0 2px 8px var(--card-shadow);}
   .speak-radio.has-art .speak-radio-title{text-align:left;}
   .speak-radio.no-art{overflow:hidden;}
+  /* the artwork sits as a soft, blurred background wash behind the card's
+     own contents \u2014 dimmed and tinted with the card's paper color so the
+     title and controls stay smoothly legible on top, not a sharp or
+     fully-visible image. */
+  .speak-radio.has-art{position:relative;overflow:hidden;box-shadow:0 4px 16px var(--card-shadow);}
+  .speak-radio.has-art .speak-radio-art{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;box-shadow:none;border-radius:0;object-fit:cover;opacity:.65;z-index:0;pointer-events:none;}
+  .speak-radio.has-art::after{content:'';position:absolute;inset:0;background:linear-gradient(165deg,rgba(251,249,252,.28) 0%,rgba(251,249,252,.4) 45%,rgba(251,249,252,.66) 100%);z-index:0;pointer-events:none;}
+  .speak-radio.has-art .speak-radio-meta{position:relative;z-index:1;}
   .speak-radio-watermark{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;pointer-events:none;opacity:.05;}
   .speak-radio-watermark svg{width:64px;height:64px;fill:none;stroke:var(--ink);stroke-width:1;}
   .speak-radio > .speak-radio-meta{position:relative;z-index:1;}
@@ -1100,7 +1108,8 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <a class="footer-link" href="/attributions.html">attributions</a>
     <a class="footer-link" href="/copyright.html#report">report a concern</a>
   </div>
-  <div class="sf-updated">Last updated: <time datetime="2026-09-26T13:16+08:00">Saturday, September 26, 2026, 1:16 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-updated">Last updated: <time datetime="2026-09-26T15:34+08:00">Saturday, September 26, 2026, 3:34 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-copyright">&copy; 2026 BeyonDefinition. All Rights Reserved.</div>
 </template>
 
 <div id="landing-page">
@@ -1499,6 +1508,10 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .diary-meta{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-style:italic;}
   .diary-view-compose{border-top:1px solid var(--rule);padding:12px clamp(20px,6vw,52px) max(12px,env(safe-area-inset-bottom,0px));max-width:720px;width:100%;margin:0 auto;flex:0 0 auto;}
   .diary-view-compose > .speak-link{margin-top:0;}
+  /* .speak-link's `all:unset` beats the browser's [hidden] rule (same issue already
+     patched for .speak-room and .thoughts-modal above) — without this, the diary's
+     log-out / delete-this-diary / notif buttons stayed visible even when not known. */
+  #diary-view-room [hidden]{display:none !important;}
   #diary-view-code-toggle{display:flex;width:fit-content;margin:0 auto;}
   #diary-view-logout:not([hidden]){display:flex;width:fit-content;margin:8px auto 0;}
   .diary-view-compose #diary-view-code-wrap > .diary-field{margin-top:8px;}
@@ -1951,7 +1964,15 @@ html body #landing-page #landing-room:hover{opacity:1;}
       // not just a line of words) centers in the space above it
       // instead of centering on the full box and dipping into it.
       const FOOTER_RESERVE = 26;
-      const avail = Math.max(lineEl.offsetHeight, listEl.clientHeight - FOOTER_RESERVE);
+      // A short quote fits the box as-is. A taller card (text plus an
+      // image and/or a song) can exceed the box's height, so grow the
+      // box itself to fit before centering — otherwise the card just
+      // gets centered from the very top and runs straight through the
+      // 'tap for another one' hint pinned to the bottom.
+      listEl.style.minHeight = '';
+      const needed = lineEl.offsetHeight + FOOTER_RESERVE;
+      if (needed > listEl.clientHeight) listEl.style.minHeight = needed + 'px';
+      const avail = listEl.clientHeight - FOOTER_RESERVE;
       lineEl.style.top = (avail / 2) + 'px';
     }
 
@@ -2463,22 +2484,26 @@ html body #landing-page #landing-room:hover{opacity:1;}
     function likeKey(entry) {
       return entry.id != null ? 'id:' + entry.id : 'k:' + hashSeed((entry.content || '') + '|' + (entry.created_at || ''));
     }
-    async function saveLikeCount(entry, count) {
+    // Atomic +1/-1 via increment_thought_likes (same pattern as the
+    // room's increment_post_likes) instead of read-then-PATCH, so two
+    // visitors liking within a moment of each other can't clobber
+    // each other's count. Returns the authoritative new count, or
+    // null on failure.
+    async function saveLikeCount(entry, delta) {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${encodeURIComponent(entry.id)}`, {
-          method: 'PATCH',
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_thought_likes`, {
+          method: 'POST',
           headers: {
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            'Content-Type': 'application/json',
-            Prefer: 'return=representation'
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ likes_count: count })
+          body: JSON.stringify({ row_id: entry.id, delta })
         });
-        if (!res.ok) return false;
-        const rows = await res.json();
-        return Array.isArray(rows) && rows.length === 1;
-      } catch (e) { return false; }
+        if (!res.ok) return null;
+        const returned = await res.json().catch(() => null);
+        return typeof returned === 'number' ? returned : null;
+      } catch (e) { return null; }
     }
     function buildLikeButton(entry) {
       const key = likeKey(entry);
@@ -2509,14 +2534,17 @@ html body #landing-page #landing-room:hover{opacity:1;}
         writeVisitorLikes(map);
         if (next) window.spawnFloatingHearts(btn);
         if (backed) {
-          entry.likes_count = count;
-          const ok = await saveLikeCount(entry, count);
-          if (!ok) {
+          const returned = await saveLikeCount(entry, next ? 1 : -1);
+          if (returned == null) {
             liked = !next; count = prevCount;
             entry.likes_count = count;
             const map2 = readVisitorLikes();
             if (liked) map2[key] = true; else delete map2[key];
             writeVisitorLikes(map2);
+            paint();
+          } else {
+            count = returned;
+            entry.likes_count = returned;
             paint();
           }
         } else {
@@ -4039,7 +4067,8 @@ html body #landing-page #landing-room:hover{opacity:1;}
         setPendingAudio(null);
         setPendingMedia(null);
         closeSpeakMusicSearch();
-        setStatus(postStatus, '');
+        setStatus(postStatus, 'posted.');
+        setTimeout(() => { if (postStatus.textContent === 'posted.') setStatus(postStatus, ''); }, 2200);
       } catch (e) {
         if (mediaUrl) deleteMedia(mediaUrl);
         const msg = e && e.columnMissing
@@ -6082,17 +6111,22 @@ html body #landing-page #landing-room:hover{opacity:1;}
     function writeDiaryLikes(map) {
       try { localStorage.setItem(DIARY_LIKES_KEY, JSON.stringify(map)); } catch (e) {}
     }
-    async function saveDiaryLikeCount(entry, count) {
+    // Atomic +1/-1 via increment_diary_entry_likes (same pattern as
+    // the room's increment_post_likes) instead of read-then-PATCH, so
+    // two visitors liking within a moment of each other can't clobber
+    // each other's count. Returns the authoritative new count, or
+    // null on failure.
+    async function saveDiaryLikeCount(entry, delta) {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/diary_entries?id=eq.${encodeURIComponent(entry.id)}`, {
-          method: 'PATCH',
-          headers: { ...H, Prefer: 'return=representation' },
-          body: JSON.stringify({ likes_count: count })
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_diary_entry_likes`, {
+          method: 'POST',
+          headers: H,
+          body: JSON.stringify({ row_id: entry.id, delta })
         });
-        if (!res.ok) return false;
-        const rows = await res.json();
-        return Array.isArray(rows) && rows.length === 1;
-      } catch (e) { return false; }
+        if (!res.ok) return null;
+        const returned = await res.json().catch(() => null);
+        return typeof returned === 'number' ? returned : null;
+      } catch (e) { return null; }
     }
     function buildDiaryLikeButton(entry) {
       const key = 'id:' + entry.id;
@@ -6121,14 +6155,17 @@ html body #landing-page #landing-room:hover{opacity:1;}
         if (next) map[key] = true; else delete map[key];
         writeDiaryLikes(map);
         if (next && window.spawnFloatingHearts) window.spawnFloatingHearts(btn);
-        entry.likes_count = count;
-        const ok = await saveDiaryLikeCount(entry, count);
-        if (!ok) {
+        const returned = await saveDiaryLikeCount(entry, next ? 1 : -1);
+        if (returned == null) {
           liked = !next; count = prevCount;
           entry.likes_count = count;
           const map2 = readDiaryLikes();
           if (liked) map2[key] = true; else delete map2[key];
           writeDiaryLikes(map2);
+          paint();
+        } else {
+          count = returned;
+          entry.likes_count = returned;
           paint();
         }
       });
@@ -6723,6 +6760,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .site-footer .sf-legal .footer-link{font-size:11px;opacity:.75;}
   .site-footer .sf-legal .footer-link:hover{opacity:1;}
   .site-footer .sf-updated{font-size:10px;opacity:.6;margin-top:2px;}
+  .site-footer .sf-copyright{font-size:10px;opacity:.6;margin-top:2px;}
   #landing-page{overflow-y:auto;}
   #landing-page .landing-inner{margin:auto 0;}
   #landing-page .site-footer{margin:0;padding-top:20px;flex:0 0 auto;}
