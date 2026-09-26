@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Third-party services, fonts, and assets used by beyondefinition.">
+<meta name="theme-color" content="#e4dce8">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://beyondefinition.onrender.com/attributions.html">
+<title>Attributions — beyondefinition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500&display=optional" rel="stylesheet">
+<style>
+:root{--ink:#2b232f;--paper:#e4dce8;--rule:#ada0b3;--accent:#71507f;--muted:#5a5065;--card:#efe9f2;}
+*{box-sizing:border-box;}
+html{scrollbar-width:none;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;line-height:1.65;-webkit-text-size-adjust:100%;}
+.wrap{max-width:640px;margin:0 auto;padding:max(28px,env(safe-area-inset-top,28px)) 20px 90px;}
+a{color:var(--accent);text-underline-offset:2px;}
+a:hover{color:#583d63;}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px;}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:26px;font-size:13px;color:var(--muted);text-decoration:none;font-style:italic;min-height:36px;}
+.back:hover{color:var(--accent);}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:italic;font-size:clamp(27px,7.5vw,38px);line-height:1.15;margin:0 0 8px;}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(17px,4.3vw,20px);margin:34px 0 10px;}
+h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:15px;margin:20px 0 6px;color:var(--ink);}
+p{font-size:15px;margin:0 0 12px;overflow-wrap:break-word;}
+ul,ol{padding-left:1.3em;margin:0 0 14px;}
+li{font-size:15px;margin-bottom:6px;}
+.updated{color:var(--muted);font-size:13px;font-style:italic;margin:0 0 30px;}
+.notice{border-left:3px solid var(--accent);padding:12px 15px;margin:16px 0 20px;background:var(--card);font-size:13.5px;border-radius:0 8px 8px 0;}
+.notice strong{color:var(--ink);}
+.fill{background:rgba(113,80,127,.14);padding:1px 5px;border-radius:4px;font-style:italic;}
+.crosslinks{margin-top:54px;padding-top:20px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;}
+.crosslinks a{text-decoration:none;}
+.crosslinks a:hover{text-decoration:underline;}
+.pagefoot{margin-top:26px;font-size:11.5px;color:var(--muted);font-style:italic;}
+section{margin-bottom:2px;}
+strong{color:var(--ink);}
+@media (prefers-reduced-motion:no-preference){.wrap{animation:fadeIn .4s ease both;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>back to beyondefinition</a>
+
+<h1>Attributions</h1>
+<p class="updated">Last updated: September 26, 2026</p>
+
+<p>beyondefinition is built mostly from scratch, but it relies on a few outside
+services and open-source assets. They're listed here along with the license or
+terms that apply to each, as best as they could be identified from the site's own
+code.</p>
+
+<h2>Fonts</h2>
+<p><strong>Fraunces</strong>, designed by Phaedra Charles and Flavia Zimbardi of
+Undercase Type, and <strong>Source Serif 4</strong>, designed by Frank
+Grießhammer for Adobe — both used for the site's headings and body text, served
+through <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google
+Fonts</a>. Both are released under the
+<a href="https://openfontlicense.org" target="_blank" rel="noopener noreferrer">SIL
+Open Font License 1.1</a>, which permits free use in a project like this one; this
+credit is included as good practice rather than a strict requirement of the
+license. Loading fonts from Google's servers sends your browser's IP address to
+Google as part of the request — see
+<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's
+Privacy Policy</a>.</p>
+
+<h2>Backend &amp; storage — Supabase</h2>
+<p>The site's database, user-uploaded media storage, sign-in for the site owner,
+and a couple of small backend functions (like the interactive chat) run on
+<a href="https://supabase.com" target="_blank" rel="noopener noreferrer">Supabase</a>.
+This is an infrastructure relationship rather than a creative-content one — see
+Supabase's
+<a href="https://supabase.com/terms" target="_blank" rel="noopener noreferrer">Terms
+of Service</a> and
+<a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Privacy
+Policy</a> for what governs data passing through it.</p>
+
+<h2>Hosting — Render</h2>
+<p>The site is hosted on <a href="https://render.com" target="_blank" rel="noopener noreferrer">Render</a>.
+See Render's <a href="https://render.com/terms" target="_blank" rel="noopener noreferrer">Terms
+of Service</a> and <a href="https://render.com/privacy" target="_blank" rel="noopener noreferrer">Privacy
+Policy</a>.</p>
+
+<h2>Music search &amp; previews — Apple</h2>
+<p>The "add a song" search uses Apple's public
+<a href="https://developer.apple.com/documentation/applemusicapi/search_for_catalog_resources" target="_blank" rel="noopener noreferrer">iTunes
+Search API</a> and plays back the short preview clip Apple provides for each
+track, streamed directly from Apple's servers. No song audio is downloaded,
+stored, modified, or redistributed by this site. This use is subject to Apple's
+own terms, including the
+<a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener noreferrer">Apple
+Media Services Terms and Conditions</a>.</p>
+
+<h2>Interactive chat feature — Groq</h2>
+<p>The interactive chat/companion feature (the <code>pet-chat</code> backend function)
+is powered by <a href="https://groq.com" target="_blank" rel="noopener noreferrer">Groq</a>,
+which runs the language model that generates its replies. Messages you send to the companion
+are processed by Groq's API to generate a response. See Groq's
+<a href="https://groq.com/terms-of-use/" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+and <a href="https://groq.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+
+<h2>Icons &amp; artwork</h2>
+<p>The site's icons, illustrations, and small animations (the envelope mark, the
+companion character, and the interface icons) are inline, hand-drawn SVG code
+written directly into the page. No icon font, icon CDN, or stock-art library is
+loaded anywhere in the site — so unlike the items above, nothing here comes from
+an outside source or needs a license credit.</p>
+<p style="font-size:13px;color:var(--muted);">(If new artwork is added later that
+does come from somewhere else — a purchased icon set, a commissioned illustration,
+a stock template — list it here with its license when that happens.)</p>
+
+<h2>User-submitted content</h2>
+<p>Text, photos, gifs, videos, and songs posted by visitors remain the property of
+whoever posted them. See the <a href="/copyright.html">Copyright &amp; Content
+Policy</a> for the rules around what can be uploaded, and how to report content
+that shouldn't be here.</p>
+
+<div class="crosslinks">
+<a href="/terms.html">terms of use</a>
+<a href="/privacy.html">privacy policy</a>
+<a href="/copyright.html">copyright &amp; content policy</a>
+<a href="/attributions.html">attributions</a>
+</div>
+<p class="pagefoot">a small place, made by Selrick. this page was last reviewed September 26, 2026.</p>
+</div>
+</body>
+</html>

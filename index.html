@@ -10,7 +10,9 @@
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="beyondefinition">
 <meta property="og:url" content="https://beyondefinition.onrender.com/">
+<link rel="canonical" href="https://beyondefinition.onrender.com/">
 <meta property="og:title" content="beyondefinition">
 <meta property="og:image" content="https://beyondefinition.onrender.com/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -27,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500&display=optional" rel="stylesheet">
-<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}button, a, [role="button"] { touch-action: manipulation; }</style>
+<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;animation: cardIn 0.22s ease both;}@keyframes cardIn {from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; }}.thoughts-stack-empty {animation: cardIn 0.25s ease both;}.skeleton-card {border: 1px solid var(--rule);border-radius: 9px;padding: 14px 16px;background: linear-gradient(90deg, var(--paper) 25%, rgba(112,78,127,.09) 37%, var(--paper) 63%);background-size: 400% 100%;animation: skeletonShine 1.4s ease infinite;}.skeleton-card .skeleton-line {height: 12px;border-radius: 4px;background: rgba(112,78,127,.14);margin: 0 auto;}.skeleton-card .skeleton-line + .skeleton-line {margin-top: 8px;width: 55%;}@keyframes skeletonShine {0% { background-position: 200% 0; } 100% { background-position: -200% 0; }}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}button, a, [role="button"] { touch-action: manipulation; }</style>
 <style>
   .speak-room{--thought-glow:#6b4a7a;--thought-cool:#60466b;position:fixed;inset:0;z-index:100020;overflow:hidden;background:var(--paper);background-image:radial-gradient(circle at 16% -8%,rgba(107,74,122,.08),transparent 48%),radial-gradient(circle at 88% 8%,rgba(96,70,107,.07),transparent 52%);box-shadow:inset 0 0 170px rgba(16,11,18,.09);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 1s ease;outline:none;}
   .speak-room.open{opacity:1;pointer-events:auto;}
@@ -235,6 +237,18 @@
   .speak-radio-meta{gap:5px;}
   .speak-radio-title{font-size:13px;line-height:1.3;}
   .speak-radio-dial{font-size:10px;}
+  /* cover art: a small square thumbnail anchors the card on the left
+     when a track has one. cards without artwork keep the original
+     layout untouched, just with a faint full-card icon watermark
+     behind the controls, so old cards still read as old cards. */
+  .speak-radio{position:relative;}
+  .speak-radio-art{width:44px;height:44px;flex:0 0 auto;border-radius:8px;object-fit:cover;border:1px solid var(--rule);box-shadow:0 1px 3px var(--card-shadow);background:var(--paper);}
+  .speak-radio.playing .speak-radio-art{box-shadow:0 0 0 2px var(--accent);}
+  .speak-radio.has-art .speak-radio-title{text-align:left;}
+  .speak-radio.no-art{overflow:hidden;}
+  .speak-radio-watermark{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;pointer-events:none;opacity:.05;}
+  .speak-radio-watermark svg{width:64px;height:64px;fill:none;stroke:var(--ink);stroke-width:1;}
+  .speak-radio > .speak-radio-meta{position:relative;z-index:1;}
   /* replies: smaller, with names */
   .speak-replies{gap:9px;margin:10px 0 0 2px;padding-left:12px;}
   .reply-like{all:unset;box-sizing:border-box;display:none;align-items:center;justify-content:center;gap:5px;min-width:22px;height:22px;color:var(--muted);cursor:default;pointer-events:none;-webkit-tap-highlight-color:transparent;}
@@ -388,11 +402,13 @@
 .speak-room .speak-radio.playing{border-color:var(--accent);}
 .speak-room .speak-radio .say{width:38px;height:38px;box-shadow:0 1px 6px var(--card-shadow);}
 .speak-room .speak-radio .say svg{width:15px;height:15px;}
+.speak-room .speak-radio-art{width:52px;height:52px;border-radius:10px;margin-right:12px;}
+.speak-room .speak-radio-watermark svg{width:78px;height:78px;}
 .speak-room .speak-radio-meta{gap:2px;}
 .speak-room .speak-radio-dial{font-size:10px;letter-spacing:.14em;text-transform:uppercase;}
 .speak-room .speak-radio-title{font-size:14px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
 .speak-radio-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
-.speak-radio-time{font-family:'Courier Prime','Courier New',Courier,monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums;}
+.speak-radio-time{font-family:'Courier Prime','Courier New',Courier,monospace;font-size:11px;letter-spacing:.03em;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .speak-radio-seek{padding:8px 0;margin:-4px 0;cursor:pointer;}
 .speak-radio-seek .speak-radio-bar{height:3px;border-radius:3px;}
 .speak-radio-seek:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
@@ -521,7 +537,25 @@
 .thought-like{margin-top:3px;transition:background .2s ease,color .2s ease;}
 .thought-like.liked{background:rgba(112,78,127,.12);}
 /* wall: plain quotes, no bubble */
-.thoughts-modal .thought-line::before,.thought-stack-item p:not(.speak-radio-title)::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+.thoughts-modal .thought-line-text:not(:empty)::before,.thought-stack-item p:not(.speak-radio-title):not(:empty)::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+.thoughts-modal .thought-line-text:not(:empty)::after,.thought-stack-item p:not(.speak-radio-title):not(:empty)::after{content:'\201D';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-left:2px;}
+.thought-line-media{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto;}
+.thought-line-media:empty{display:none;}
+.thought-line-text:not(:empty) + .thought-line-media{margin-top:6px;}
+.thought-line-media .speak-media{margin:0;line-height:0;}
+.thought-line-media .speak-media img,.thought-line-media .speak-media video{display:block;max-width:88px;max-height:88px;width:auto;height:auto;border-radius:9px;}
+.thought-line-media .speak-radio{width:min(220px,66vw);max-width:100%;margin-top:0;text-align:left;padding:8px 10px;gap:8px;}
+.thought-line-media .speak-radio .say{width:26px;height:26px;}
+.thought-line-media .speak-radio .say svg{width:11px;height:11px;}
+.thought-line-media .speak-radio-art{width:32px;height:32px;margin-right:0;}
+.thought-line-media .speak-radio-meta{gap:5px;}
+.thought-line-media .speak-radio-title{font-size:12px;}
+.thought-line-media .speak-radio-skip{width:22px;height:22px;}
+.thought-line-media .speak-radio-skip svg{width:10px;height:10px;}
+.thought-line-media .speak-radio-mute{width:20px;height:20px;}
+.thought-line-media .speak-radio-mute svg{width:11px;height:11px;}
+.thought-line-media .speak-radio-time{font-size:9px;}
+.thought-line-media .speak-radio-end .speak-radio-dial{display:none;}
 /* full list: soft chat bubbles, alternating sides, corner-tail (no diamond) */
 .thoughts-stack-list{gap:12px;padding-top:18px;}
 .thoughts-stacked-room .thought-stack-item{position:relative;align-self:flex-start;box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:12px 16px 9px;text-align:left;border:0;border-radius:20px 20px 20px 6px;background-color:rgba(112,78,127,.11);background-image:none;box-shadow:none;}
@@ -537,6 +571,7 @@
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
 .thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
 .thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::before{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-right:4px;opacity:.55;}
+.thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::after{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-left:4px;opacity:.55;}
 .thoughts-stacked-room .thought-stack-item time{margin-top:7px;font-size:9.5px;letter-spacing:.1em;opacity:.8;}
 .thoughts-stacked-room .thought-stack-item .thought-like{margin:2px 0 0;padding:4px 8px 4px 0;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin-left:auto;padding:4px 0 4px 8px;}
@@ -763,6 +798,48 @@
 /* `all:unset` on .speak-link was beating [hidden], so "take it off" showed with nothing attached */
 .thoughts-modal [hidden]{display:none !important;}
 </style>
+<style id="diary-view-visibility-guard">
+  /* The individual diary is a real full-screen room, not an empty state.
+     Keep its shell visible whenever open, including on mobile/browser
+     restores where the room visibility state can become stale. */
+  #diary-view-room.open {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    z-index: 999999 !important;
+  }
+  #diary-view-room.open > * {
+    visibility: visible !important;
+  }
+  #diary-view-room.open .thoughts-stacked-header,
+  #diary-view-room.open .thoughts-stack-list,
+  #diary-view-room.open .diary-view-compose,
+  #diary-view-room.open .site-footer {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  #diary-view-room.open .thoughts-stacked-header,
+  #diary-view-room.open .thoughts-stack-list,
+  #diary-view-room.open .diary-view-compose,
+  #diary-view-room.open .site-footer {
+    visibility: visible;
+  }
+  #diary-view-title {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "beyondefinition",
+  "url": "https://beyondefinition.onrender.com/",
+  "description": "A quiet place to set a thought down. It stays here — for you to find again, or for a stranger to stumble on."
+}
+</script>
 </head>
 <body>
 <script>
@@ -864,18 +941,30 @@ html body .thoughts-overlay.open{display:block !important;padding:0 !important;o
   background-image:radial-gradient(ellipse at 18% 0%,var(--room-glow),transparent 38%),radial-gradient(ellipse at 84% 100%,var(--room-wash),transparent 45%) !important;
   -webkit-backdrop-filter:none !important;backdrop-filter:none !important;}
 html body .thoughts-overlay:not(.open){display:none !important;}
+.landing-thoughts-bg{position:absolute;z-index:-1;overflow:hidden;pointer-events:none;opacity:.45;filter:blur(.3px);}
+.landing-thoughts-bg .ltb-row{display:flex;gap:14px;width:max-content;margin:14px 0;animation:ltbDrift 26s linear infinite;will-change:transform;}
+.landing-thoughts-bg .ltb-row:last-child{animation-direction:reverse;animation-duration:32s;}
+.landing-thoughts-bg .ltb-card{flex:0 0 auto;max-width:180px;margin:0;padding:10px 13px;border:1px solid var(--rule);border-radius:10px;
+  background:var(--paper);box-shadow:0 2px 10px var(--card-shadow);font-family:'Source Serif 4',Georgia,serif;font-style:italic;
+  font-size:12px;line-height:1.5;color:var(--muted);}
+@keyframes ltbDrift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#landing-thoughts-bg-top{left:0;right:0;top:0;height:min(22vh,160px);
+  -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);
+  mask-image:linear-gradient(180deg,#000 40%,transparent);}
 #landing-page{position:fixed;inset:0;z-index:99990;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:max(28px,env(safe-area-inset-top)) clamp(20px,6vw,40px) max(40px,env(safe-area-inset-bottom));
   background:var(--paper);
-  background-image:radial-gradient(ellipse at 18% 0%,rgba(107,74,122,0.07),transparent 42%),radial-gradient(ellipse at 84% 100%,rgba(96,70,107,0.06),transparent 48%);
+  background-image:radial-gradient(ellipse at 18% 0%,rgba(107,74,122,0.07),transparent 42%),radial-gradient(ellipse at 84% 100%,rgba(96,70,107,0.06),transparent 48%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
   text-align:center;opacity:1;transition:opacity .35s ease;}
 #landing-page.leaving{opacity:0;pointer-events:none;}
-#landing-page .landing-inner{width:100%;max-width:400px;}
+#landing-page .landing-inner{width:100%;max-width:400px;position:relative;}
 /* the envelope is a button: tap or click and the flap lifts, a note slides out; again to close */
-#landing-page .landing-mail{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;width:48px;height:48px;margin:-9px auto 7px;border-radius:50%;color:var(--accent);transition:transform .1s ease;}
+#landing-page .landing-mail{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:-6px auto 5px;border-radius:50%;color:var(--accent);opacity:.7;transition:transform .1s ease,opacity .15s ease;}
+#landing-page .landing-mail:hover,#landing-page .landing-mail[aria-pressed="true"]{opacity:1;}
 #landing-page .landing-mail:active{transform:scale(.94);}
 #landing-page .landing-mail:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-#landing-page .landing-mark{display:block;width:30px;height:30px;opacity:.85;transition:opacity .15s ease;}
+#landing-page .landing-mark{display:block;width:25px;height:25px;opacity:.85;transition:opacity .15s ease;}
 #landing-page .landing-mail:hover .landing-mark,#landing-page .landing-mail[aria-pressed="true"] .landing-mark{opacity:1;}
 .landing-mark .fill{fill:var(--paper);}
 .landing-mark .flap{transform-box:view-box;transform-origin:16px 9.5px;transition:transform .25s cubic-bezier(.3,.7,.2,1);}
@@ -884,7 +973,8 @@ html body .thoughts-overlay:not(.open){display:none !important;}
 .landing-mail[aria-pressed="true"] .letter{opacity:1;transform:translateY(-6px);}
 #landing-page h1{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:clamp(30px,8vw,44px);line-height:1.15;margin:0 0 14px;color:var(--ink);}
 #landing-page p{max-width:50ch;margin:0 auto;color:var(--muted);font-size:clamp(14px,3.6vw,16px);line-height:1.55;}
-#landing-page .landing-divider{width:34px;height:1px;margin:26px auto;background:var(--rule);}
+#landing-page .landing-count{margin:10px auto 0;font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:12px;color:var(--muted);opacity:.75;min-height:15px;}
+#landing-page .landing-divider{width:34px;height:1px;margin:16px auto 14px;background:var(--rule);}
 #landing-page .landing-actions{display:flex;flex-direction:column;align-items:center;}
 #landing-page .landing-actions .thoughts-link{margin-top:18px;opacity:.72;}
 #landing-enter{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;margin-top:0;padding:12px 28px;border-radius:20px;
@@ -982,6 +1072,14 @@ html body #thoughts-panel-wall #thoughts-goto-stacked,html body #thoughts-panel-
 html body #thoughts-panel-wall #thoughts-goto-compose{line-height:1.3;padding-top:5px;padding-bottom:5px;}
 html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
+/* landing page: sharpen the gap between the two secondary actions —
+   "other diaries" stays a visible outlined pill, "into selrick's room"
+   drops to a quieter plain-text link so the two don't read as equal weight */
+html body #landing-page #landing-diaries{border-color:var(--rule);color:var(--ink);font-size:13px;font-weight:500;}
+html body #landing-page #landing-diaries:hover{border-color:var(--accent);background:rgba(112,78,127,.06);}
+html body #landing-page #landing-room{margin-top:8px;font-size:12px;opacity:.65;}
+html body #landing-page #landing-room:hover{opacity:1;}
+
 
 </style>
 <template id="site-footer-tpl">
@@ -992,10 +1090,21 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
             follow @kcirles
           </a>
   </div>
-  <div class="sf-updated">Last updated: <time datetime="2026-09-25T15:59+08:00">Friday, September 25, 2026, 3:59 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-meta sf-legal">
+    <a class="footer-link" href="/terms.html">terms</a>
+    <a class="footer-link" href="/privacy.html">privacy</a>
+    <a class="footer-link" href="/copyright.html">copyright</a>
+    <a class="footer-link" href="/attributions.html">attributions</a>
+    <a class="footer-link" href="/copyright.html#report">report a concern</a>
+  </div>
+  <div class="sf-updated">Last updated: <time datetime="2026-09-26T06:33+08:00">Saturday, September 26, 2026, 6:33 AM</time> <span class="sf-updated-ago"></span></div>
 </template>
 
 <div id="landing-page">
+  <div class="landing-thoughts-bg" id="landing-thoughts-bg-top" aria-hidden="true">
+    <div class="ltb-row" id="ltb-row-5"></div>
+    <div class="ltb-row" id="ltb-row-6"></div>
+  </div>
   <div class="landing-inner">
     <button type="button" class="landing-mail" id="landing-mail" aria-pressed="false" aria-label="open the envelope">
       <svg class="landing-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">
@@ -1009,6 +1118,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     </button>
     <h1>beyondefinition</h1>
     <p>not quite a diary, not quite a message in a bottle, something closer to both. leave a few words here, and let them sit for as long as they need to.</p>
+    <p class="landing-count" id="landing-count" aria-hidden="true"></p>
     <div class="landing-divider"></div>
     <div class="landing-actions">
       <button type="button" id="landing-enter">leave something</button>
@@ -1018,7 +1128,61 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   </div>
   <footer class="footer-note site-footer" data-site-footer></footer>
 </div>
+<script>(function(){
+  var SB_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
+  var SB_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
+  var countEl = document.getElementById('landing-count');
+  fetch(SB_URL + '/rest/v1/thoughts?select=id', {
+    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, Prefer: 'count=exact', Range: '0-0' }
+  }).then(function (r) {
+    var range = r.headers.get('content-range');
+    var total = range ? parseInt(range.split('/')[1], 10) : NaN;
+    if (countEl && !isNaN(total) && total > 0) {
+      countEl.textContent = total.toLocaleString() + ' thought' + (total === 1 ? '' : 's') + ' left so far';
+    }
+  }).catch(function () {});
+})();</script>
 <script>document.getElementById('landing-mail').onclick=function(){this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')!=='true');};</script>
+<script>
+// Quiet, half-visible thoughts drifting behind the landing card — real
+// ones when they're reachable, a handful of seed lines when they're not.
+// Pure decoration: aria-hidden, pointer-events:none, no interaction wired up.
+(function () {
+  var SB_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
+  var SB_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
+  var seed = [
+    'i read the entry twice. it was longer the second time.',
+    'i think i have heard the name before. i could not say where.',
+    'it is tuesday where i am.',
+    'nothing to add. i only wanted to say i was here.',
+    'the second sense was gone when i scrolled back. thank you anyway.',
+    'i counted the letters. seven. i counted again, to be polite.'
+  ];
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function trim(s) { s = (s || '').trim(); return s.length > 90 ? s.slice(0, 87) + '\u2026' : s; }
+  function fillRow(el, lines) {
+    if (!el || !lines.length) return;
+    el.innerHTML = lines.concat(lines).map(function (t) { return '<p class="ltb-card">' + esc(t) + '</p>'; }).join('');
+  }
+  function place(lines) {
+    if (!lines.length) lines = seed;
+    var a = lines.filter(function (_, i) { return i % 2 === 0; });
+    var b = lines.filter(function (_, i) { return i % 2 === 1; });
+    fillRow(document.getElementById('ltb-row-1'), a.length ? a : seed);
+    fillRow(document.getElementById('ltb-row-2'), b.length ? b : seed);
+    fillRow(document.getElementById('ltb-row-3'), b.length ? b : seed);
+    fillRow(document.getElementById('ltb-row-4'), a.length ? a : seed);
+    fillRow(document.getElementById('ltb-row-5'), a.length ? a : seed);
+    fillRow(document.getElementById('ltb-row-6'), b.length ? b : seed);
+  }
+  fetch(SB_URL + '/rest/v1/thoughts?select=content&order=created_at.desc&limit=24', {
+    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
+  }).then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) {
+    var lines = (rows || []).map(function (r) { return trim(r.content); }).filter(function (t) { return t && t !== '[media]'; });
+    place(lines);
+  }).catch(function () { place([]); });
+})();
+</script>
 
 <div class="thoughts-overlay" id="thoughts-overlay" inert>
   <div class="thoughts-modal" role="dialog" aria-modal="true" aria-labelledby="thoughts-title">
@@ -1045,6 +1209,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         <div class="speak-attach" id="thoughts-media-wrap">
           <input type="file" id="thoughts-media-input" accept="image/*,video/*" hidden>
         </div>
+        <p class="attach-rights-note">only attach a photo, gif, or clip that's yours to share — <a href="/copyright.html" target="_blank" rel="noopener noreferrer">copyright policy</a></p>
         <div class="thoughts-music-search" id="thoughts-music-search" hidden>
           <div class="thoughts-music-searchrow">
             <input type="text" id="thoughts-music-input" enterkeyhint="search" maxlength="80" placeholder="search a song or artist&hellip;">
@@ -1100,12 +1265,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       <span>back</span>
     </button>
     <h2 id="thoughts-stacked-title">everything left behind</h2>
-    <p class="thoughts-stacked-sub">there's no clock running. take whatever time you need to read them.</p>
+    <p class="thoughts-stacked-sub" id="thoughts-room-sub" style="white-space:normal;overflow:visible;text-overflow:clip;">there's no clock running. take whatever time you need to read them.</p>
   </div>
 
   <div class="thoughts-stack-list" id="thoughts-stack-list">
     <p class="thoughts-loading" id="thoughts-stack-loading">looking for them&hellip;</p>
   </div>
+  <button type="button" class="thoughts-link" id="thoughts-stacked-goto-wall">see what's here</button>
   <footer class="footer-note site-footer" data-site-footer></footer>
 </div>
 
@@ -1161,6 +1327,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         <div class="speak-attach" id="speak-media-wrap">
           <input type="file" id="speak-media-input" accept="image/*,video/*" hidden>
         </div>
+        <p class="attach-rights-note">only attach a photo, gif, or clip that's yours to share — <a href="/copyright.html" target="_blank" rel="noopener noreferrer">copyright policy</a></p>
         <div class="thoughts-music-search" id="speak-music-search" hidden>
           <div class="thoughts-music-searchrow">
             <input type="text" id="speak-music-input" enterkeyhint="search" maxlength="80" placeholder="search a song or artist&hellip;">
@@ -1220,7 +1387,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   </div>
 
   <div class="thoughts-stack-list" id="diaries-list">
-    <p class="thoughts-loading" id="diaries-loading">looking for them&hellip;</p>
+    <p class="thoughts-loading" id="diaries-loading" hidden>looking for them&hellip;</p>
   </div>
   <footer class="footer-note site-footer" data-site-footer></footer>
 </div>
@@ -1271,6 +1438,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     <div id="diary-view-code-wrap" hidden>
       <input type="text" class="diary-field" id="diary-view-code" enterkeyhint="done" maxlength="40" placeholder="the private code, to write here&hellip;" autocapitalize="none" autocorrect="off" spellcheck="false">
       <button type="button" class="speak-link" id="diary-view-logout" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"/><path d="M16 8l4 4-4 4M20 12H9"/></svg><span class="lbl">log out</span></button>
+      <button type="button" class="speak-link thought-delete" id="diary-view-delete-diary" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg><span class="lbl">delete this diary</span></button>
       <p class="thoughts-status" id="diary-view-status" aria-live="polite"></p>
       <div id="diary-write-fields" hidden>
       <textarea id="diary-view-input" enterkeyhint="done" maxlength="500" rows="3" placeholder="write something here&hellip;"></textarea>
@@ -1289,6 +1457,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       <div class="speak-attach" id="diary-view-media-wrap">
         <input type="file" id="diary-view-media-input" accept="image/*,video/*" hidden>
       </div>
+      <p class="attach-rights-note">only attach a photo, gif, or clip that's yours to share — <a href="/copyright.html" target="_blank" rel="noopener noreferrer">copyright policy</a></p>
       <div class="thoughts-music-search" id="diary-view-music-search" hidden>
         <div class="thoughts-music-searchrow">
           <input type="text" id="diary-view-music-input" enterkeyhint="search" maxlength="80" placeholder="search a song or artist&hellip;">
@@ -1361,7 +1530,11 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         title: it.trackName || 'untitled',
         artist: it.artistName || '',
         previewUrl: it.previewUrl || '',
-        artwork: it.artworkUrl60 || it.artworkUrl100 || ''
+        // iTunes only ever returns small thumbnails (60/100px), but the
+        // same asset exists at higher resolutions under a predictable
+        // path — swapping the size in the URL is free and avoids a
+        // second request.
+        artwork: (it.artworkUrl100 || it.artworkUrl60 || '').replace(/\/\d+x\d+bb\.(jpg|png)$/, '/300x300bb.$1')
       })).filter((r) => r.previewUrl);
     }
     return { search };
@@ -1542,7 +1715,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           meta.appendChild(t); meta.appendChild(a);
           row.appendChild(art); row.appendChild(meta);
           row.addEventListener('click', () => {
-            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
+            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl, artwork: r.artwork });
             closeMusicSearch();
           });
           musicResultsEl.appendChild(row);
@@ -1743,9 +1916,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
     const lineEl = document.createElement('div');
     lineEl.className = 'thought-line';
-    const lineText = document.createTextNode('');
+    const lineText = document.createElement('span');
+    lineText.className = 'thought-line-text';
+    const lineMedia = document.createElement('div');
+    lineMedia.className = 'thought-line-media';
     const lineTime = document.createElement('time');
     lineEl.appendChild(lineText);
+    lineEl.appendChild(lineMedia);
     lineEl.appendChild(lineTime);
     listEl.appendChild(lineEl);
 
@@ -1766,7 +1943,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     // at risk of drifting toward an edge.
     function placeLineRandomly() {
       lineEl.style.left = '50%';
-      lineEl.style.top = '50%';
+      // Reserve room for the 'tap for another one' hint pinned to the
+      // bottom of the box, so a taller card (text + sticker/audio,
+      // not just a line of words) centers in the space above it
+      // instead of centering on the full box and dipping into it.
+      const FOOTER_RESERVE = 26;
+      const avail = Math.max(lineEl.offsetHeight, listEl.clientHeight - FOOTER_RESERVE);
+      lineEl.style.top = (avail / 2) + 'px';
     }
 
     // If the viewport changes size while a thought is on screen (a
@@ -1796,6 +1979,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     function scheduleHide() {
       clearTimeout(stageHideTimer);
       stageHideTimer = setTimeout(() => {
+        // A song from this card is still playing — don't cut away to
+        // the next thought under it. Check back again shortly instead
+        // of hiding.
+        if (thoughtActiveAudio) { scheduleHide(); return; }
         lineEl.classList.remove('show');
         lineEl.classList.add('fade');
         stageTimer = setTimeout(surfaceNext, 480 + Math.random() * 300);
@@ -1820,7 +2007,12 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
       clearStageEmpty();
       lineEl.classList.remove('show', 'fade', 'thought-line-new');
-      lineText.textContent = entry.content;
+      if (window.stopThoughtAudio) window.stopThoughtAudio();
+      const wordless = (entry.media_url || entry.music_url) && entry.content === THOUGHT_MEDIA_ONLY;
+      lineText.textContent = wordless ? '' : entry.content;
+      lineMedia.innerHTML = '';
+      if (entry.media_url) lineMedia.appendChild(buildThoughtMedia(entry, true));
+      if (entry.music_url) lineMedia.appendChild(buildThoughtMusic(entry));
       lineTime.textContent = (isNew ? 'you' : pseudoHandle(entry)) + ' · ' + (isNew ? 'just now' : timeAgo(entry.created_at));
       if (entry.created_at) { lineTime.dateTime = entry.created_at; lineTime.title = fmtDate(entry.created_at); }
       placeLineRandomly();
@@ -1845,6 +2037,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       clearTimeout(stageTimer);
       clearTimeout(stageHideTimer);
       lineEl.classList.remove('show', 'fade');
+      if (window.stopThoughtAudio) window.stopThoughtAudio();
     }
 
     // Tapping the room skips ahead to another thought early, the same
@@ -2095,6 +2288,25 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       };
       return api;
     }
+    // Real artwork gets its usual side thumbnail. A card with no artwork
+    // (mostly older ones, saved before the artwork field existed) keeps
+    // its original layout and just gets the same note icon as a faint
+    // full-card watermark, instead of a new box pushing the content over.
+    function buildRadioArt(src) {
+      const art = document.createElement('img');
+      art.className = 'speak-radio-art';
+      art.src = src;
+      art.alt = '';
+      art.loading = 'lazy';
+      return art;
+    }
+    function buildRadioWatermark() {
+      const wm = document.createElement('div');
+      wm.className = 'speak-radio-watermark';
+      wm.setAttribute('aria-hidden', 'true');
+      wm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+      return wm;
+    }
     function buildThoughtMusic(entry) {
       const box = document.createElement('div');
       box.className = 'speak-radio';
@@ -2178,6 +2390,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       });
       rew.addEventListener('click', (e) => { e.stopPropagation(); audioApi.seekBy(-10); });
       ff.addEventListener('click', (e) => { e.stopPropagation(); audioApi.seekBy(10); });
+      if (entry.music_artwork) {
+        box.insertBefore(buildRadioArt(entry.music_artwork), meta);
+        box.classList.add('has-art');
+      } else {
+        box.classList.add('no-art');
+        box.insertBefore(buildRadioWatermark(), meta);
+      }
       return box;
     }
     // Shared with the diary's card renderer, so a diary entry's photo
@@ -2385,9 +2604,15 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         try {
           const hdrs = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` };
           let res = await fetch(
-            `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,likes_count,liked_by_owner,liked_at,media_url,music_url,music_title&order=created_at.desc&limit=50`,
+            `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,likes_count,liked_by_owner,liked_at,media_url,music_url,music_title,music_artwork&order=created_at.desc&limit=50`,
             { headers: hdrs }
           );
+          if (!res.ok) {
+            res = await fetch(
+              `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,likes_count,liked_by_owner,liked_at,media_url,music_url,music_title&order=created_at.desc&limit=50`,
+              { headers: hdrs }
+            );
+          }
           if (!res.ok) {
             res = await fetch(
               `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,content,created_at,liked_by_owner,liked_at,media_url,music_url,music_title&order=created_at.desc&limit=50`,
@@ -2521,6 +2746,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       if (track) {
         entry.music_url = track.previewUrl;
         entry.music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : '');
+        if (track.artwork) entry.music_artwork = track.artwork;
       }
       let saved = false;
 
@@ -2528,7 +2754,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         try {
           const body = { content: entry.content };
           if (mediaUrl) body.media_url = mediaUrl;
-          if (track) { body.music_url = entry.music_url; body.music_title = entry.music_title; }
+          if (track) {
+            body.music_url = entry.music_url; body.music_title = entry.music_title;
+            if (entry.music_artwork) body.music_artwork = entry.music_artwork;
+          }
           const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/${TABLE}`, {
             method: 'POST',
             headers: {
@@ -2540,6 +2769,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
             body: JSON.stringify(b)
           });
           let res = await send(body);
+          if (res.status === 400 && body.music_artwork) { // column not set up yet: post without it
+            delete body.music_artwork;
+            res = await send(body);
+          }
           if (res.status === 400 && (body.music_url || body.music_title)) { // columns not set up yet: post without them
             delete body.music_url; delete body.music_title;
             res = await send(body);
@@ -2642,6 +2875,11 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     if (gotoWallBtn) gotoWallBtn.addEventListener('click', () => switchPanel(wallPanel, composePanel));
     if (gotoComposeBtn) gotoComposeBtn.addEventListener('click', () => switchPanel(composePanel, wallPanel));
     if (gotoStackedBtn) gotoStackedBtn.addEventListener('click', openStackedRoom);
+    const stackedGotoWallBtn = document.getElementById('thoughts-stacked-goto-wall');
+    if (stackedGotoWallBtn) stackedGotoWallBtn.addEventListener('click', () => {
+      closeStackedRoom();
+      if (!wallPanel.classList.contains('active')) switchPanel(wallPanel, composePanel);
+    });
     const backToWallBtn = document.getElementById('thoughts-back-compose');
     const backToLandingBtn = document.getElementById('thoughts-back-wall');
     if (backToWallBtn) backToWallBtn.addEventListener('click', () => switchPanel(wallPanel, composePanel));
@@ -2693,6 +2931,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   //
   //   alter table room_posts add column audio_url text;
   //   alter table room_posts add column audio_title text;
+  //   alter table room_posts add column audio_artwork text;  -- optional cover thumbnail
   //   alter table room_replies add column username text;  -- names on replies
   //   alter table room_replies add column liked_by_owner boolean not null default false;  -- Selrick's likes
   //   create policy "owner likes replies" on room_replies for update to authenticated
@@ -3178,6 +3417,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       });
       rew.addEventListener('click', (e) => { e.stopPropagation(); radio.seekBy(-10); });
       ff.addEventListener('click', (e) => { e.stopPropagation(); radio.seekBy(10); });
+      if (post.audio_artwork) {
+        box.insertBefore(buildRadioArt(post.audio_artwork), meta);
+        box.classList.add('has-art');
+      } else {
+        box.classList.add('no-art');
+        box.insertBefore(buildRadioWatermark(), meta);
+      }
       box._radio = radio;
       return box;
     }
@@ -3274,7 +3520,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           meta.appendChild(t); meta.appendChild(a);
           row.appendChild(art); row.appendChild(meta);
           row.addEventListener('click', () => {
-            setPendingAudio({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
+            setPendingAudio({ title: r.title, artist: r.artist, previewUrl: r.previewUrl, artwork: r.artwork });
             closeSpeakMusicSearch();
           });
           musicResultsEl.appendChild(row);
@@ -3653,7 +3899,8 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       try { localStorage.setItem(SEEN_KEY, new Date().toISOString()); } catch (e) {}
     }
 
-    async function loadRoom() {
+    async function loadRoom(attempt) {
+      attempt = attempt || 0;
       feedEl.innerHTML = '';
       feedEl.appendChild(el('p', 'speak-status-line', 'opening the room\u2026'));
       try {
@@ -3663,7 +3910,8 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           { headers: anonHeaders }
         );
         // newest columns first; falls back for anything not set up yet
-        let res = await q('id,content,created_at,audio_url,audio_title,media_url,likes_count', 'id,content,created_at,username,liked_by_owner');
+        let res = await q('id,content,created_at,audio_url,audio_title,audio_artwork,media_url,likes_count', 'id,content,created_at,username,liked_by_owner');
+        if (!res.ok) res = await q('id,content,created_at,audio_url,audio_title,media_url,likes_count', 'id,content,created_at,username,liked_by_owner');
         if (!res.ok) res = await q('id,content,created_at,audio_url,audio_title,media_url', 'id,content,created_at,username,liked_by_owner');
         if (!res.ok) res = await q('id,content,created_at,audio_url,audio_title,likes_count', 'id,content,created_at,username,liked_by_owner');
         if (!res.ok) res = await q('id,content,created_at,audio_url,audio_title', 'id,content,created_at,username,liked_by_owner');
@@ -3675,14 +3923,26 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         renderFeed(await res.json());
         loadedAt = Date.now();
       } catch (e) {
+        // a dropped request on a weak connection shouldn't read as "broken" —
+        // quietly retry with backoff before showing the error state.
+        if (attempt < 4) { setTimeout(() => loadRoom(attempt + 1), 600 * (attempt + 1)); return; }
         feedEl.innerHTML = '';
-        const msg = el('p', 'speak-status-line', "the room could not be reached. ");
+        const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+        const msg = el('p', 'speak-status-line', offline
+          ? "looks like you're offline. "
+          : "the room could not be reached \u2014 it might be your connection or an ad blocker. ");
         const retry = linkBtn('try again', '', 'refresh');
-        retry.addEventListener('click', loadRoom);
+        retry.addEventListener('click', () => loadRoom());
         msg.appendChild(retry);
         feedEl.appendChild(msg);
       }
     }
+
+    // if the room failed to load while offline, pick it back up the moment
+    // the connection returns, instead of leaving a stale error on screen.
+    window.addEventListener('online', () => {
+      if (room.classList.contains('open') && !loadedAt) loadRoom();
+    });
 
     /* ---------- owner: sign in / out, and speaking ---------- */
     ownerToggle.addEventListener('click', () => {
@@ -3734,6 +3994,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         if (mediaUrl) body.media_url = mediaUrl;
         if (audioUrl) body.audio_url = audioUrl;
         if (audioUrl && title) body.audio_title = title;
+        if (audioUrl && track.artwork) body.audio_artwork = track.artwork;
         const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/room_posts`, {
           method: 'POST',
           headers: {
@@ -3745,6 +4006,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           body: JSON.stringify(b)
         });
         let res = await send(body);
+        if (res.status === 400 && body.audio_artwork) { // column not set up yet: post without it
+          delete body.audio_artwork;
+          res = await send(body);
+        }
         if (res.status === 400 && body.audio_title) { // title column not set up yet: post without it
           delete body.audio_title;
           res = await send(body);
@@ -4433,16 +4698,13 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   }
   function clampY(v){ return Math.max(M + 56, Math.min(vh() - vkH() - H - M, footerTop(), v)); }
 
-  // On a thought-preview card, clip the pet to the card's own box (its border line),
-  // so only the part of it inside the card is visible — it reads as boxed inside;
-  // off the card the clip is removed and it's back to its normal outside self.
+  // Used to clip the pet to a thought-preview card's box so it read as
+  // "boxed inside" — removed: with the perch sitting at the card's top
+  // edge, almost the whole pet stayed above that line, so only a sliver
+  // of its feet/paws was ever left visible. The pet now stays fully
+  // visible whether or not it's perched on a card.
   function syncCardDepth(){
-    var el = perch && perch.el && perch.el.matches(PREVIEW_CARD) ? perch.el : null;
-    if (!el) { pet.style.clipPath = ''; return; }
-    var r = el.getBoundingClientRect();
-    var top = Math.max(0, r.top - y), left = Math.max(0, r.left - x);
-    var right = Math.max(0, (x + W) - r.right), bottom = Math.max(0, (y + H) - r.bottom);
-    pet.style.clipPath = 'inset(' + top + 'px ' + right + 'px ' + bottom + 'px ' + left + 'px)';
+    pet.style.clipPath = '';
   }
 
   function render(){
@@ -4601,18 +4863,9 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     scheduleThink(rnd(3500, 6000));
     return true;
   }
-  document.addEventListener('click', function(e){
-    if (chatOpen || held || asleep || moving || pet.contains(e.target) || Math.random() > .3) return;
-    var el = e.target.closest && e.target.closest(SEL);
-    if (!el || (perch && perch.el === el)) return;
-    clearTimeout(think);
-    setTimeout(function(){
-      if (held || chatOpen || moving) return;
-      var t = { el: el, fx: Math.random() }, p = place(t);
-      if (p) { var dd = Math.hypot(p.x - x, p.y - y); hopTo(t, 130 + dd * .1, Math.min(90, 24 + dd * .2)); }
-      else scheduleThink(rnd(1500, 3000));
-    }, 500);
-  }, true);
+  // The pet used to hop toward whatever the visitor clicked. It now
+  // roams entirely on its own (see decide/scheduleThink below) and
+  // never reacts to taps or clicks anywhere on the page.
   function elText(el){ return (el.innerText || el.alt || el.placeholder || '').replace(/\s+/g, ' ').trim().slice(0, 60); }
   function remark(){
     if (!perch || chatOpen || held || Math.random() > .3) return;
@@ -5248,7 +5501,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   // [selector, smallest font size in px that's still comfortable to read]
   var GROUPS = [
     ['#landing-page h1,#thoughts-title,#thoughts-panel-wall h3,#thoughts-stacked-title,#speak-title', 16],
-    ['#landing-page p,.feedback-sub,.thoughts-stacked-sub,.speak-sub', 12]
+    ['#landing-page p,.feedback-sub,.thoughts-stacked-sub:not(#thoughts-room-sub),.speak-sub', 12]
   ];
   function fit(el, floor){
     el.classList.remove('fit1', 'fitwrap'); el.style.fontSize = '';
@@ -5282,7 +5535,6 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   #page-veil{position:fixed;inset:0;z-index:500000;display:none;pointer-events:none;background-color:var(--paper);opacity:0;}
   #page-veil.go{display:block;animation:veilFade .4s cubic-bezier(.4,0,.2,1) both;}
   @keyframes veilFade{0%{opacity:0;}45%,55%{opacity:1;}100%{opacity:0;}}
-  @media (prefers-reduced-motion: reduce){ #page-veil.go{animation-duration:.01ms;} }
 </style>
 <script id="page-turn-script">
 (function(){
@@ -5522,7 +5774,6 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     const room = document.getElementById('diaries-room');
     const backBtn = document.getElementById('diaries-back');
     const listEl = document.getElementById('diaries-list');
-    const loadingEl = document.getElementById('diaries-loading');
     const searchEl = document.getElementById('diaries-search');
     const newBtn = document.getElementById('diaries-new-btn');
     const newOverlay = document.getElementById('diary-new-overlay');
@@ -5542,6 +5793,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     const viewInput = document.getElementById('diary-view-input');
     const viewCodeToggle = document.getElementById('diary-view-code-toggle');
     const viewLogout = document.getElementById('diary-view-logout');
+    const viewDeleteDiary = document.getElementById('diary-view-delete-diary');
     const viewCodeWrap = document.getElementById('diary-view-code-wrap');
     const viewCode = document.getElementById('diary-view-code');
     const viewCount = document.getElementById('diary-view-count');
@@ -5575,16 +5827,27 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
+    // a few pulsing placeholder cards while a list is still loading,
+    // shaped like the real cards so nothing jumps when they arrive
+    function renderSkeletons(container, n) {
+      for (let i = 0; i < n; i++) {
+        const s = document.createElement('div');
+        s.className = 'thought-stack-item skeleton-card';
+        s.innerHTML = '<div class="skeleton-line"></div><div class="skeleton-line"></div>';
+        container.appendChild(s);
+      }
+    }
+
     // ---------- directory ----------
     async function loadDiaries(term) {
-      loadingEl.hidden = false;
-      listEl.querySelectorAll('.thought-stack-item').forEach((n) => n.remove());
+      listEl.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
+      renderSkeletons(listEl, 3);
       let url = `${SUPABASE_URL}/rest/v1/diaries?select=id,name,created_at&order=created_at.desc&limit=50`;
       if (term) url += `&name=ilike.*${encodeURIComponent(term)}*`;
       try {
         const res = await fetch(url, { headers: H });
         const rows = res.ok ? await res.json() : [];
-        loadingEl.hidden = true;
+        listEl.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
         if (!rows.length) {
           const p = document.createElement('p');
           p.className = 'thoughts-loading thoughts-stack-empty';
@@ -5600,7 +5863,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           listEl.appendChild(card);
         });
       } catch {
-        loadingEl.hidden = true;
+        listEl.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
         const p = document.createElement('p');
         p.className = 'thoughts-loading thoughts-stack-empty';
         p.textContent = 'could not look just now. try again.';
@@ -5683,7 +5946,8 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         if (!res.ok) throw new Error(String(res.status));
         lastCode = code;
         closeNew();
-        closeDiaries();
+        room.classList.remove('open');
+        room.setAttribute('aria-hidden', 'true');
         openDiaryView(name);
       } catch {
         newStatus.textContent = 'could not start it just now. try again.';
@@ -5708,23 +5972,32 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     //   alter table diary_entries add column media_url text;
     //   alter table diary_entries add column music_url text;
     //   alter table diary_entries add column music_title text;
+    //   alter table diary_entries add column music_artwork text;  -- optional cover thumbnail
     //   create or replace function post_diary_entry(p_name text, p_code_hash text, p_content text,
-    //     p_media_url text default null, p_music_url text default null, p_music_title text default null)
+    //     p_media_url text default null, p_music_url text default null, p_music_title text default null,
+    //     p_music_artwork text default null)
     //   returns void language plpgsql security definer as $$
     //     -- keep the existing body's code_hash check, then:
-    //     insert into diary_entries (diary_id, content, media_url, music_url, music_title)
-    //     values (<found id>, p_content, p_media_url, p_music_url, p_music_title);
+    //     insert into diary_entries (diary_id, content, media_url, music_url, music_title, music_artwork)
+    //     values (<found id>, p_content, p_media_url, p_music_url, p_music_title, p_music_artwork);
     //   $$;
 
     // ---------- a single diary ----------
     async function loadEntries(diaryId) {
-      viewLoading.hidden = false;
-      viewList.querySelectorAll('.thought-stack-item').forEach((n) => n.remove());
+      viewLoading.hidden = true;
+      viewList.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
+      renderSkeletons(viewList, 3);
       try {
         let res = await fetch(
-          `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at,likes_count,media_url,music_url,music_title&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
+          `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at,likes_count,media_url,music_url,music_title,music_artwork&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
           { headers: H }
         );
+        if (res.status === 400) { // music_artwork column not set up yet
+          res = await fetch(
+            `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at,likes_count,media_url,music_url,music_title&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
+            { headers: H }
+          );
+        }
         if (res.status === 400) { // likes_count column not set up yet
           res = await fetch(
             `${SUPABASE_URL}/rest/v1/diary_entries?select=id,content,created_at,media_url,music_url,music_title&diary_id=eq.${diaryId}&order=created_at.desc&limit=100`,
@@ -5738,7 +6011,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           );
         }
         const rows = res.ok ? await res.json() : [];
-        viewLoading.hidden = true;
+        viewList.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
         if (!rows.length) {
           const p = document.createElement('p');
           p.className = 'thoughts-loading thoughts-stack-empty';
@@ -5784,7 +6057,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         });
         return rows;
       } catch {
-        viewLoading.hidden = true;
+        viewList.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
         const p = document.createElement('p');
         p.className = 'thoughts-loading thoughts-stack-empty';
         p.textContent = 'could not look just now. try again.';
@@ -5920,6 +6193,58 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       return btn;
     }
 
+    // ---------- delete the whole diary ----------
+    // Same code gate as removing one entry, just scoped to the diary
+    // itself: knowing the code proves it's yours to remove. Checked
+    // again server-side, through delete_diary (entries cascade with
+    // it, same as delete_diary_entry already assumes for one).
+    //   create or replace function delete_diary(p_name text, p_code_hash text)
+    //   returns void language plpgsql security definer as $$
+    //     delete from diaries where name = p_name and code_hash = p_code_hash;
+    //   $$;
+    //   grant execute on function delete_diary(text, text) to anon, authenticated;
+    async function deleteDiary() {
+      const code = viewCode.value;
+      if (!code || !current) return false;
+      try {
+        const code_hash = await sha256Hex(code);
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/delete_diary`, {
+          method: 'POST',
+          headers: H,
+          body: JSON.stringify({ p_name: current.name, p_code_hash: code_hash })
+        });
+        if (!res.ok) {
+          let detail = '';
+          try { detail = (await res.json()).message || ''; } catch (e) {}
+          console.error('delete_diary failed', res.status, detail);
+        }
+        return res.ok;
+      } catch (e) { return false; }
+    }
+    if (viewDeleteDiary) {
+      let armed = false, armTimer = null;
+      viewDeleteDiary.addEventListener('click', async () => {
+        if (!armed) {
+          armed = true;
+          viewDeleteDiary.querySelector('.lbl').textContent = 'sure? this deletes everything';
+          armTimer = setTimeout(() => { armed = false; viewDeleteDiary.querySelector('.lbl').textContent = 'delete this diary'; }, 3000);
+          return;
+        }
+        clearTimeout(armTimer);
+        armed = false;
+        viewDeleteDiary.disabled = true;
+        const ok = await deleteDiary();
+        if (ok) {
+          closeDiaryView();
+        } else {
+          viewDeleteDiary.disabled = false;
+          viewDeleteDiary.querySelector('.lbl').textContent = 'delete this diary';
+          viewStatus.textContent = 'that code doesn\u2019t match this diary, so it can\u2019t be deleted.';
+          viewStatus.classList.add('error');
+        }
+      });
+    }
+
     // ---------- notifications: someone liked what you wrote here ----------
     // Same shape as the room's own "notifications" list and "notify me"
     // alerts, just scoped to this one diary and gated on the code being
@@ -6040,9 +6365,21 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
     document.addEventListener('visibilitychange', () => { if (!document.hidden) pollDiaryLikes(); });
 
     async function openDiaryView(name) {
+      // Open the diary shell and paint its identity immediately. This keeps the
+      // individual diary page visible even while Supabase is being queried.
+      // The previous version could leave the room looking blank when a later
+      // async step failed or the overlay state was stale.
+      name = String(name || '').trim();
+      if (!name) return;
       if (window.bringOverlayToFront) window.bringOverlayToFront(viewRoom);
-      viewRoom.classList.add('open');
+      viewRoom.classList.add('open', 'diary-view-open');
       viewRoom.setAttribute('aria-hidden', 'false');
+      viewRoom.style.display = 'flex';
+      viewRoom.style.visibility = 'visible';
+      viewRoom.style.opacity = '1';
+      viewRoom.style.transform = 'none';
+      viewRoom.style.pointerEvents = 'auto';
+      viewRoom.style.zIndex = '999999';
       viewTitle.textContent = name;
       viewSub.textContent = DEFAULT_DIARY_SUB;
       viewInput.value = ''; viewCode.value = lastCode; viewStatus.textContent = ''; viewStatus.classList.remove('error');
@@ -6076,7 +6413,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       }
     }
     function closeDiaryView() {
-      viewRoom.classList.remove('open');
+      viewRoom.classList.remove('open', 'diary-view-open');
       viewRoom.setAttribute('aria-hidden', 'true');
     }
     viewBack.addEventListener('click', closeDiaryView);
@@ -6108,6 +6445,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
       if (viewList) viewList.classList.toggle('code-known', known);
       if (notifWrap) notifWrap.hidden = !known;
       if (viewLogout) viewLogout.hidden = !known;
+      if (viewDeleteDiary) viewDeleteDiary.hidden = !known;
       if (known) { refreshDiaryAlertsBtn(); renderDiaryNotifs(false); }
     }
 
@@ -6248,7 +6586,7 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
           meta.appendChild(t); meta.appendChild(a);
           row.appendChild(art); row.appendChild(meta);
           row.addEventListener('click', () => {
-            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl });
+            setPendingMusic({ title: r.title, artist: r.artist, previewUrl: r.previewUrl, artwork: r.artwork });
             closeViewMusicSearch();
           });
           viewMusicResults.appendChild(row);
@@ -6292,9 +6630,16 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
         const code_hash = await sha256Hex(code);
         const args = { p_name: current.name, p_code_hash: code_hash, p_content: content || '[media]' };
         if (mediaUrl) args.p_media_url = mediaUrl;
-        if (track) { args.p_music_url = track.previewUrl; args.p_music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : ''); }
+        if (track) {
+          args.p_music_url = track.previewUrl; args.p_music_title = track.title + (track.artist ? ' \u2014 ' + track.artist : '');
+          if (track.artwork) args.p_music_artwork = track.artwork;
+        }
         const send = (b) => fetch(`${SUPABASE_URL}/rest/v1/rpc/post_diary_entry`, { method: 'POST', headers: H, body: JSON.stringify(b) });
         let res = await send(args);
+        if (!res.ok && args.p_music_artwork) { // the backend function doesn't take artwork yet
+          delete args.p_music_artwork;
+          res = await send(args);
+        }
         if (!res.ok && (args.p_music_url || args.p_music_title)) { // the backend function doesn't take a song yet
           delete args.p_music_url; delete args.p_music_title;
           res = await send(args);
@@ -6361,6 +6706,10 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
   .site-footer .sf-tag{font-style:italic;}
   .site-footer .sf-meta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;column-gap:8px;}
   .site-footer .footer-link{padding:6px 4px;}
+  .site-footer .sf-legal{margin-top:2px;column-gap:10px;}
+  .site-footer .sf-legal .footer-link{font-size:11px;opacity:.75;}
+  .site-footer .sf-legal .footer-link:hover{opacity:1;}
+  .site-footer .sf-updated{font-size:10px;opacity:.6;margin-top:2px;}
   #landing-page{overflow-y:auto;}
   #landing-page .landing-inner{margin:auto 0;}
   #landing-page .site-footer{margin:0;padding-top:20px;flex:0 0 auto;}
@@ -6369,6 +6718,11 @@ html body #thoughts-panel-wall #thoughts-goto-stacked{margin-top:8px;}
 
   /* one row for photo + song; the preview lands on its own line beneath */
   html body #thoughts-media-wrap{margin-top:0;}
+
+  /* quiet reminder shown wherever a visitor can attach their own media */
+  .attach-rights-note{margin:4px 0 0;font-size:12px;font-style:italic;color:var(--muted);line-height:1.5;}
+  .attach-rights-note a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
+  .attach-rights-note a:hover{color:var(--accent);}
 
   /* steadier landing + compose pages and footer: the flicker stays on the wall and in the room */
   #landing-page h1,#landing-page p,#thoughts-title,#thoughts-panel-compose .feedback-sub,.site-footer{animation:none !important;}
