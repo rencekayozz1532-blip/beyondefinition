@@ -901,6 +901,7 @@
   border-color:color-mix(in srgb, var(--ink) 55%, transparent);
 }
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <script>
@@ -1651,6 +1652,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
           <input class="speak-field" type="text" id="speak-email" enterkeyhint="next" placeholder="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
           <input class="speak-field" type="password" id="speak-password" enterkeyhint="go" placeholder="password" autocomplete="current-password" required>
           <p class="thoughts-status" id="speak-login-status" aria-live="polite"></p>
+          <div class="cf-turnstile" id="speak-turnstile" data-sitekey="0x4AAAAAAFFAW1chT0ahVdHu" data-callback="onSpeakTurnstile" data-expired-callback="onSpeakTurnstileExpired" style="align-self:center;margin:2px 0 0;"></div>
           <div class="thoughts-row" style="justify-content:center;margin-top:0;">
             <button type="submit" class="primary">come in</button>
           </div>
@@ -3687,6 +3689,13 @@ html body #landing-page #landing-room:hover{opacity:1;}
     const postSubmit = $id('speak-post-submit');
     const ownerToggle = $id('speak-owner-toggle');
     const signOutBtn = $id('speak-signout');
+    let speakTurnstileToken = null;
+    window.onSpeakTurnstile = function (token) { speakTurnstileToken = token; };
+    window.onSpeakTurnstileExpired = function () { speakTurnstileToken = null; };
+    function resetSpeakTurnstile() {
+      speakTurnstileToken = null;
+      try { if (window.turnstile) window.turnstile.reset('#speak-turnstile'); } catch (e) {}
+    }
     const loginForm = $id('speak-login');
     const emailInput = $id('speak-email');
     const passwordInput = $id('speak-password');
@@ -4646,14 +4655,24 @@ html body #landing-page #landing-room:hover{opacity:1;}
     });
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!speakTurnstileToken) {
+        setStatus(loginStatus, "please complete the check below first.", true);
+        return;
+      }
       setStatus(loginStatus, 'opening the door\u2026');
       try {
-        saveSession(await authRequest('password', { email: (OWNER_EMAIL && emailInput.value.trim().toLowerCase() === 'selrick') ? OWNER_EMAIL : emailInput.value.trim(), password: passwordInput.value }));
+        saveSession(await authRequest('password', {
+          email: (OWNER_EMAIL && emailInput.value.trim().toLowerCase() === 'selrick') ? OWNER_EMAIL : emailInput.value.trim(),
+          password: passwordInput.value,
+          gotrue_meta_security: { captcha_token: speakTurnstileToken }
+        }));
         passwordInput.value = '';
         setStatus(loginStatus, '');
         setOwnerMode(true);
       } catch (err) {
         setStatus(loginStatus, err.network ? "could not reach the door. try again in a bit." : "that did not work. try it once more.", true);
+      } finally {
+        resetSpeakTurnstile();
       }
     });
     signOutBtn.addEventListener('click', () => {
