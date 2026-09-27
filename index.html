@@ -89,7 +89,7 @@
   .speak-foot{margin-top:38px;text-align:center;font-family:'Source Serif 4',Georgia,serif;font-size:11px;color:var(--muted);}
   .speak-foot .speak-link{color:var(--muted);opacity:.8;}
   .speak-foot .speak-link:hover{color:var(--thought-glow);opacity:1;}
-  .speak-login{max-width:280px;margin:14px auto 0;display:flex;flex-direction:column;gap:10px;text-align:left;}
+  .speak-login{max-width:280px;margin:14px auto 0;display:flex;flex-direction:column;gap:6px;text-align:left;}
 </style>
 <style id="unified-earth-surface-pass">
   :root {
@@ -936,6 +936,19 @@
     } catch (e) {}
   };
 
+  // Belt-and-suspenders on top of every individual close/back handler
+  // above: whatever else changes, nothing should keep making noise once
+  // the tab is hidden, the page is being left, or the visitor navigates
+  // back (phone back button or in-app back, both fire popstate here --
+  // see the history handling further down).
+  function stopAllOwnAudio() {
+    try { if (typeof window.stopThoughtAudio === 'function') window.stopThoughtAudio(); } catch (e) {}
+    try { if (typeof window.pauseRoomRadio === 'function') window.pauseRoomRadio(); } catch (e) {}
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopAllOwnAudio(); });
+  window.addEventListener('pagehide', stopAllOwnAudio);
+  window.addEventListener('popstate', stopAllOwnAudio);
+
   // Small floating-heart burst, used wherever a heart/like button goes
   // from unliked to liked. Spawns a handful of little hearts from the
   // button's center that drift up, drift sideways a bit, and fade out.
@@ -1223,7 +1236,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <a class="footer-link" href="/attributions.html">attributions</a>
     <a class="footer-link" href="/copyright.html#report">report a concern</a>
   </div>
-  <div class="sf-updated">Last updated: <time datetime="2026-09-27T14:57+08:00">Sunday, September 27, 2026, 2:57 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-updated">Last updated: <time datetime="2026-09-27T23:04+08:00">Sunday, September 27, 2026, 11:04 PM</time> <span class="sf-updated-ago"></span></div>
   <div class="sf-copyright">&copy; 2026 BeyonDefinition. All Rights Reserved.</div>
 </template>
 
@@ -1652,8 +1665,8 @@ html body #landing-page #landing-room:hover{opacity:1;}
           <input class="speak-field" type="text" id="speak-email" enterkeyhint="next" placeholder="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
           <input class="speak-field" type="password" id="speak-password" enterkeyhint="go" placeholder="password" autocomplete="current-password" required>
           <p class="thoughts-status" id="speak-login-status" aria-live="polite"></p>
-          <div class="cf-turnstile" id="speak-turnstile" data-sitekey="0x4AAAAAAFFAW1chT0ahVdHu" data-callback="onSpeakTurnstile" data-expired-callback="onSpeakTurnstileExpired" style="align-self:center;margin:2px 0 0;"></div>
-          <div class="thoughts-row" style="justify-content:center;margin-top:0;">
+          <div class="cf-turnstile" id="speak-turnstile" data-sitekey="0x4AAAAAAFFAW1chT0ahVdHu" data-callback="onSpeakTurnstile" data-expired-callback="onSpeakTurnstileExpired" style="align-self:center;margin:0;"></div>
+          <div class="thoughts-row" style="justify-content:center;margin-top:-4px;">
             <button type="submit" class="primary">come in</button>
           </div>
         </form>
@@ -2202,6 +2215,24 @@ html body #landing-page #landing-room:hover{opacity:1;}
         const card = e.target.closest('.thought-stack-item');
         if (card) openThoughtFocus(card);
       });
+      // The duplicate lane (stackedDupEl) is just cloned markup for the
+      // seamless drift loop -- its own buttons carry no listeners, and
+      // its nodes aren't the real ones openThoughtFocus needs to move.
+      // Map a tap on a dup card back to the real card at the same index
+      // (the two lanes are always kept in sync 1:1 by syncStackDrift)
+      // and open that instead, so a duplicate reads as openable too.
+      if (stackedDupEl) {
+        stackedDupEl.addEventListener('click', (e) => {
+          if (e.target.closest('button, a')) return;
+          const dupCard = e.target.closest('.thought-stack-item');
+          if (!dupCard) return;
+          const dupCards = Array.from(stackedDupEl.querySelectorAll('.thought-stack-item'));
+          const idx = dupCards.indexOf(dupCard);
+          if (idx === -1) return;
+          const realCard = stackedListEl.querySelectorAll('.thought-stack-item')[idx];
+          if (realCard) openThoughtFocus(realCard);
+        });
+      }
       thoughtFocusOverlay.addEventListener('click', (e) => {
         if (e.target === thoughtFocusOverlay) closeThoughtFocus();
       });
@@ -3654,10 +3685,10 @@ html body #landing-page #landing-room:hover{opacity:1;}
   (function setupSpeakRoom() {
     const SUPABASE_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
-    // Sign in by typing the username Selrick. Put the email you made your
-    // Supabase account with between the quotes (it is visible in the page
-    // source). While it is empty, type the email itself in the box instead.
-    const OWNER_EMAIL = 'user@selrick.com';
+    // Sign in by typing the username "selrick". The real account email is
+    // no longer stored here at all -- it lives server-side, behind the
+    // selrick-login Edge Function, so it never ships in the page source.
+    const LOGIN_FN_URL = `${SUPABASE_URL}/functions/v1/selrick-login`;
     const SESSION_KEY = 'selrick-room-session';
     const LAST_REPLY_KEY = 'selrick-room-last-reply';
     const NAME_KEY = 'selrick-room-alias';
@@ -3700,6 +3731,12 @@ html body #landing-page #landing-room:hover{opacity:1;}
     const emailInput = $id('speak-email');
     const passwordInput = $id('speak-password');
     const loginStatus = $id('speak-login-status');
+    // Cheap client-side brake on repeated failed logins: the captcha
+    // already forces a fresh check each try, but this adds a growing
+    // pause too, so a scripted loop through this form can't just fire
+    // as fast as the network allows.
+    let speakLoginFails = 0;
+    let speakLoginLockUntil = 0;
 
     const anonHeaders = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` };
     let loadedAt = 0;
@@ -3708,15 +3745,15 @@ html body #landing-page #landing-room:hover{opacity:1;}
     /* ---------- owner session (plain Supabase Auth over REST) ---------- */
     let session = null;
     try {
-      const raw = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+      const raw = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
       if (raw && raw.access_token && raw.refresh_token) session = raw;
     } catch (e) {}
 
     function saveSession(s) {
       session = s;
       try {
-        if (s) localStorage.setItem(SESSION_KEY, JSON.stringify(s));
-        else localStorage.removeItem(SESSION_KEY);
+        if (s) sessionStorage.setItem(SESSION_KEY, JSON.stringify(s));
+        else sessionStorage.removeItem(SESSION_KEY);
       } catch (e) {}
     }
 
@@ -3735,6 +3772,32 @@ html body #landing-page #landing-room:hover{opacity:1;}
       }
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.access_token) throw new Error(data.error_description || data.msg || 'rejected');
+      return {
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        expires_at: Date.now() + (data.expires_in || 3600) * 1000
+      };
+    }
+
+    // Selrick's room login goes through the selrick-login Edge Function
+    // instead of hitting Supabase Auth directly, so the real account email
+    // is looked up server-side and never has to sit in this page's source.
+    // Same shape and same network-vs-rejection distinction as authRequest.
+    async function loginRequest(username, password, captcha_token) {
+      let res;
+      try {
+        res = await fetch(LOGIN_FN_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, captcha_token })
+        });
+      } catch (e) {
+        const err = new Error('network');
+        err.network = true;
+        throw err;
+      }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.access_token) throw new Error(data.error || 'rejected');
       return {
         access_token: data.access_token,
         refresh_token: data.refresh_token,
@@ -4655,21 +4718,33 @@ html body #landing-page #landing-room:hover{opacity:1;}
     });
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const waitLeft = speakLoginLockUntil - Date.now();
+      if (waitLeft > 0) {
+        setStatus(loginStatus, `too many tries \u2014 wait ${Math.ceil(waitLeft / 1000)}s and try again.`, true);
+        return;
+      }
       if (!speakTurnstileToken) {
         setStatus(loginStatus, "please complete the check below first.", true);
         return;
       }
       setStatus(loginStatus, 'opening the door\u2026');
       try {
-        saveSession(await authRequest('password', {
-          email: (OWNER_EMAIL && emailInput.value.trim().toLowerCase() === 'selrick') ? OWNER_EMAIL : emailInput.value.trim(),
-          password: passwordInput.value,
-          gotrue_meta_security: { captcha_token: speakTurnstileToken }
-        }));
+        saveSession(await loginRequest(
+          emailInput.value.trim().toLowerCase(),
+          passwordInput.value,
+          speakTurnstileToken
+        ));
         passwordInput.value = '';
+        speakLoginFails = 0;
         setStatus(loginStatus, '');
         setOwnerMode(true);
       } catch (err) {
+        passwordInput.value = '';
+        if (!err.network) {
+          speakLoginFails++;
+          // grows 2s, 4s, 8s... capped at 30s, only after a real rejection
+          if (speakLoginFails >= 2) speakLoginLockUntil = Date.now() + Math.min(30000, 2000 * Math.pow(2, speakLoginFails - 2));
+        }
         setStatus(loginStatus, err.network ? "could not reach the door. try again in a bit." : "that did not work. try it once more.", true);
       } finally {
         resetSpeakTurnstile();
@@ -5165,6 +5240,9 @@ html body #landing-page #landing-room:hover{opacity:1;}
 
 <style>
   #site-pet{position:fixed;left:0;top:0;width:70px;height:75px;z-index:900000;pointer-events:none;will-change:transform;transition:opacity .25s ease;font-family:'Source Serif 4',Georgia,serif;}
+  /* while the chat is open, the pet docks above the message log (z-index above .pet-chat's
+     960000) so it stays physically visible instead of being hidden behind the panel. */
+  #site-pet.docked{z-index:961000;}
   .pet-avatar{all:unset;position:absolute;inset:0;cursor:grab;pointer-events:auto;touch-action:none;-webkit-tap-highlight-color:transparent;transform:scale(var(--s,1));transform-origin:50% 100%;}
   .pet-avatar:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:14px;}
   #site-pet.held .pet-avatar{cursor:grabbing;}
@@ -5272,22 +5350,23 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .pet-bubble.show{opacity:1;transform:none;}
   .pet-bubble::after{content:"";position:absolute;left:var(--tail,20px);bottom:-5px;width:8px;height:8px;background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);transform:rotate(45deg);}
   .pet-bubble.below::after{bottom:auto;top:-5px;border:0;border-left:1px solid var(--rule);border-top:1px solid var(--rule);}
-  .pet-chat{top:calc(100% + 6px);width:min(92vw,330px);max-height:min(36vh,250px);display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:4px;background:var(--paper);overflow:hidden;pointer-events:auto;box-shadow:0 4px 18px rgba(50,36,56,.10);transform-origin:calc(var(--tail,50%) + 4px) 0;animation:petChatIn .26s cubic-bezier(.2,.8,.2,1) .08s backwards;}
-  @keyframes petChatIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:none;}}
+  .pet-chat{position:fixed;left:0;right:0;top:0;height:100%;max-width:none;max-height:none;display:flex;flex-direction:column;border:0;border-radius:0;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;pointer-events:auto;box-shadow:none;z-index:960000;animation:petChatIn .22s ease backwards;}
+  @keyframes petChatIn{from{opacity:0;transform:scale(.98) translateY(8px);}to{opacity:1;transform:none;}}
   @keyframes petLineIn{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:none;}}
   @keyframes petDots{0%,100%{opacity:.3;}50%{opacity:1;}}
-  .pet-chat.above{top:auto;bottom:calc(100% + 6px);transform-origin:calc(var(--tail,50%) + 4px) 100%;}
   .pet-chat[hidden]{display:none;}
   /* head: a small library-card label, like the room's cover page */
-  .pet-chat-head{display:flex;align-items:center;justify-content:space-between;padding:0 2px 0 14px;min-height:38px;border-bottom:3px double var(--rule);font:400 10px/1 'Courier Prime','Courier New',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+  .pet-chat-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:env(safe-area-inset-top,0px) 2px 0 14px;min-height:calc(38px + env(safe-area-inset-top,0px));border-bottom:3px double var(--rule);background:var(--paper);font:400 10px/1 'Courier Prime','Courier New',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
   .pet-chat-head button{all:unset;cursor:pointer;width:40px;height:38px;display:flex;align-items:center;justify-content:center;font:400 20px/1 'Source Serif 4',Georgia,serif;letter-spacing:0;color:var(--muted);}
   .pet-chat-head button:hover{color:var(--ink);}
   .pet-chat-head button:focus-visible,.pet-chat-form button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
-  .pet-chat-log{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:14px 16px;display:flex;flex-direction:column;gap:14px;scrollbar-width:none;min-height:64px;}
+  .pet-chat-log{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:16px 16px 14px;display:flex;flex-direction:column;gap:14px;scrollbar-width:none;min-height:64px;}
   .pet-chat-log::-webkit-scrollbar{display:none;}
   /* the pet writes in the site's italic; you write in plain text on the other side */
   .pet-line{max-width:92%;overflow-wrap:anywhere;animation:petLineIn .2s ease-out;}
   .pet-line.theirs{align-self:flex-start;font:italic 500 15.5px/1.5 'Fraunces',Georgia,serif;color:var(--ink);}
+  .pet-line-avatar{display:inline-flex;width:26px;height:28px;margin:0 5px -8px 0;flex-shrink:0;vertical-align:baseline;}
+  .pet-line-avatar svg{width:100%;height:100%;display:block;}
   .pet-line.mine{align-self:flex-end;font:400 14px/1.5 'Source Serif 4',Georgia,serif;color:var(--ink);opacity:.68;text-align:right;}
   .pet-line.typing{color:var(--muted);letter-spacing:.3em;animation:petDots 1.1s ease-in-out infinite;}
   /* input: one ruled line to write on */
@@ -5298,7 +5377,14 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .pet-chips button:hover{border-color:var(--accent);background:rgba(112,78,127,.06);}
   .pet-chips button:active{transform:scale(.98);}
   .pet-chips button:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
-  .pet-chat-form{display:flex;gap:4px;align-items:center;border-top:1px solid var(--rule);padding:2px 6px 2px 16px;}
+  .pet-chat-form{display:flex;gap:4px;align-items:center;border-top:1px solid var(--rule);padding:2px 6px calc(2px + env(safe-area-inset-bottom,0px)) 16px;background:var(--paper);transition:padding-bottom .1s ease;}
+  /* fallback for hosts where the panel's own height doesn't shrink with the on-screen
+     keyboard (visualViewport unavailable/unreliable): force extra scroll room below the
+     input while it's focused, so the input can be scrolled up above the keyboard. */
+  /* fallback for hosts where the panel's own height doesn't shrink with the on-screen
+     keyboard (visualViewport unavailable/unreliable): force extra scroll room below the
+     input while it's focused, so the input can be scrolled up above the keyboard. */
+  .pet-chat.kb-open .pet-chat-form{padding-bottom:calc(2px + env(safe-area-inset-bottom,0px) + 42vh);}
   .pet-chat-form input{flex:1 1 auto;min-width:0;height:46px;border:0;border-radius:0;padding:0;font:400 16px 'Source Serif 4',Georgia,serif;color:var(--ink);background:transparent;outline:0;caret-color:var(--accent);}
   .pet-chat-form input::placeholder{color:var(--muted);font-family:'Fraunces',Georgia,serif;font-style:italic;}
   .pet-chat-form button{all:unset;cursor:pointer;min-width:56px;height:46px;padding:0 6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font:400 11px/1 'Courier Prime','Courier New',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);}
@@ -5306,15 +5392,6 @@ html body #landing-page #landing-room:hover{opacity:1;}
 </style>
 <div id="site-pet" style="visibility:hidden">
   <div class="pet-bubble" id="pet-bubble" role="status" aria-live="polite"></div>
-  <div class="pet-chat" id="pet-chat" hidden>
-    <div class="pet-chat-head"><span id="pet-chat-name">companion</span><button type="button" id="pet-chat-close" aria-label="Close chat">×</button></div>
-    <div class="pet-chat-log" id="pet-chat-log" aria-live="polite"></div>
-    <div class="pet-chips" id="pet-chips"><button type="button">what is this place?</button><button type="button">how do i leave something?</button><button type="button">what can you do?</button></div>
-    <form class="pet-chat-form" id="pet-chat-form">
-      <input id="pet-chat-input" type="text" maxlength="200" placeholder="say something…" aria-label="Message" autocomplete="off" enterkeyhint="send">
-      <button type="submit" aria-label="Send" disabled>send</button>
-    </form>
-  </div>
   <button class="pet-avatar" id="pet-avatar" type="button" aria-label="Talk to your companion" aria-expanded="false">
     <svg viewBox="0 0 56 60" xmlns="http://www.w3.org/2000/svg">
       <g class="pet-flip">
@@ -5346,11 +5423,44 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <span class="pet-z" aria-hidden="true">z</span>
   </button>
 </div>
+<div class="pet-chat" id="pet-chat" hidden>
+  <div class="pet-chat-head"><span id="pet-chat-name">companion</span><button type="button" id="pet-chat-close" aria-label="Close chat">×</button></div>
+  <div class="pet-chat-log" id="pet-chat-log" aria-live="polite"></div>
+  <div class="pet-chips" id="pet-chips"><button type="button">what is this place?</button><button type="button">how do i leave something?</button><button type="button">what can you do?</button></div>
+  <form class="pet-chat-form" id="pet-chat-form">
+    <input id="pet-chat-input" type="text" maxlength="200" placeholder="say something…" aria-label="Message" autocomplete="off" enterkeyhint="send">
+    <button type="submit" aria-label="Send" disabled>send</button>
+  </form>
+</div>
 <script>
 (function(){
   var pet = document.getElementById('site-pet');
   var avatar = document.getElementById('pet-avatar');
   var bubble = document.getElementById('pet-bubble');
+  // the pet's own artwork (same drawing as the avatar button, with the same
+  // gentle breathing/blinking animation), shown before each of its chat lines
+  // instead of spelling out its name every time.
+  var PET_AVATAR_ICON = '<svg viewBox="0 0 56 60" xmlns="http://www.w3.org/2000/svg">' +
+    '<g class="pet-tail"><path d="M15 41c-9 2-13-6-8-13 2-3 5-3 5-1" fill="none" stroke="var(--ink)" stroke-width="2.1" stroke-linecap="round"/></g>' +
+    '<g class="pet-leg l"><path d="M21 44v1.5"/><ellipse cx="21" cy="47.3" rx="3.8" ry="2.8" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></g>' +
+    '<g class="pet-leg r"><path d="M35 44v1.5"/><ellipse cx="35" cy="47.3" rx="3.8" ry="2.8" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/></g>' +
+    '<g class="pet-body" stroke="var(--ink)" stroke-linejoin="round" stroke-linecap="round">' +
+    '<path d="M17 18Q10.5 12 12.5 3Q20 5.5 25.5 10.5Q22 15 17 18Z" fill="var(--paper)" stroke-width="1.8"/>' +
+    '<ellipse cx="18.5" cy="10.5" rx="2" ry="3.4" fill="var(--accent)" fill-opacity=".32" stroke="none" transform="rotate(-18 18.5 10.5)"/>' +
+    '<g class="pet-ear-r"><path d="M39 18Q45.5 12 43.5 3Q36 5.5 30.5 10.5Q34 15 39 18Z" fill="var(--paper)" stroke-width="1.8"/><ellipse cx="37.5" cy="10.5" rx="2" ry="3.4" fill="var(--accent)" fill-opacity=".32" stroke="none" transform="rotate(18 37.5 10.5)"/></g>' +
+    '<path d="M28 8c11 0 17 8 17 19 0 8-3 13-6 17H17c-3-4-6-9-6-17C11 16 17 8 28 8Z" fill="var(--paper)" stroke-width="1.8"/>' +
+    '<path d="M45 27c0 8-3 13-6 17h-6c6-5 9-11 9-21 2 1.5 3 3 3 4Z" fill="var(--ink)" fill-opacity=".16" stroke="none"/>' +
+    '<ellipse cx="16" cy="32" rx="4.3" ry="2.5" fill="var(--accent)" fill-opacity=".3" stroke="none"/><ellipse cx="40" cy="32" rx="4.3" ry="2.5" fill="var(--accent)" fill-opacity=".3" stroke="none"/>' +
+    '<g class="pet-third"><ellipse cx="28" cy="16.5" rx="2.7" ry="2" fill="var(--paper)" stroke-width="1"/><circle cx="28" cy="16.5" r=".9" fill="var(--ink)" stroke="none"/></g>' +
+    '<g class="pet-eye e1"><circle cx="22.5" cy="24.6" r="5.6" fill="var(--paper)" stroke-width="1.3"/><g class="pet-pupil"><circle cx="22.5" cy="24.6" r="3.4" fill="var(--accent)" fill-opacity=".45" stroke="none"/><circle cx="22.5" cy="24.6" r="2.6" fill="var(--ink)" stroke="none"/><circle cx="21.1" cy="23.1" r="1.3" fill="var(--paper)" stroke="none"/><circle cx="24.1" cy="26.3" r=".6" fill="var(--paper)" stroke="none"/><circle cx="23.6" cy="22.9" r=".4" fill="var(--paper)" stroke="none" opacity=".85"/></g></g>' +
+    '<g class="pet-eye e2"><circle cx="33.5" cy="24.8" r="5" fill="var(--paper)" stroke-width="1.3"/><g class="pet-pupil"><circle cx="33.5" cy="24.8" r="3" fill="var(--accent)" fill-opacity=".45" stroke="none"/><circle cx="33.5" cy="24.8" r="2.3" fill="var(--ink)" stroke="none"/><circle cx="32.2" cy="23.4" r="1.1" fill="var(--paper)" stroke="none"/><circle cx="34.9" cy="26.4" r=".5" fill="var(--paper)" stroke="none"/><circle cx="34.4" cy="23.2" r=".35" fill="var(--paper)" stroke="none" opacity=".85"/></g></g>' +
+    '<ellipse cx="28.3" cy="30" rx="1.3" ry=".9" fill="var(--accent)" fill-opacity=".5" stroke="none"/>' +
+    '<g class="pet-sm"><path d="M20 32.5q8 6.5 17-1.5" fill="none" stroke-width="1.3" stroke-linecap="round"/></g>' +
+    '<ellipse class="pet-mo" cx="28.5" cy="34.5" rx="4" ry="2.2" fill="var(--ink)" stroke="none"/>' +
+    '<g class="pet-tongue"><path d="M25.8 35.2v2.8a2.2 2.2 0 0 0 4.4 0v-2.8" fill="var(--accent)" fill-opacity=".3" stroke-width="1.2"/><path d="M28 36.6v1.6" fill="none" stroke-width=".8" stroke-opacity=".5"/></g>' +
+    '<g class="pet-hand l"><ellipse cx="10.5" cy="29" rx="3" ry="2.4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.4"/></g>' +
+    '<g class="pet-hand r"><ellipse cx="45.5" cy="29" rx="3" ry="2.4" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.4"/></g>' +
+    '</g></svg>';
   var chat = document.getElementById('pet-chat');
   var log = document.getElementById('pet-chat-log');
   var form = document.getElementById('pet-chat-form');
@@ -5402,18 +5512,12 @@ html body #landing-page #landing-room:hover{opacity:1;}
   function vh(){ return innerHeight; }
   function vkH(){ return window.vkHeight || 0; }
   function clampX(v){ return Math.max(M, Math.min(vw() - W - M, v)); }
-  // The top of whichever footer is showing in the pet's floor band, so it stands on it instead of covering it.
-  function footerTop(){
-    var fs = document.querySelectorAll('.site-footer'), t = 1e5, band = vh() - vkH() - H - M;
-    for (var i = 0; i < fs.length; i++) {
-      var r = fs[i].getBoundingClientRect();
-      if (!r.width || r.bottom < band || r.top > vh()) continue;
-      var hit = [].filter.call(document.elementsFromPoint(r.left + r.width / 2, Math.min(vh() - 1, r.top + 4)), function(e){ return !pet.contains(e); })[0];
-      if (hit && fs[i].contains(hit)) t = Math.min(t, r.top - FEET);
-    }
-    return t;
+  // The pet can roam and perch anywhere on screen -- top to bottom, side to
+  // side -- on every page, not just the landing page.
+  function topFloor(){
+    return vh() - vkH() - H - M;
   }
-  function clampY(v){ return Math.max(M + 56, Math.min(vh() - vkH() - H - M, footerTop(), v)); }
+  function clampY(v){ return Math.max(M, Math.min(topFloor(), v)); }
 
   // Used to clip the pet to a thought-preview card's box so it read as
   // "boxed inside" — removed: with the perch sitting at the card's top
@@ -5508,10 +5612,6 @@ html body #landing-page #landing-room:hover{opacity:1;}
       var bh = placeFloat(bubble);
       bubble.classList.toggle('below', y < bh + M + 60);
     }
-    if (!chat.hasAttribute('hidden')) {
-      var ch = placeFloat(chat);
-      chat.classList.toggle('above', y + H + ch + 12 > availBottom() && y > ch + 12);
-    }
   }
 
   function setFacing(dx){
@@ -5525,7 +5625,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
     var lo = Math.max(M, r.left), hi = Math.min(vw() - W - M, r.right - W);
     if (hi < lo) lo = hi = Math.max(M, Math.min(vw() - W - M, r.left + r.width / 2 - W / 2));
     var py = r.top - FEET;
-    if (py < M + 56 || py > vh() - vkH() - H - M) return null;
+    if (py < M + 56 || py > topFloor()) return null;
     if (t.fx < 0 || t.fx > 1) return { x: Math.max(0, Math.min(vw() - W, t.fx < 0 ? r.left - W * .4 : r.right - W * .6)), y: py };
     return { x: lo + (hi - lo) * t.fx, y: py };
   }
@@ -5534,7 +5634,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
     for (var i = 0; i < els.length && i < 200; i++) {
       var el = els[i]; if (pet.contains(el)) continue;
       var r = el.getBoundingClientRect();
-      if (r.width < 90 || r.height < 14 || r.top - FEET < M + 56 || r.top - FEET > vh() - vkH() - H - M) continue;
+      if (r.width < 90 || r.height < 14 || r.top - FEET < M + 56 || r.top - FEET > topFloor()) continue;
       var hit = document.elementFromPoint(Math.min(vw() - 1, Math.max(0, r.left + r.width / 2)), r.top + 3);
       if (hit && (pet.contains(hit) || el.contains(hit))) out.push(el);
     }
@@ -5729,7 +5829,16 @@ html body #landing-page #landing-room:hover{opacity:1;}
     if (mine && chips) chips.hidden = true;
     var div = document.createElement('div');
     div.className = 'pet-line ' + (mine ? 'mine' : 'theirs') + (typing ? ' typing' : '');
-    div.textContent = text;
+    if (!mine && !typing) {
+      var tag = document.createElement('span');
+      tag.className = 'pet-line-avatar';
+      tag.setAttribute('aria-hidden', 'true');
+      tag.innerHTML = PET_AVATAR_ICON;
+      div.appendChild(tag);
+      div.appendChild(document.createTextNode(text));
+    } else {
+      div.textContent = text;
+    }
     log.appendChild(div);
     log.scrollTop = log.scrollHeight;
     if (!typing && !restoring) { hist.push([text, mine ? 1 : 0]); hist = hist.slice(-14); keep(LOG_KEY, hist); }
@@ -5737,7 +5846,9 @@ html body #landing-page #landing-room:hover{opacity:1;}
   }
 
   var USER_KEY = 'selrick-pet-user', FACT_KEY = 'selrick-pet-facts', LOG_KEY = 'selrick-pet-log', userName = null, lastIn = '', facts = [], hist = [];
-  try { facts = JSON.parse(localStorage.getItem(FACT_KEY) || '[]'); hist = JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); } catch (e) {}
+  // the conversation itself is never restored - each fresh page load starts a clean chat,
+  // even though the pet still remembers your name/facts (below) from one visit to the next.
+  try { facts = JSON.parse(localStorage.getItem(FACT_KEY) || '[]'); localStorage.removeItem(LOG_KEY); } catch (e) {}
   function keep(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   function restoreLog(){ hist.slice(-10).forEach(function(h){ addLine(h[0], h[1], false, true); }); }
   var typeT = 0, typingLines = ["you've got this.", 'take your time.', "i'm cheering for you.", 'no rush.', '*quietly rooting for you*'];
@@ -5975,17 +6086,24 @@ html body #landing-page #landing-room:hover{opacity:1;}
     // ---------- chat open / close ----------
   function fitChat(){
     if (!chatOpen) return;
-    // stay put; only slide (no walking) if the pet or the chat would end up under the keyboard
-    var top = Math.max(M + 56, Math.min(availBottom() - H - M, y));
-    var below = availBottom() - top - H - 12, above = top - 12;
-    chat.style.maxHeight = Math.max(96, Math.min(250, Math.max(below, above))) + 'px';
-    var ch = chat.offsetHeight;
-    if (below < ch && above < ch) top = Math.max(M + 56, availBottom() - H - 12 - ch);
-    y = top; perch = null; render();
+    // the fullscreen chat is fixed to the layout viewport, which on mobile does NOT
+    // shrink when the on-screen keyboard opens - so track visualViewport and resize/
+    // reposition to the actually-visible area, keeping the input above the keyboard.
+    var v = window.visualViewport;
+    if (v) {
+      chat.style.top = v.offsetTop + 'px';
+      chat.style.height = v.height + 'px';
+    } else {
+      chat.style.top = '0px';
+      chat.style.height = '100%';
+    }
   }
   function openChat(){
     chatOpen = true; moving = false; setMode(''); lift = 0; perch = null;
-    pet.classList.remove('sit', 'float', 'settle', 'jump', 'blep'); pet.classList.add('docked');
+    pet.classList.remove('sit', 'float', 'settle', 'jump', 'blep');
+    // each chat line now carries its own little likeness of the pet, so the
+    // floating avatar itself just steps out of the way while the chat is open.
+    pet.style.visibility = 'hidden';
     if (asleep) wake(true);
     flash('perk', 600); talk(600);
     clearTimeout(think);
@@ -6001,7 +6119,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   }
   function closeChat(){
     if (!chatOpen) return;
-    chatOpen = false; pet.classList.remove('docked');
+    chatOpen = false; pet.style.visibility = 'visible';
     chat.setAttribute('hidden', '');
     avatar.setAttribute('aria-expanded', 'false');
     input.blur();
@@ -6029,6 +6147,25 @@ html body #landing-page #landing-room:hover{opacity:1;}
   var sendBtn = form.querySelector('button[type=submit]');
   function sync(){ sendBtn.disabled = !input.value.trim(); }
   input.addEventListener('input', sync);
+
+  // ---------- keep the input visible above the on-screen keyboard ----------
+  // fitChat() (via visualViewport) handles this in browsers that report a
+  // resized visible area. As a belt-and-braces fallback for hosts where that
+  // doesn't fire reliably, force some extra scroll room under the input while
+  // it's focused and scroll it into view directly.
+  input.addEventListener('focus', function(){
+    chat.classList.add('kb-open');
+    var n = 0;
+    var iv = setInterval(function(){
+      fitChat();
+      input.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      if (++n >= 6) clearInterval(iv);
+    }, 120);
+  });
+  input.addEventListener('blur', function(){
+    setTimeout(function(){ chat.classList.remove('kb-open'); fitChat(); }, 80);
+  });
+
   sendBtn.addEventListener('pointerdown', function(e){ e.preventDefault(); });
   sendBtn.addEventListener('mousedown', function(e){ e.preventDefault(); });
   form.addEventListener('submit', function(e){
@@ -6071,7 +6208,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   document.getElementById('pet-chat-close').addEventListener('click', closeChat);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeChat(); });
   document.addEventListener('pointerdown', function(e){
-    if (chatOpen && !pet.contains(e.target) && !e.target.closest('#vk')) closeChat();
+    if (chatOpen && !pet.contains(e.target) && !chat.contains(e.target) && !e.target.closest('#vk')) closeChat();
   }, true);
 
   // ---------- tap to talk, drag to carry ----------
@@ -6750,8 +6887,8 @@ html body #landing-page #landing-room:hover{opacity:1;}
         viewList.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
         if (!rows.length) {
           const p = document.createElement('p');
-          p.className = 'thoughts-loading thoughts-stack-empty';
-          p.textContent = 'nothing written here yet.';
+          p.className = 'thoughts-empty thoughts-stack-empty';
+          p.textContent = 'nothing here yet. you can go first.';
           viewList.appendChild(p);
           return rows;
         }
@@ -7241,6 +7378,11 @@ html body #landing-page #landing-room:hover{opacity:1;}
     }
     function closeDiaryView() {
       if (window.resetDeleteDiaryArm) window.resetDeleteDiaryArm();
+      // Backing out of a diary (on-screen back button or the phone's own
+      // back button -- both land here) used to leave its music playing
+      // behind, since diary music rides the same player as a thought's
+      // does but this exit never told it to stop.
+      try { if (typeof window.stopThoughtAudio === 'function') window.stopThoughtAudio(); } catch (e) {}
       viewRoom.classList.remove('open', 'diary-view-open');
       viewRoom.setAttribute('aria-hidden', 'true');
       // openDiaryView forces the room visible with inline styles (so it
@@ -7282,6 +7424,11 @@ html body #landing-page #landing-room:hover{opacity:1;}
     const writeFields = document.getElementById('diary-write-fields');
     let codeVerified = false;
     let verifyToken = 0;
+    // Same growing-pause brake as Selrick's own login: verify_diary_code
+    // has no login/captcha in front of it at all, so without this a
+    // script could hammer it with guesses as fast as the network allows.
+    let diaryCodeFails = 0;
+    let diaryCodeLockUntil = 0;
 
     function setKnown(known) {
       codeVerified = known;
@@ -7303,6 +7450,13 @@ html body #landing-page #landing-room:hover{opacity:1;}
     async function confirmCode() {
       const code = viewCode.value;
       if (!code || !current) { setKnown(false); return; }
+      const waitLeft = diaryCodeLockUntil - Date.now();
+      if (waitLeft > 0) {
+        setKnown(false);
+        viewStatus.textContent = `too many tries \u2014 wait ${Math.ceil(waitLeft / 1000)}s and try again.`;
+        viewStatus.classList.add('error');
+        return;
+      }
       const token = ++verifyToken;
       viewStatus.textContent = 'checking the code\u2026';
       viewStatus.classList.remove('error');
@@ -7319,6 +7473,12 @@ html body #landing-page #landing-room:hover{opacity:1;}
       } catch (e) {
         if (token !== verifyToken) return;
         failed = true;
+      }
+      if (ok) {
+        diaryCodeFails = 0;
+      } else if (!failed) {
+        diaryCodeFails++;
+        if (diaryCodeFails >= 2) diaryCodeLockUntil = Date.now() + Math.min(30000, 2000 * Math.pow(2, diaryCodeFails - 2));
       }
       setKnown(ok);
       viewStatus.textContent = ok ? '' : (failed ? 'could not confirm the code just now. try again.' : 'that code doesn\u2019t match this diary.');
