@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500&display=optional" rel="stylesheet">
-<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}::selection{background:var(--accent);color:var(--paper);}::-moz-selection{background:var(--accent);color:var(--paper);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;animation: cardIn 0.22s ease both;}@keyframes cardIn {from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; }}.thoughts-stack-empty {animation: cardIn 0.25s ease both;}.skeleton-card {border: 1px solid var(--rule);border-radius: 9px;padding: 14px 16px;background: linear-gradient(90deg, var(--paper) 25%, rgba(112,78,127,.09) 37%, var(--paper) 63%);background-size: 400% 100%;animation: skeletonShine 1.4s ease infinite;pointer-events: none;cursor: default;}.skeleton-card .skeleton-line {height: 12px;border-radius: 4px;background: rgba(112,78,127,.14);margin: 0 auto;}.skeleton-card .skeleton-line + .skeleton-line {margin-top: 8px;width: 55%;}@keyframes skeletonShine {0% { background-position: 200% 0; } 100% { background-position: -200% 0; }}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}button, a, [role="button"] { touch-action: manipulation; }</style>
+<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}::selection{background:var(--accent);color:var(--paper);}::-moz-selection{background:var(--accent);color:var(--paper);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;animation: cardIn 0.22s ease both;}@keyframes cardIn {from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; }}.thoughts-stack-empty {animation: cardIn 0.25s ease both;}.skeleton-card {border: 1px solid var(--rule);border-radius: 9px;padding: 14px 16px;background: linear-gradient(90deg, var(--paper) 25%, rgba(112,78,127,.09) 37%, var(--paper) 63%);background-size: 400% 100%;animation: skeletonShine 1.4s ease infinite;pointer-events: none;cursor: default;}.skeleton-card .skeleton-line {height: 12px;border-radius: 4px;background: rgba(112,78,127,.14);margin: 0 auto;}.skeleton-card .skeleton-line + .skeleton-line {margin-top: 8px;width: 55%;}@keyframes skeletonShine {0% { background-position: 200% 0; } 100% { background-position: -200% 0; }}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 0 auto;padding: 0;min-height: 50vh;display: flex;align-items: center;justify-content: center;text-align: center;}button, a, [role="button"] { touch-action: manipulation; }</style>
 <style>
   .speak-room{--thought-glow:#6b4a7a;--thought-cool:#60466b;position:fixed;inset:0;z-index:100020;overflow:hidden;background:var(--paper);background-image:radial-gradient(circle at 16% -8%,rgba(107,74,122,.08),transparent 48%),radial-gradient(circle at 88% 8%,rgba(96,70,107,.07),transparent 52%);box-shadow:inset 0 0 170px rgba(16,11,18,.09);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 1s ease;outline:none;}
   .speak-room.open{opacity:1;pointer-events:auto;}
@@ -575,7 +575,7 @@
 .thought-line-media .speak-radio-end .speak-radio-dial{display:none;}
 /* full list: soft chat bubbles, alternating sides, corner-tail (no diamond) */
 .thoughts-stack-list{gap:12px;padding-top:18px;}
-.thoughts-stacked-room .thought-stack-item{position:relative;align-self:flex-start;box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:12px 16px 9px;text-align:left;border:0;border-radius:20px 20px 20px 6px;background-color:rgba(112,78,127,.11);background-image:none;box-shadow:none;}
+#thoughts-stacked-room .thought-stack-item{position:relative;align-self:flex-start;box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:12px 16px 9px;text-align:left;border:0;border-radius:20px 20px 20px 6px;background-color:rgba(112,78,127,.11);background-image:none;box-shadow:none;}
 /* An audio card was being dropped straight into a chat-bubble item
    sized with width:fit-content — fine for plain text, but the
    player's row of controls (play button, seek bar, skip buttons,
@@ -583,14 +583,14 @@
    squeezed past their min-content size and overlapped each other.
    Once a bubble is holding a player, let it take the same full
    share of the row every other bubble gets instead of shrink-wrapping. */
-.thoughts-stacked-room .thought-stack-item:has(.speak-radio){width:100%;min-width:0;}
+#thoughts-stacked-room .thought-stack-item:has(.speak-radio){width:100%;min-width:0;}
 .thought-stack-item .speak-radio{width:100%;box-sizing:border-box;}
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
-.thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
-.thoughts-stacked-room .thought-stack-item time{margin-top:7px;font-size:9.5px;letter-spacing:.1em;opacity:.8;}
-.thoughts-stacked-room .thought-stack-item .thought-like{margin:2px 0 0;padding:4px 8px 4px 0;}
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin-left:auto;padding:4px 0 4px 8px;}
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even) time{text-align:right;}
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
+#thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
+#thoughts-stacked-room .thought-stack-item time{margin-top:7px;font-size:9.5px;letter-spacing:.1em;opacity:.8;}
+#thoughts-stacked-room .thought-stack-item .thought-like{margin:2px 0 0;padding:4px 8px 4px 0;}
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin-left:auto;padding:4px 0 4px 8px;}
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even) time{text-align:right;}
 /* room: replies as soft chat bubbles (notes keep alternating tails) */
 .speak-room .speak-replies{gap:8px;}
 .speak-room .speak-reply{box-sizing:border-box;width:fit-content;min-width:38%;max-width:86%;padding:10px 14px 7px;border:0;border-radius:20px 20px 20px 6px;background:rgba(112,78,127,.11);}
@@ -599,12 +599,12 @@
 .speak-room .speak-reply-name{font-size:9.5px;letter-spacing:.1em;margin-bottom:2px;}
 .speak-room .speak-reply-meta{margin-top:5px;}
 /* everything that was written here: centered bubbles */
-.thoughts-stacked-room .thought-stack-item,
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:center;text-align:center;border-radius:20px;background-color:rgba(112,78,127,.11);}
-.thoughts-stacked-room .thought-stack-item time,
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even) time{text-align:center;}
-.thoughts-stacked-room .thought-stack-item .thought-like,
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin:2px auto 0;padding:4px 8px;}
+#thoughts-stacked-room .thought-stack-item,
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:center;text-align:center;border-radius:20px;background-color:rgba(112,78,127,.11);}
+#thoughts-stacked-room .thought-stack-item time,
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even) time{text-align:center;}
+#thoughts-stacked-room .thought-stack-item .thought-like,
+#thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin:2px auto 0;padding:4px 8px;}
 .speak-room .speak-replies::before{content:'replies';display:block;margin:0 0 2px 2px;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
 .speak-media-preview{display:block;max-width:120px;max-height:120px;margin-top:10px;border-radius:12px;border:1px solid var(--rule);}
 .speak-room .speak-media{max-width:150px;margin:4px 2px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;line-height:0;}
@@ -799,7 +799,7 @@
 .thoughts-stacked-header{padding-bottom:16px;border-bottom:3px double var(--rule);}
 .thoughts-stacked-header .thoughts-stacked-sub{line-height:1.5;}
 .thoughts-stacked-room .thoughts-stack-list{gap:18px;padding-top:24px;padding-bottom:max(48px,env(safe-area-inset-bottom,20px));}
-.thoughts-stacked-room .thought-stack-item:nth-of-type(n){
+#thoughts-stacked-room .thought-stack-item:nth-of-type(n){
   min-width:52%;max-width:88%;padding:0 4px 18px;border-radius:0;
   background:none;
   border:0;border-bottom:1px dashed var(--rule);
@@ -901,7 +901,7 @@
   border-color:color-mix(in srgb, var(--ink) 55%, transparent);
 }
 </style>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
 </head>
 <body>
 <script>
@@ -1236,7 +1236,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <a class="footer-link" href="/attributions.html">attributions</a>
     <a class="footer-link" href="/copyright.html#report">report a concern</a>
   </div>
-  <div class="sf-updated">Last updated: <time datetime="2026-09-27T23:04+08:00">Sunday, September 27, 2026, 11:04 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-updated">Last updated: <time datetime="2026-09-28T07:31+08:00">Monday, September 28, 2026, 7:31 AM</time> <span class="sf-updated-ago"></span></div>
   <div class="sf-copyright">&copy; 2026 BeyonDefinition. All Rights Reserved.</div>
 </template>
 
@@ -1476,7 +1476,19 @@ html body #landing-page #landing-room:hover{opacity:1;}
   animation:thoughtsStackDrift linear infinite;animation-duration:var(--tsd-duration, 90s);}
 .thought-drift-track.thought-drift-track--empty{animation:none;}
 .thought-drift-set{display:flex;flex-direction:column;flex:0 0 auto;gap:22px;}
-.thought-drift-set--dup{pointer-events:none;}
+/* Used to be pointer-events:none + inert (see the HTML), which between
+   them meant nothing in this lane could ever be clicked -- so its cards
+   read as openable in the comments below but never actually were. Now
+   plain content: clicking one opens the real card it mirrors, same as
+   the rest of the column, and once open, liking/deleting it works
+   exactly as it does from a real card, since it's the genuine node. */
+/* An echo card is a clone used only to pad a sparse loop -- any inner
+   controls it carries over (a music player's own play button, say) have
+   no listeners since cloneNode doesn't copy those, so they'd otherwise
+   sit there looking clickable but doing nothing. Routing pointer-events
+   through to the card itself instead means a tap anywhere on an echo
+   opens the real card it was cloned from, same as tapping the rest of it. */
+.thought-drift-echo *{pointer-events:none;}
 #thoughts-stack-list.thought-drift:has(.thought-like:hover,.thought-delete:hover) .thought-drift-track,
 #thoughts-stack-list.thought-drift:focus-within .thought-drift-track{animation-play-state:paused;}
 @keyframes thoughtsStackDrift{0%{transform:translate(0,0);}100%{transform:translate(0,-50%);}}
@@ -1576,7 +1588,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   <div class="thoughts-stack-list thought-drift" id="thoughts-stack-list">
     <div class="thought-drift-track" id="thoughts-stack-track">
       <div class="thought-drift-set" id="thoughts-stack-set"></div>
-      <div class="thought-drift-set thought-drift-set--dup" id="thoughts-stack-set-dup" aria-hidden="true" inert></div>
+      <div class="thought-drift-set thought-drift-set--dup" id="thoughts-stack-set-dup" aria-hidden="true"></div>
     </div>
     <p class="thoughts-loading" id="thoughts-stack-loading">looking for them&hellip;</p>
   </div>
@@ -1605,7 +1617,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
         back
       </button>
       <h2 id="speak-title">selrick's room</h2>
-      <p class="speak-sub">selrick's corner of the place. he starts the thoughts, and you're welcome to answer — new ones and old ones alike.</p>
+      <p class="speak-sub" id="speak-room-sub" style="white-space:normal;overflow:visible;text-overflow:clip;">selrick's corner of the place. he starts the thoughts, and you're welcome to answer — new ones and old ones alike.</p>
     </div>
   </div>
 
@@ -1665,7 +1677,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
           <input class="speak-field" type="text" id="speak-email" enterkeyhint="next" placeholder="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
           <input class="speak-field" type="password" id="speak-password" enterkeyhint="go" placeholder="password" autocomplete="current-password" required>
           <p class="thoughts-status" id="speak-login-status" aria-live="polite"></p>
-          <div class="cf-turnstile" id="speak-turnstile" data-sitekey="0x4AAAAAAFFAW1chT0ahVdHu" data-callback="onSpeakTurnstile" data-expired-callback="onSpeakTurnstileExpired" style="align-self:center;margin:0;"></div>
+          <div id="speak-turnstile" style="align-self:center;margin:0;"></div>
           <div class="thoughts-row" style="justify-content:center;margin-top:-4px;">
             <button type="submit" class="primary">come in</button>
           </div>
@@ -1704,6 +1716,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
       <div class="dcb-col" id="dcb-col-1"></div>
       <div class="dcb-col" id="dcb-col-2"></div>
     </div>
+    <p class="thoughts-loading thoughts-stack-empty" id="diaries-empty" hidden>no diaries here yet. you could be the first to start one.</p>
     <p class="thoughts-loading" id="diaries-loading" hidden>looking for them&hellip;</p>
   </div>
   <footer class="footer-note site-footer" data-site-footer></footer>
@@ -1810,31 +1823,57 @@ html body #landing-page #landing-room:hover{opacity:1;}
     return '<div class="dcb-card" data-name="' + esc(e.raw) + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : ' role="button" tabindex="0"') + '>' +
       '<p class="dcb-name">' + esc(diaryTitle(e.raw)) + '</p><span class="dcb-meta">' + esc(e.date) + '</span></div>';
   }
+  function padToMin(list, n) {
+    // When there aren't enough real diaries to fill a column, cycle back
+    // through the ones there are until we reach n -- so a lone diary still
+    // fills the column and the drift still reads as a loop instead of one
+    // card adrift in a lot of empty space. Still all real, openable
+    // diaries; just shown more than once until there's more to show.
+    if (!list.length) return list;
+    var out = list.slice();
+    var i = 0;
+    while (out.length < n) { out.push(list[i % list.length]); i++; }
+    return out;
+  }
   function place(pool) {
-    if (!pool.length) { bg.hidden = true; return; }
+    if (!pool.length) { bg.hidden = true; updateEmptyState(); return; }
     bg.hidden = false;
     var cols = distribute(pool);
     slots.forEach(function (id, i) {
       var el = document.getElementById(id);
       if (!el) return;
-      var picks = cols[i].slice(0, CARDS_PER_COL);
+      var picks = padToMin(cols[i].slice(0, CARDS_PER_COL), CARDS_PER_COL);
       el.innerHTML = picks.length ? '<span class="dcb-track">' + renderSet(picks) + renderSet(picks, true) + '</span>' : '';
     });
+    updateEmptyState();
   }
 
   var bg = document.getElementById('diary-cards-bg');
   if (!bg) return;
   bg.hidden = true; // nothing to show until real rows load in
-  window.setDiaryDriftSearching = function (isSearching) {
-    bg.classList.toggle('diary-cards-bg--searching', !!isSearching);
+  var diariesEmpty = document.getElementById('diaries-empty');
+  var isSearching = false;
+  // Only when there truly are no diaries anywhere, and no search is in
+  // progress (a search already shows its own "no diary named like that
+  // yet" message) -- so this stays quiet the moment even one diary exists.
+  function updateEmptyState() {
+    if (!diariesEmpty) return;
+    diariesEmpty.hidden = !bg.hidden || isSearching;
+  }
+  window.setDiaryDriftSearching = function (searching) {
+    bg.classList.toggle('diary-cards-bg--searching', !!searching);
+    isSearching = !!searching;
+    updateEmptyState();
   };
 
   // Called when a diary is deleted elsewhere on the page, so its card
   // comes out of the drift immediately instead of continuing to loop
   // around until the next full page load re-fetches the list. A
-  // deleted diary can have up to four matching elements (visible +
-  // the aria-hidden duplicate used to make the loop seamless, in
-  // either column), so all matches are removed, not just the first.
+  // deleted diary can have several matching elements -- the aria-hidden
+  // duplicate used to make the loop seamless, in either column, and now
+  // possibly repeats from padToMin when there weren't enough diaries to
+  // fill a column on their own -- so all matches are removed, not just
+  // the first.
   window.removeDiaryFromDrift = function (name) {
     if (!name) return;
     document.querySelectorAll('.dcb-card[data-name="' + CSS.escape(name) + '"]').forEach(function (el) {
@@ -1847,6 +1886,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
     setTimeout(function () {
       var anyLeft = bg.querySelector('.dcb-card');
       if (!anyLeft) bg.hidden = true;
+      updateEmptyState();
     }, 400);
   };
 
@@ -1878,7 +1918,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
       }).filter(function (e) { return e.raw; });
       place(pool);
     })
-    .catch(function () { /* leave hidden on failure */ });
+    .catch(function () { updateEmptyState(); /* leave hidden on failure */ });
 })();
 </script>
 
@@ -1987,6 +2027,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   #diaries-list .thought-stack-item:not(.skeleton-card){
     position:relative;
     align-self:center;
+    width:100%;
     text-align:center;
     cursor:pointer;
     padding:22px 22px 16px;
@@ -2111,17 +2152,45 @@ html body #landing-page #landing-room:hover{opacity:1;}
     // back at the start, then sizes the loop speed to how much content
     // there is -- more thoughts, a longer (not faster) lap -- and turns
     // the drift off entirely when there's nothing to loop.
+    // When there are only a handful of real thoughts, the column reads as
+    // mostly empty rather than a loop -- so before mirroring, the real set
+    // is padded out with inert visual echoes (buttons stripped, cloned
+    // from the real cards that exist, cycling as needed) up to a minimum.
+    // Tapping an echo -- in the real set or in the mirrored dup lane --
+    // opens the genuine card it was cloned from, so every card in the
+    // loop reads as openable, not just the first few.
+    const STACK_DRIFT_MIN = 3;
+    function buildDriftEcho(realCard, srcIndex) {
+      const echo = realCard.cloneNode(true);
+      echo.classList.add('thought-drift-echo');
+      echo.setAttribute('aria-hidden', 'true');
+      echo.tabIndex = -1;
+      echo.dataset.echoSrc = String(srcIndex);
+      echo.querySelectorAll('.thought-like, .thought-delete').forEach((b) => b.remove());
+      return echo;
+    }
     function syncStackDrift() {
       if (!stackedListEl || !stackedDupEl || !stackedTrackEl) return;
-      const count = stackedListEl.querySelectorAll('.thought-stack-item').length;
-      if (count < 1) {
+      // Idempotent: strip any echoes left from a previous sync before
+      // recounting, since this runs again after every like, delete, or
+      // open/close.
+      stackedListEl.querySelectorAll('.thought-drift-echo').forEach((n) => n.remove());
+      const realCards = Array.from(stackedListEl.querySelectorAll('.thought-stack-item'));
+      const realCount = realCards.length;
+      if (realCount < 1) {
         stackedDupEl.innerHTML = '';
         stackedTrackEl.classList.add('thought-drift-track--empty');
         return;
       }
+      let i = 0;
+      while (stackedListEl.querySelectorAll('.thought-stack-item').length < STACK_DRIFT_MIN) {
+        stackedListEl.appendChild(buildDriftEcho(realCards[i % realCount], i % realCount));
+        i++;
+      }
+      const totalCount = stackedListEl.querySelectorAll('.thought-stack-item').length;
       stackedDupEl.innerHTML = stackedListEl.innerHTML;
       stackedTrackEl.classList.remove('thought-drift-track--empty');
-      stackedTrackEl.style.setProperty('--tsd-duration', Math.max(50, count * 9) + 's');
+      stackedTrackEl.style.setProperty('--tsd-duration', Math.max(50, totalCount * 9) + 's');
     }
 
     // Tapping a thought (anywhere but its like/remove buttons) lifts the
@@ -2213,14 +2282,24 @@ html body #landing-page #landing-room:hover{opacity:1;}
       stackedListEl.addEventListener('click', (e) => {
         if (e.target.closest('button, a')) return;
         const card = e.target.closest('.thought-stack-item');
-        if (card) openThoughtFocus(card);
+        if (!card) return;
+        if (card.classList.contains('thought-drift-echo')) {
+          const realOnly = Array.from(stackedListEl.querySelectorAll('.thought-stack-item:not(.thought-drift-echo)'));
+          const real = realOnly[+card.dataset.echoSrc];
+          if (real) openThoughtFocus(real);
+          return;
+        }
+        openThoughtFocus(card);
       });
       // The duplicate lane (stackedDupEl) is just cloned markup for the
       // seamless drift loop -- its own buttons carry no listeners, and
       // its nodes aren't the real ones openThoughtFocus needs to move.
       // Map a tap on a dup card back to the real card at the same index
-      // (the two lanes are always kept in sync 1:1 by syncStackDrift)
-      // and open that instead, so a duplicate reads as openable too.
+      // (the two lanes are always kept in sync 1:1 by syncStackDrift,
+      // echoes included) and open that instead -- if that index lands on
+      // an echo rather than a genuine card, resolve one step further to
+      // the real card the echo was cloned from -- so every card in the
+      // loop reads as openable, not just the first few.
       if (stackedDupEl) {
         stackedDupEl.addEventListener('click', (e) => {
           if (e.target.closest('button, a')) return;
@@ -2229,8 +2308,15 @@ html body #landing-page #landing-room:hover{opacity:1;}
           const dupCards = Array.from(stackedDupEl.querySelectorAll('.thought-stack-item'));
           const idx = dupCards.indexOf(dupCard);
           if (idx === -1) return;
-          const realCard = stackedListEl.querySelectorAll('.thought-stack-item')[idx];
-          if (realCard) openThoughtFocus(realCard);
+          const matched = stackedListEl.querySelectorAll('.thought-stack-item')[idx];
+          if (!matched) return;
+          if (matched.classList.contains('thought-drift-echo')) {
+            const realOnly = Array.from(stackedListEl.querySelectorAll('.thought-stack-item:not(.thought-drift-echo)'));
+            const real = realOnly[+matched.dataset.echoSrc];
+            if (real) openThoughtFocus(real);
+            return;
+          }
+          openThoughtFocus(matched);
         });
       }
       thoughtFocusOverlay.addEventListener('click', (e) => {
@@ -2515,28 +2601,6 @@ html body #landing-page #landing-room:hover{opacity:1;}
     function writeLocal(list) {
       try { localStorage.setItem(LOCAL_KEY, JSON.stringify(list.slice(0, 100))); }
       catch (e) {}
-    }
-
-    // A handful of seed thoughts so the wall and the stacked room
-    // never read as genuinely empty — used only when there's nothing
-    // real to show yet (no backend reachable, or a fresh table).
-    // Timestamps are fixed, real points in the past (not recomputed
-    // relative to "now" on every load) so "time ago" genuinely ages
-    // as real time passes, the same way a real visitor's post would,
-    // instead of forever reading as exactly "40m ago" no matter when
-    // someone loads the page — which is what made them look like a
-    // static picture of a wall rather than an actual one.
-    function getSeedThoughts() {
-      return [
-        { content: "i read the entry twice. it was longer the second time.", created_at: "2026-09-10T13:50:56.000Z" },
-        { content: "i think i have heard the name before. i could not say where.", created_at: "2026-09-10T11:30:56.000Z" },
-        { content: "i knew the name before i read the entry. i checked anyway.", created_at: "2026-09-10T05:30:56.000Z" },
-        { content: "i counted the letters. seven. i counted again, to be polite.", created_at: "2026-09-09T14:30:56.000Z" },
-        { content: "the second sense was gone when i scrolled back. thank you anyway.", created_at: "2026-09-09T09:30:56.000Z" },
-        { content: "i wrote something here last week. i cannot find it. maybe it was somewhere else.", created_at: "2026-09-08T14:30:56.000Z" },
-        { content: "it is tuesday where i am.", created_at: "2026-09-06T14:30:56.000Z" },
-        { content: "nothing to add. i only wanted to say i was here.", created_at: "2026-09-04T14:30:56.000Z" }
-      ];
     }
 
     // The visible label stays the same hushed "just now" / "3h ago"
@@ -3357,7 +3421,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
           data = readLocal();
         }
       }
-      if (!data || !data.length) data = getSeedThoughts();
+      if (!data) data = [];
       stageThoughts = data;
       stageQueue = [];
       startStage();
@@ -3720,9 +3784,19 @@ html body #landing-page #landing-room:hover{opacity:1;}
     const postSubmit = $id('speak-post-submit');
     const ownerToggle = $id('speak-owner-toggle');
     const signOutBtn = $id('speak-signout');
+    const TURNSTILE_SITEKEY = '0x4AAAAAAFFAW1chT0ahVdHu';
     let speakTurnstileToken = null;
     window.onSpeakTurnstile = function (token) { speakTurnstileToken = token; };
     window.onSpeakTurnstileExpired = function () { speakTurnstileToken = null; };
+    window.onTurnstileLoad = function () {
+      try {
+        window.turnstile.render('#speak-turnstile', {
+          sitekey: TURNSTILE_SITEKEY,
+          callback: onSpeakTurnstile,
+          'expired-callback': onSpeakTurnstileExpired
+        });
+      } catch (e) {}
+    };
     function resetSpeakTurnstile() {
       speakTurnstileToken = null;
       try { if (window.turnstile) window.turnstile.reset('#speak-turnstile'); } catch (e) {}
@@ -6347,7 +6421,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   // [selector, smallest font size in px that's still comfortable to read]
   var GROUPS = [
     ['#landing-page h1,#thoughts-title,#thoughts-panel-wall h3,#thoughts-stacked-title,#speak-title', 16],
-    ['#landing-page p,.feedback-sub,.thoughts-stacked-sub:not(#thoughts-room-sub),.speak-sub', 12]
+    ['#landing-page p,.feedback-sub,.thoughts-stacked-sub:not(#thoughts-room-sub),.speak-sub:not(#speak-room-sub)', 12]
   ];
   function fit(el, floor){
     el.classList.remove('fit1', 'fitwrap'); el.style.fontSize = '';
@@ -6694,7 +6768,13 @@ html body #landing-page #landing-room:hover{opacity:1;}
 
     // ---------- directory ----------
     async function loadDiaries(term) {
-      listEl.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
+      // ".thoughts-stack-empty" also matches #diaries-empty, the permanent
+      // "no diaries at all" message this cleanup used to delete from the
+      // page outright the first time this ran (even with an empty term) --
+      // after that, nothing could ever show it again. Only the ephemeral
+      // "no diary named like that yet" message this function creates below
+      // should be cleared here.
+      listEl.querySelectorAll('.thought-stack-item, .thoughts-stack-empty:not(#diaries-empty)').forEach((n) => n.remove());
       if (!term) {
         // No default full listing here -- the drifting cards behind this
         // list are the only "browse everything" view. This static list is
