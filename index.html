@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400;1,500&display=optional" rel="stylesheet">
-<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;animation: cardIn 0.22s ease both;}@keyframes cardIn {from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; }}.thoughts-stack-empty {animation: cardIn 0.25s ease both;}.skeleton-card {border: 1px solid var(--rule);border-radius: 9px;padding: 14px 16px;background: linear-gradient(90deg, var(--paper) 25%, rgba(112,78,127,.09) 37%, var(--paper) 63%);background-size: 400% 100%;animation: skeletonShine 1.4s ease infinite;}.skeleton-card .skeleton-line {height: 12px;border-radius: 4px;background: rgba(112,78,127,.14);margin: 0 auto;}.skeleton-card .skeleton-line + .skeleton-line {margin-top: 8px;width: 55%;}@keyframes skeletonShine {0% { background-position: 200% 0; } 100% { background-position: -200% 0; }}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}button, a, [role="button"] { touch-action: manipulation; }</style>
+<style>:root {--ink: #322438;--paper: #fbf9fc;--rule: #dcd3e0;--accent: #704e7f;--muted: #807186;--card-shadow: rgba(50,36,56,0.08);}::selection{background:var(--accent);color:var(--paper);}::-moz-selection{background:var(--accent);color:var(--paper);}* {box-sizing: border-box;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;}html {scrollbar-width: none;-ms-overflow-style: none;-webkit-overflow-scrolling: touch;}html::-webkit-scrollbar {display: none;width: 0;height: 0;}body {margin: 0;background: var(--paper);background-image:linear-gradient(var(--paper), var(--paper));color: var(--ink);font-family: 'Source Serif 4', Georgia, serif;min-height: 100vh;min-height: 100dvh;display: flex;flex-direction: column;transition: filter .5s ease, background-image .5s ease, color .4s ease;}.pos {font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 500;font-size: clamp(15px, 4vw, 18px);color: var(--muted);}button.say {all: unset;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;width: 34px;height: 34px;border-radius: 50%;background: var(--ink);color: var(--paper);flex-shrink: 0;transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease, opacity 0.15s ease;}button.say:hover { transform: scale(1.06); opacity: .82; }button.say.playing { animation: pulse 0.9s ease-in-out infinite; }button.say:active { transform: scale(0.96); }button.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }button.say svg { width: 15px; height: 15px; }@keyframes pulse {0%, 100% { box-shadow: 0 0 0 0 rgba(127,120,130,0.35); }50% { box-shadow: 0 0 0 8px rgba(127,120,130,0); }}.footer-note {margin-top: 22px;font-size: clamp(11px, 2.8vw, 12px);color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;letter-spacing: 0.01em;}@keyframes flashLineFlickerIn {0% { opacity: 0; } 100% { opacity: 0.85; }}@keyframes flashLineFlickerOut {0% { opacity: 0.85; } 100% { opacity: 0; }}.footer-links {display: inline-flex;align-items: center;gap: 8px;flex-wrap: wrap;justify-content: center;}.footer-link {all: unset;cursor: pointer;color: var(--accent);text-decoration: none;display: inline-flex;align-items: center;gap: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: inherit;}.footer-link:hover { text-decoration: underline; }.footer-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }.feedback-whisper {text-align: center;font-family: 'Fraunces', Georgia, serif;font-style: italic;font-weight: 600;font-size: 12px;letter-spacing: 0.16em;text-transform: lowercase;color: #4f3759;margin: -8px 0 12px;opacity: 0;filter: blur(3px);text-shadow: none;pointer-events: none;}.feedback-whisper.show {animation: whisperFlickerIn 1.3s steps(1, end) forwards;filter: blur(0);}.thoughts-compose .feedback-whisper.thoughts-whisper {margin: 8px 0 0;}@keyframes whisperFlickerIn {0% { opacity: 0; } 100% { opacity: 0.75; }}.thoughts-modal textarea.ghost-typing {color: var(--muted);font-style: italic;caret-color: transparent;}.thoughts-overlay {position: fixed;inset: 0;background: rgba(50,36,56,0.45);display: flex;align-items: center;justify-content: center;padding: 20px;opacity: 0;pointer-events: none;transition: opacity 0.25s ease;z-index: 100000;}.thoughts-overlay.open {opacity: 1;pointer-events: auto;}.thoughts-modal {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: relative;background: var(--paper);background-image:radial-gradient(circle at 14% -10%, rgba(107,74,122,0.09), transparent 48%),radial-gradient(circle at 92% 106%, rgba(96,70,107,0.08), transparent 55%),border-radius: 22px;border: 1px solid var(--rule);padding: 22px 24px 18px;max-width: min(420px, 92vw);width: 100%;max-height: min(80vh, 620px);display: flex;flex-direction: column;overflow-y: auto;overflow-x: hidden;scrollbar-width: none;-ms-overflow-style: none;box-shadow: 0 0 0 1px rgba(107,74,122,0.14), 0 20px 46px rgba(50,36,56,0.4), 0 0 30px rgba(15,11,17,0.2);transform: translateY(10px);transition: transform 0.25s ease;}.thoughts-modal::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,0.06), transparent 72%);}.thoughts-modal::-webkit-scrollbar{display:none;width:0;height:0;}.thoughts-overlay.open .thoughts-modal { transform: translateY(0); }.thoughts-panel {display: none;flex-direction: column;min-height: 0;flex: 1 1 auto;}.thoughts-panel.active {display: flex;animation: thoughtsPanelIn 0.4s ease both;}.thoughts-panel.leaving {display: flex;animation: thoughtsPanelOut 0.22s ease both;}@keyframes thoughtsPanelIn {from { opacity: 0; transform: translateX(14px); }to   { opacity: 1; transform: translateX(0); }}@keyframes thoughtsPanelOut {from { opacity: 1; transform: translateX(0); }to   { opacity: 0; transform: translateX(-14px); }}#thoughts-panel-compose h3,#thoughts-panel-wall h3 {font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(23px, 6.2vw, 27px);line-height: 1.15;margin: 0 0 5px;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-panel-compose .feedback-sub,#thoughts-panel-wall .feedback-sub {line-height: 1.55;overflow-wrap: break-word;word-break: break-word;hyphens: auto;text-wrap: pretty;}#thoughts-title,#thoughts-panel-wall h3 {position: relative;}.thoughts-link {all: unset;box-sizing: border-box;cursor: pointer;display: inline-block;margin-top: 10px;padding: 6px 10px;border-radius: 14px;font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 12px;color: var(--thought-glow, var(--accent));text-align: center;align-self: center;transition: color 0.2s ease, background 0.2s ease;}.thoughts-link:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 2px;}.thoughts-link:hover { color: var(--thought-cool, var(--accent)); background: rgba(112,78,127,0.08); }.thoughts-list {position: relative;flex: 1 1 auto;min-height: 130px;overflow: hidden;margin: 5px -6px 3px;padding: 3px 6px;border-top: 1px solid var(--rule);border-bottom: 1px solid var(--rule);cursor: pointer;}.thoughts-list::after {content: 'tap for another one';position: absolute;left: 0; right: 0; bottom: 6px;text-align: center;font-size: 11px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);opacity: 1;pointer-events: none;}.thoughts-loading,.thoughts-empty {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: min(84%, 300px);text-align: center;color: var(--muted);font-style: italic;font-size: 13px;}.thought-line {position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);width: max-content;max-width: min(80%, 78vw, 300px);white-space: normal;text-wrap: pretty;text-align: center;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;line-height: 1.5;color: var(--ink);opacity: 0;overflow-wrap: anywhere;word-break: break-word;pointer-events: none;}.thought-line time {display: block;margin-top: 7px;font-size: 10.5px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-line.show {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thought-line.fade {animation: flashLineFlickerOut 0.5s steps(1, end) forwards;}.thought-line.thought-line-new {animation: flashLineFlickerIn 0.32s steps(1, end) forwards;}.thoughts-compose textarea {width: 100%;min-height: 36px;border: 1px solid var(--rule);border-radius: 8px;padding: 7px 10px;font-family: 'Source Serif 4', Georgia, serif;font-size: 14px;color: var(--ink);background: var(--paper);resize: vertical;}.thoughts-compose textarea::placeholder { color: var(--muted); }.thoughts-compose textarea:focus-visible { outline: 2px solid var(--thought-glow, var(--accent)); outline-offset: 1px; }.thoughts-row {display: flex;align-items: center;justify-content: space-between;gap: 10px;margin-top: 10px;}.thoughts-count {font-size: 11px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;}.thoughts-row button.primary {all: unset;cursor: pointer;font-family: 'Source Serif 4', Georgia, serif;font-size: 12px;font-weight: 600;letter-spacing: 0.015em;padding: 6px 14px;border-radius: 16px;background: var(--ink);border: 1px solid var(--thought-glow, var(--accent));color: var(--paper);text-align: center;box-shadow: 0 0 10px rgba(107,74,122,0.2);transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.2s ease;}.thoughts-row button.primary:hover { background: #583d63; }.thoughts-row button.primary:disabled {opacity: 0.45;cursor: not-allowed;}.thoughts-row button.primary:hover:not(:disabled) {transform: translateY(-1px);box-shadow: 0 6px 18px rgba(107,74,122,0.32);}.thoughts-row button.primary:active:not(:disabled) {transform: translateY(0) scale(0.97);box-shadow: 0 2px 8px rgba(107,74,122,0.25);}.thoughts-row button.primary:focus-visible {outline: 2px solid var(--thought-glow, var(--accent));outline-offset: 3px;}.thoughts-compose textarea.thought-leaving {animation: thoughtLeaving 0.48s steps(1, end) forwards;pointer-events: none;}@keyframes thoughtLeaving {0%   { opacity: 1;    filter: blur(0); }16%  { opacity: 0.2;  filter: blur(1px); }30%  { opacity: 0.75; filter: blur(0.4px); }46%  { opacity: 0.08; filter: blur(2px); }62%  { opacity: 0.5;  filter: blur(1.4px); }80%  { opacity: 0.12; filter: blur(2.6px); }100% { opacity: 0;    filter: blur(3.5px); }}.thoughts-status {min-height: 16px;margin: 8px 0 0;font-size: 12px;font-style: italic;color: var(--muted);text-align: center;}.thoughts-status.error { color: #4f3759; }.thoughts-stacked-room {--thought-glow: #6b4a7a;--thought-cool: #60466b;position: fixed;inset: 0;z-index: 100010;background: var(--paper);background-image:radial-gradient(circle at 18% -8%, rgba(107,74,122,0.09), transparent 46%),radial-gradient(circle at 88% 6%, rgba(112,78,127,0.1), transparent 50%),background-attachment: fixed;display: flex;flex-direction: column;opacity: 0;pointer-events: none;transform: translateY(10px);transition: opacity 0.3s ease, transform 0.3s ease;}.thoughts-stacked-room.open {opacity: 1;pointer-events: auto;transform: translateY(0);}.thoughts-stacked-room::before {content: '';position: absolute;inset: 0;pointer-events: none;background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(107,74,122,0.06), transparent 70%);}.thoughts-stacked-header {position: relative;flex: 0 0 auto;padding: max(20px, env(safe-area-inset-top, 20px)) clamp(20px, 6vw, 52px) 16px;border-bottom: 1px solid var(--rule);}.thoughts-stacked-back {all: unset;cursor: pointer;display: inline-flex;align-items: center;gap: 6px;color: var(--muted);font-family: 'Source Serif 4', Georgia, serif;font-style: italic;font-size: 13px;margin-bottom: 14px;transition: color 0.2s ease;}.thoughts-stacked-back:hover { color: var(--thought-glow); }.thoughts-stacked-back svg { width: 16px; height: 16px; flex-shrink: 0; }#thoughts-stacked-title {position: relative;font-family: 'Fraunces', Georgia, serif;font-weight: 700;font-size: clamp(26px, 7.5vw, 34px);margin: 0 0 6px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stacked-sub {margin: 0;color: var(--muted);font-size: 14px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}.thoughts-stack-list {position: relative;flex: 1 1 auto;min-height: 0;overflow-y: auto;overscroll-behavior: contain;padding: 8px clamp(20px, 6vw, 52px) max(40px, env(safe-area-inset-bottom, 20px));max-width: 720px;width: 100%;margin: 0 auto;display: flex;flex-direction: column;gap: 22px;}.thought-stack-item {text-align: center;padding: 14px 16px;border: 1px solid var(--rule);border-radius: 9px;background: var(--paper);box-shadow: 0 3px 16px var(--card-shadow);transition: filter 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;animation: cardIn 0.22s ease both;}@keyframes cardIn {from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; }}.thoughts-stack-empty {animation: cardIn 0.25s ease both;}.skeleton-card {border: 1px solid var(--rule);border-radius: 9px;padding: 14px 16px;background: linear-gradient(90deg, var(--paper) 25%, rgba(112,78,127,.09) 37%, var(--paper) 63%);background-size: 400% 100%;animation: skeletonShine 1.4s ease infinite;}.skeleton-card .skeleton-line {height: 12px;border-radius: 4px;background: rgba(112,78,127,.14);margin: 0 auto;}.skeleton-card .skeleton-line + .skeleton-line {margin-top: 8px;width: 55%;}@keyframes skeletonShine {0% { background-position: 200% 0; } 100% { background-position: -200% 0; }}.thought-stack-item p {margin: 0;font-family: 'Source Serif 4', Georgia, serif;font-size: 15px;line-height: 1.6;color: var(--ink);overflow-wrap: anywhere;}.thought-stack-item time {display: block;margin-top: 6px;font-size: 11px;letter-spacing: 0.03em;color: var(--muted);font-style: italic;}.thought-like {all: unset;box-sizing: border-box;display: flex;align-items: center;justify-content: center;width: max-content;margin: 8px auto 0;padding: 8px 14px;border-radius: 16px;color: var(--muted);line-height: 1;pointer-events: auto;cursor: pointer;-webkit-tap-highlight-color: transparent;transition: color 0.2s ease, background 0.2s ease;}.thought-like:hover {color: var(--accent);}.thought-like.liked {color: var(--accent);background: rgba(112,78,127,0.1);}.thought-like:focus-visible {outline: 2px solid var(--accent);outline-offset: 2px;}.thought-like svg {width: 16px;height: 16px;fill: none;stroke: currentColor;stroke-width: 1.8;stroke-linejoin: round;transition: fill 0.2s ease, transform 0.2s ease;}.thought-like.liked svg {fill: currentColor;transform: scale(1.08);}.thought-like-time {margin-left: 6px;font-family: 'Source Serif 4', Georgia, serif;font-size: 9.5px;font-style: italic;letter-spacing: 0.02em;color: var(--muted);white-space: nowrap;}.thought-like-time:empty {display: none;}.thought-owner-only{display:none !important;}:root.selrick-owner .thought-owner-only{display:flex !important;}.thought-delete{align-items:center;justify-content:center;width:max-content;margin:8px auto 0;padding:6px 10px;color:var(--muted);}.thought-delete:hover{color:var(--accent);}.thought-delete svg{width:14px;height:14px;}#diary-view-list .diary-delete{display:none;}#diary-view-list.code-known .diary-delete{display:inline-flex;}.thoughts-stack-empty {position: static;transform: none;width: auto;margin: 40px auto;padding: 0;}button, a, [role="button"] { touch-action: manipulation; }</style>
 <style>
   .speak-room{--thought-glow:#6b4a7a;--thought-cool:#60466b;position:fixed;inset:0;z-index:100020;overflow:hidden;background:var(--paper);background-image:radial-gradient(circle at 16% -8%,rgba(107,74,122,.08),transparent 48%),radial-gradient(circle at 88% 8%,rgba(96,70,107,.07),transparent 52%);box-shadow:inset 0 0 170px rgba(16,11,18,.09);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 1s ease;outline:none;}
   .speak-room.open{opacity:1;pointer-events:auto;}
@@ -226,6 +226,7 @@
   .speak-radio-title{margin:0;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:15px;line-height:1.35;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .speak-audio-title{margin-top:10px;}
   .speak-radio-dial{font-family:'Courier Prime','Courier New',Courier,monospace;font-size:12px;letter-spacing:.08em;color:var(--muted);transition:color .3s ease;}
+  .speak-radio-dial:empty{display:none;}
   .speak-radio.playing .speak-radio-dial{color:var(--accent);}
   .speak-radio.lost .speak-radio-dial{color:var(--muted);font-style:italic;}
   .speak-radio-bar{position:relative;height:2px;background:var(--rule);border-radius:2px;overflow:hidden;}
@@ -246,14 +247,19 @@
   .speak-radio.playing .speak-radio-art{box-shadow:0 0 0 2px var(--accent),0 2px 8px var(--card-shadow);}
   .speak-radio.has-art .speak-radio-title{text-align:left;}
   .speak-radio.no-art{overflow:hidden;}
-  /* the artwork sits as a soft, blurred background wash behind the card's
-     own contents \u2014 dimmed and tinted with the card's paper color so the
-     title and controls stay smoothly legible on top, not a sharp or
-     fully-visible image. */
-  .speak-radio.has-art{position:relative;overflow:hidden;box-shadow:0 4px 16px var(--card-shadow);}
-  .speak-radio.has-art .speak-radio-art{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;box-shadow:none;border-radius:0;object-fit:cover;opacity:.65;z-index:0;pointer-events:none;}
-  .speak-radio.has-art::after{content:'';position:absolute;inset:0;background:linear-gradient(165deg,rgba(251,249,252,.28) 0%,rgba(251,249,252,.4) 45%,rgba(251,249,252,.66) 100%);z-index:0;pointer-events:none;}
+  /* dark scrim over the cover instead of a light one, so the meta
+     text switches to paper-colored (like Spotify's now-playing card)
+     and stays legible regardless of how bright the art itself is. */
+  .speak-radio.has-art{position:relative;overflow:hidden;border-color:color-mix(in srgb, var(--ink) 55%, transparent);box-shadow:0 4px 16px var(--card-shadow);}
+  .speak-radio.has-art .speak-radio-art{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;box-shadow:none;border-radius:0;object-fit:cover;z-index:0;pointer-events:none;}
+  .speak-radio.has-art::after{content:'';position:absolute;inset:0;background:color-mix(in srgb, var(--ink) 80%, transparent);z-index:0;pointer-events:none;}
   .speak-radio.has-art .speak-radio-meta{position:relative;z-index:1;}
+  .speak-radio.has-art .speak-radio-title,.speak-radio.has-art .speak-radio-dial,.speak-radio.has-art .speak-radio-time{color:var(--paper);text-shadow:0 1px 3px rgba(0,0,0,.4);}
+  .speak-radio.has-art .speak-radio-skip,.speak-radio.has-art .speak-radio-mute{color:color-mix(in srgb, var(--paper) 78%, transparent);}
+  .speak-radio.has-art .speak-radio-skip:hover,.speak-radio.has-art .speak-radio-mute:hover,.speak-radio.has-art .speak-radio-mute.on{color:var(--paper);}
+  .speak-radio.has-art .speak-radio-bar{background:rgba(255,255,255,.3);box-shadow:none;}
+  .speak-radio.has-art .speak-radio-bar i{background:var(--paper);}
+  .speak-radio.has-art .speak-radio-seek:focus-visible{outline-color:var(--paper);}
   .speak-radio-watermark{position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;pointer-events:none;opacity:.16;}
   .speak-radio-watermark svg{width:64px;height:64px;fill:none;stroke:var(--accent);stroke-width:1;}
   .speak-radio > .speak-radio-meta{position:relative;z-index:1;}
@@ -531,7 +537,7 @@
 .thoughts-modal .thoughts-link{margin-top:6px;padding:5px 8px;min-height:24px;font-size:11px;border-radius:12px;}
 .thoughts-modal .thoughts-link:hover{background:rgba(112,78,127,.08);text-decoration:none;}
 #thoughts-panel-wall .thoughts-link{margin-top:2px;padding:2px 10px;min-height:20px;}
-.thoughts-modal .thoughts-list{border:1px solid var(--rule);border-radius:12px;margin:4px 0 6px;min-height:120px;background-color:var(--field);}
+.thoughts-modal .thoughts-list{border:1px solid var(--rule);border-radius:14px;margin:4px 0 6px;padding:14px 16px;min-height:120px;background:color-mix(in srgb, var(--accent) 6%, var(--paper));box-shadow:0 2px 10px var(--card-shadow);}
 .thoughts-modal .thoughts-list::after{bottom:6px;}
 .thought-line{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14px;line-height:1.45;}
 .thought-line time{font-family:'Source Serif 4',Georgia,serif;font-style:normal;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;}
@@ -545,8 +551,8 @@
 .thought-like{margin-top:3px;transition:background .2s ease,color .2s ease;}
 .thought-like.liked{background:rgba(112,78,127,.12);}
 /* wall: plain quotes, no bubble */
-.thoughts-modal .thought-line-text:not(:empty)::before,.thought-stack-item p:not(.speak-radio-title):not(:empty)::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
-.thoughts-modal .thought-line-text:not(:empty)::after,.thought-stack-item p:not(.speak-radio-title):not(:empty)::after{content:'\201D';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-left:2px;}
+.thoughts-modal .thought-line-text:not(:empty)::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+.thoughts-modal .thought-line-text:not(:empty)::after{content:'\201D';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-left:2px;}
 .thought-line-media{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:auto;}
 .thought-line-media:empty{display:none;}
 .thought-line-text:not(:empty) + .thought-line-media{margin-top:6px;}
@@ -578,8 +584,6 @@
 .thought-stack-item .speak-radio{width:100%;box-sizing:border-box;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even){align-self:flex-end;border-radius:20px 20px 6px 20px;background-color:rgba(112,78,127,.2);}
 .thoughts-stacked-room .thought-stack-item p{font-size:15px;line-height:1.5;text-wrap:pretty;}
-.thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::before{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-right:4px;opacity:.55;}
-.thoughts-stacked-room .thought-stack-item p:not(.speak-radio-title)::after{font-size:1.9em;line-height:0;vertical-align:-.32em;margin-left:4px;opacity:.55;}
 .thoughts-stacked-room .thought-stack-item time{margin-top:7px;font-size:9.5px;letter-spacing:.1em;opacity:.8;}
 .thoughts-stacked-room .thought-stack-item .thought-like{margin:2px 0 0;padding:4px 8px 4px 0;}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(even) .thought-like{margin-left:auto;padding:4px 0 4px 8px;}
@@ -611,7 +615,7 @@
 .speak-room .speak-media-note .speak-media{margin:0;flex:0 0 auto;}
 .speak-room .speak-media-caption{margin:0;padding:0 2px;flex:1 1 auto;min-width:0;max-width:230px;font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;font-size:14px;line-height:1.45;text-align:left;color:var(--ink);text-wrap:pretty;overflow-wrap:anywhere;}
 .speak-room .speak-media-note.reverse .speak-media-caption{text-align:right;}
-.speak-room .speak-media-caption::before{content:'\201C';font-family:'Fraunces',Georgia,serif;font-weight:700;font-style:normal;color:var(--accent);opacity:.75;margin-right:2px;}
+
 /* the same pairing, for a visitor's own attached picture on the
    thoughts wall — the quote mark and type already come from the
    stack item's own paragraph styling, so this just lays it out */
@@ -701,8 +705,15 @@
   transform:rotate(-1.2deg);opacity:.88;margin-bottom:4px;width:fit-content;
 }
 
-/* tape: a catalogue card */
-.speak-room .speak-post > .speak-radio{border-radius:6px;}
+/* tape: a catalogue card — tinted like the rest of the page instead
+   of a separate flat white box next to the boxless text and photo */
+.speak-room .speak-post > .speak-radio{
+  border-radius:6px;
+  border-color:rgba(50,36,56,.14);
+  background:color-mix(in srgb, var(--accent) 5%, var(--paper));
+  box-shadow:0 1px 4px var(--card-shadow);
+}
+.speak-room .speak-post > .speak-radio.playing{border-color:var(--accent);}
 .speak-room .speak-replies{border-radius:8px;}
 
 /* replies: slips tucked into the margin */
@@ -777,7 +788,7 @@
 #thoughts-panel-wall #thoughts-goto-compose{margin-top:0;}
 
 /* the wall: a calm page for one thought at a time */
-.thoughts-modal .thoughts-list{margin:0 0 10px;min-height:170px;border-radius:8px;}
+.thoughts-modal .thoughts-list{margin:0 0 10px;min-height:170px;}
 .thoughts-modal .thoughts-list .thought-line{top:44%;max-width:min(84%,300px);}
 .thoughts-modal .thoughts-list::after{bottom:10px;}
 
@@ -786,9 +797,22 @@
 .thoughts-stacked-header .thoughts-stacked-sub{line-height:1.5;}
 .thoughts-stacked-room .thoughts-stack-list{gap:18px;padding-top:24px;padding-bottom:max(48px,env(safe-area-inset-bottom,20px));}
 .thoughts-stacked-room .thought-stack-item:nth-of-type(n){
-  min-width:52%;max-width:88%;padding:16px 20px 12px;border-radius:6px;
-  background:var(--paper);border:1px solid var(--rule);box-shadow:0 2px 10px var(--card-shadow);
+  min-width:52%;max-width:88%;padding:0 4px 18px;border-radius:0;
+  background:none;
+  border:0;border-bottom:1px dashed var(--rule);
+  box-shadow:none;
 }
+/* Every card keeps its dashed divider now, the last one included.
+   The old rule stripped the border from whichever card happened to
+   land last inside its own container -- but this list is mirrored
+   into a second, identical container behind the scenes to make the
+   drifting scroll loop seamlessly, so "last in its container" could
+   be a card in the middle of the visible list, not the final thought
+   overall. That's what let two unrelated thoughts sit flush against
+   each other with no line between them. Always drawing the line
+   removes the ambiguity -- the only visible cost is one extra dashed
+   rule before the "see what's here" button at the very bottom, which
+   reads fine as a closing line rather than a mistake. */
 .thoughts-stacked-room .thought-stack-item p{line-height:1.6;}
 .thoughts-stacked-room .thought-stack-item time{margin-top:10px;}
 
@@ -798,8 +822,8 @@
   display:block;font-family:'Courier Prime','Courier New',monospace;
   letter-spacing:.12em;opacity:.85;
 }
-.thoughts-stacked-room .thought-stack-item:nth-of-type(odd){transform:rotate(-.6deg);}
-.thoughts-stacked-room .thought-stack-item:nth-of-type(even){transform:rotate(.6deg);}
+
+
 
 /* like hearts: 24px -> 40px tall hit area */
 .thought-like{min-height:40px;}
@@ -851,7 +875,30 @@
     "name": "Selrick"
   }
 }
-</script></head>
+</script>
+<style id="attachment-card-polish">
+/* a card that groups a photo, a song and a few words together should
+   read as one considered thing, not as separate widgets stacked on
+   top of each other. give the photo a touch of its own presence, and
+   let a plain (no-artwork) song sit inside the card as a tinted
+   passage instead of a second hard-edged box. */
+.thought-stack-item .thought-media-note .speak-media img,
+.thought-stack-item .thought-media-note .speak-media video{
+  border:0;
+  box-shadow:none;
+  background:transparent;
+  mix-blend-mode:multiply;
+}
+.thought-stack-item .speak-radio{
+  border-color:rgba(50,36,56,.06);
+  background:color-mix(in srgb, var(--accent) 6%, var(--paper));
+  box-shadow:none;
+}
+.thought-stack-item .speak-radio.has-art{
+  border-color:color-mix(in srgb, var(--ink) 55%, transparent);
+}
+</style>
+</head>
 <body>
 <script>
   // Every full-page overlay (the "leave a thought" card, its stacked
@@ -952,16 +999,68 @@ html body .thoughts-overlay.open{display:block !important;padding:0 !important;o
   background-image:radial-gradient(ellipse at 18% 0%,var(--room-glow),transparent 38%),radial-gradient(ellipse at 84% 100%,var(--room-wash),transparent 45%) !important;
   -webkit-backdrop-filter:none !important;backdrop-filter:none !important;}
 html body .thoughts-overlay:not(.open){display:none !important;}
-.landing-thoughts-bg{position:absolute;z-index:-1;overflow:hidden;pointer-events:none;opacity:.45;filter:blur(.3px);}
-.landing-thoughts-bg .ltb-row{display:flex;gap:14px;width:max-content;margin:14px 0;animation:ltbDrift 26s linear infinite;will-change:transform;}
-.landing-thoughts-bg .ltb-row:last-child{animation-direction:reverse;animation-duration:32s;}
-.landing-thoughts-bg .ltb-card{flex:0 0 auto;max-width:180px;margin:0;padding:10px 13px;border:1px solid var(--rule);border-radius:10px;
-  background:var(--paper);box-shadow:0 2px 10px var(--card-shadow);font-family:'Source Serif 4',Georgia,serif;font-style:italic;
-  font-size:12px;line-height:1.5;color:var(--muted);}
-@keyframes ltbDrift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-#landing-thoughts-bg-top{left:0;right:0;top:0;height:min(22vh,160px);
-  -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);
-  mask-image:linear-gradient(180deg,#000 40%,transparent);}
+.landing-thoughts-bg{position:absolute;z-index:-1;overflow:hidden;pointer-events:none;opacity:.55;}
+.landing-thoughts-bg .ltb-row{position:absolute;left:0;right:0;overflow:hidden;}
+.landing-thoughts-bg .ltb-track{display:flex;align-items:flex-start;gap:14px;width:max-content;will-change:transform;transition:opacity .6s ease,filter .6s ease;}
+.landing-thoughts-bg .ltb-card{margin:0;flex:0 0 auto;width:212px;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;
+  background:var(--paper);box-shadow:0 2px 12px var(--card-shadow);font-family:'Source Serif 4',Georgia,serif;
+  transition:opacity .6s ease,filter .6s ease;}
+.landing-thoughts-bg .ltb-quote{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-style:italic;font-size:12.5px;line-height:1.55;color:var(--ink);}
+.landing-thoughts-bg .ltb-song{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid var(--rule);}
+.landing-thoughts-bg .ltb-song-art{width:26px;height:26px;border-radius:6px;object-fit:cover;flex:0 0 auto;background:var(--rule);}
+.landing-thoughts-bg .ltb-song-icon{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.landing-thoughts-bg .ltb-song-icon svg{width:12px;height:12px;}
+.landing-thoughts-bg .ltb-song-meta{min-width:0;flex:1 1 auto;}
+.landing-thoughts-bg .ltb-song-title{display:block;font-style:normal;font-weight:600;font-size:11.5px;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.landing-thoughts-bg .ltb-song-artist{display:block;font-style:italic;font-size:10.5px;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* seven full-width lanes stacked down the hero, each an independent
+   horizontal ticker, alternating direction like the reference clip */
+.landing-thoughts-bg .ltb-row:nth-of-type(1){top:2%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(2){top:15%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(3){top:28%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(4){top:41%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(5){top:54%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(6){top:67%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(7){top:80%;}
+.landing-thoughts-bg .ltb-row:nth-of-type(1) .ltb-track{animation:ltbDrift 28s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(2) .ltb-track{animation:ltbDriftMirror 33s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(3) .ltb-track{animation:ltbDrift 38s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(4) .ltb-track{animation:ltbDriftMirror 30s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(5) .ltb-track{animation:ltbDrift 42s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(6) .ltb-track{animation:ltbDriftMirror 36s linear infinite;}
+.landing-thoughts-bg .ltb-row:nth-of-type(7) .ltb-track{animation:ltbDrift 31s linear infinite;}
+/* the mechanic from the reference clip: each lane is a run of different
+   cards followed by an exact repeat of that same run. sliding the whole
+   strip by half its own rendered width lands the repeat exactly where the
+   originals began, so one card exits as a new, different one enters — a
+   true seamless, constant-speed ticker instead of a single card looping
+   against itself. the horizontal steps stay evenly spaced (-10% each) so
+   that constant speed holds; a small vertical wander is layered on top,
+   ending back at 0 so the loop still lands cleanly, so each row drifts
+   on a gentle up-and-down path instead of a dead-straight line. */
+@keyframes ltbDrift{
+  0%{transform:translate(0,0);}
+  20%{transform:translate(-10%,-7px);}
+  40%{transform:translate(-20%,4px);}
+  60%{transform:translate(-30%,-5px);}
+  80%{transform:translate(-40%,6px);}
+  100%{transform:translate(-50%,0);}
+}
+@keyframes ltbDriftMirror{
+  0%{transform:translate(-50%,0);}
+  20%{transform:translate(-40%,5px);}
+  40%{transform:translate(-30%,-6px);}
+  60%{transform:translate(-20%,7px);}
+  80%{transform:translate(-10%,-4px);}
+  100%{transform:translate(0,0);}
+}
+#landing-thoughts-bg-full{left:0;right:0;top:0;bottom:0;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.28) 14%,rgba(0,0,0,.28) 27%,rgba(0,0,0,.28) 70%,#000 83%,#000 100%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,.28) 14%,rgba(0,0,0,.28) 27%,rgba(0,0,0,.28) 70%,#000 83%,#000 100%);}
 #landing-page{position:fixed;inset:0;z-index:99990;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:max(28px,env(safe-area-inset-top)) clamp(20px,6vw,40px) max(40px,env(safe-area-inset-bottom));
   background:var(--paper);
@@ -969,7 +1068,18 @@ html body .thoughts-overlay:not(.open){display:none !important;}
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
   text-align:center;opacity:1;transition:opacity .35s ease;}
 #landing-page.leaving{opacity:0;pointer-events:none;}
-#landing-page .landing-inner{width:100%;max-width:400px;position:relative;}
+#landing-page .landing-inner{width:100%;max-width:400px;position:relative;
+  animation:landingIntroIn .75s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes landingIntroIn{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@media (prefers-reduced-motion: reduce){
+  #landing-page .landing-inner{animation:none;}
+}
+#landing-page h1,#landing-page p,#landing-page .landing-actions button,#landing-page .site-footer{position:relative;z-index:1;}
+#landing-page .landing-inner::before{content:'';position:absolute;inset:-24px -32px;-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);-webkit-mask-image:radial-gradient(ellipse 68% 62% at 50% 50%,#000 35%,transparent 78%);mask-image:radial-gradient(ellipse 68% 62% at 50% 50%,#000 35%,transparent 78%);pointer-events:none;z-index:0;}
+#landing-page .site-footer::before{content:'';position:absolute;inset:-40px -56px;-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);-webkit-mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,#000 25%,transparent 70%);mask-image:radial-gradient(ellipse 85% 85% at 50% 50%,#000 25%,transparent 70%);pointer-events:none;z-index:-1;}
 /* the envelope is a button: tap or click and the flap lifts, a note slides out; again to close */
 #landing-page .landing-mail{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:-6px auto 5px;border-radius:50%;color:var(--accent);opacity:.7;transition:transform .1s ease,opacity .15s ease;}
 #landing-page .landing-mail:hover,#landing-page .landing-mail[aria-pressed="true"]{opacity:1;}
@@ -1108,14 +1218,19 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <a class="footer-link" href="/attributions.html">attributions</a>
     <a class="footer-link" href="/copyright.html#report">report a concern</a>
   </div>
-  <div class="sf-updated">Last updated: <time datetime="2026-09-26T15:34+08:00">Saturday, September 26, 2026, 3:34 PM</time> <span class="sf-updated-ago"></span></div>
+  <div class="sf-updated">Last updated: <time datetime="2026-09-27T13:13+08:00">Sunday, September 27, 2026, 1:13 PM</time> <span class="sf-updated-ago"></span></div>
   <div class="sf-copyright">&copy; 2026 BeyonDefinition. All Rights Reserved.</div>
 </template>
 
 <div id="landing-page">
-  <div class="landing-thoughts-bg" id="landing-thoughts-bg-top" aria-hidden="true">
+  <div class="landing-thoughts-bg" id="landing-thoughts-bg-full" aria-hidden="true">
+    <div class="ltb-row" id="ltb-row-1"></div>
+    <div class="ltb-row" id="ltb-row-2"></div>
+    <div class="ltb-row" id="ltb-row-3"></div>
+    <div class="ltb-row" id="ltb-row-4"></div>
     <div class="ltb-row" id="ltb-row-5"></div>
     <div class="ltb-row" id="ltb-row-6"></div>
+    <div class="ltb-row" id="ltb-row-7"></div>
   </div>
   <div class="landing-inner">
     <button type="button" class="landing-mail" id="landing-mail" aria-pressed="false" aria-label="open the envelope">
@@ -1162,37 +1277,94 @@ html body #landing-page #landing-room:hover{opacity:1;}
 (function () {
   var SB_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
   var SB_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
+  var MUSIC_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
   var seed = [
-    'i read the entry twice. it was longer the second time.',
-    'i think i have heard the name before. i could not say where.',
-    'it is tuesday where i am.',
-    'nothing to add. i only wanted to say i was here.',
-    'the second sense was gone when i scrolled back. thank you anyway.',
-    'i counted the letters. seven. i counted again, to be polite.'
+    { text: 'i read the entry twice. it was longer the second time.' },
+    { text: 'i think i have heard the name before. i could not say where.', music: 'Say \u2014 keshi' },
+    { text: 'it is tuesday where i am.' },
+    { text: 'nothing to add. i only wanted to say i was here.', music: 'Resonance \u2014 Home' },
+    { text: 'the second sense was gone when i scrolled back. thank you anyway.' },
+    { text: 'i counted the letters. seven. i counted again, to be polite.', music: 'It\u2019s A Trip! \u2014 Joywave' },
+    { text: 'left the porch light on for no one in particular.' },
+    { text: 'i almost said it out loud today. almost.', music: 'Someone To Spend Time With \u2014 Los Retros' },
+    { text: 'some days the quiet is the whole point.' },
+    { text: 'i keep this window open longer than i mean to.' }
   ];
-  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function trim(s) { s = (s || '').trim(); return s.length > 90 ? s.slice(0, 87) + '\u2026' : s; }
-  function fillRow(el, lines) {
-    if (!el || !lines.length) return;
-    el.innerHTML = lines.concat(lines).map(function (t) { return '<p class="ltb-card">' + esc(t) + '</p>'; }).join('');
+  var CARDS_PER_ROW = 4;
+  var slots = ['ltb-row-1', 'ltb-row-2', 'ltb-row-3', 'ltb-row-4', 'ltb-row-5', 'ltb-row-6', 'ltb-row-7'];
+  var pool = seed.slice();
+
+  function place(entries) {
+    if (entries && entries.length) pool = entries;
+    slots.forEach(function (id, i) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var picks = pickN(i * CARDS_PER_ROW, CARDS_PER_ROW);
+      el.innerHTML = '<span class="ltb-track">' + renderSet(picks) + renderSet(picks, true) + '</span>';
+    });
   }
-  function place(lines) {
-    if (!lines.length) lines = seed;
-    var a = lines.filter(function (_, i) { return i % 2 === 0; });
-    var b = lines.filter(function (_, i) { return i % 2 === 1; });
-    fillRow(document.getElementById('ltb-row-1'), a.length ? a : seed);
-    fillRow(document.getElementById('ltb-row-2'), b.length ? b : seed);
-    fillRow(document.getElementById('ltb-row-3'), b.length ? b : seed);
-    fillRow(document.getElementById('ltb-row-4'), a.length ? a : seed);
-    fillRow(document.getElementById('ltb-row-5'), a.length ? a : seed);
-    fillRow(document.getElementById('ltb-row-6'), b.length ? b : seed);
+
+  // pick n distinct-ish pool entries starting near a given offset, so each
+  // lane tends to show different cards from its neighbors
+  function pickN(startAt, n) {
+    if (!pool.length) return [];
+    var out = [];
+    for (var k = 0; k < n; k++) out.push(pool[(startAt + k) % pool.length]);
+    return out;
   }
-  fetch(SB_URL + '/rest/v1/thoughts?select=content&order=created_at.desc&limit=24', {
-    headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
-  }).then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) {
-    var lines = (rows || []).map(function (r) { return trim(r.content); }).filter(function (t) { return t && t !== '[media]'; });
-    place(lines);
-  }).catch(function () { place([]); });
+  function renderSet(entries, hidden) {
+    return entries.map(function (e) { return renderCard(e, hidden); }).join('');
+  }
+  function renderCard(e, hidden) {
+    if (!e || !e.text) return '';
+    var song = e.music ? renderSong(e) : '';
+    return '<div class="ltb-card"' + (hidden ? ' aria-hidden="true"' : '') + '>' +
+      '<p class="ltb-quote">' + esc(e.text) + '</p>' + song + '</div>';
+  }
+  function renderSong(e) {
+    var parts = String(e.music).split(' \u2014 ');
+    var title = esc(parts[0] || e.music);
+    var artist = parts[1] ? esc(parts[1]) : '';
+    var art = e.artwork ?
+      '<img class="ltb-song-art" src="' + esc(e.artwork) + '" alt="" loading="lazy">' :
+      '<span class="ltb-song-icon">' + MUSIC_ICON + '</span>';
+    return '<div class="ltb-song">' + art +
+      '<span class="ltb-song-meta"><span class="ltb-song-title">' + title + '</span>' +
+      (artist ? '<span class="ltb-song-artist">' + artist + '</span>' : '') + '</span></div>';
+  }
+
+  // every few seconds, one lane's set of cards quietly fades to a fresh set
+  function cycleOne() {
+    if (pool.length < CARDS_PER_ROW) return;
+    var i = Math.floor(Math.random() * slots.length);
+    var el = document.getElementById(slots[i]);
+    var track = el && el.querySelector('.ltb-track');
+    if (!track) return;
+    var start = Math.floor(Math.random() * pool.length);
+    var picks = pickN(start, CARDS_PER_ROW);
+    track.style.opacity = '0';
+    track.style.filter = 'blur(2px)';
+    setTimeout(function () {
+      track.innerHTML = renderSet(picks) + renderSet(picks, true);
+      track.style.opacity = '';
+      track.style.filter = '';
+    }, 600);
+  }
+  setInterval(cycleOne, 3600);
+
+  var hdrs = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY };
+  fetch(SB_URL + '/rest/v1/thoughts?select=content,music_title,music_artwork&order=created_at.desc&limit=40', { headers: hdrs })
+    .then(function (r) { return r.ok ? r.json() : fetch(SB_URL + '/rest/v1/thoughts?select=content&order=created_at.desc&limit=40', { headers: hdrs }).then(function (r2) { return r2.ok ? r2.json() : []; }); })
+    .then(function (rows) {
+      var entries = (rows || []).map(function (r) {
+        var text = trim(r.content);
+        if (!text || text === '[media]') return null;
+        return { text: text, music: r.music_title || '', artwork: r.music_artwork || '' };
+      }).filter(Boolean);
+      place(entries);
+    }).catch(function () { place([]); });
 })();
 </script>
 
@@ -1263,11 +1435,109 @@ html body #landing-page #landing-room:hover{opacity:1;}
 <!-- ============================================================
      A FOURTH ROOM, ON ITS OWN — not a card inside the thoughts
      modal, a whole page you step into. Every thought that's been
-     left, all at once, stacked in one column and scrollable — and
-     unlike the wall it opens from, nothing here ever flickers back
-     out. Sits above everything else, including the thoughts modal
-     it opens from, and closing it just steps back down into that
-     modal rather than the dictionary underneath. ============================================================ -->
+     left, all at once, drifting past in one slow column instead of
+     sitting still to be scrolled — and unlike the wall it opens
+     from, nothing here ever flickers back out. Sits above everything
+     else, including the thoughts modal it opens from, and closing it
+     just steps back down into that modal rather than the dictionary
+     underneath. ============================================================ -->
+<style id="thoughts-stack-drift-style">
+/* The real, live thought cards themselves drift upward in a single
+   column -- not a decorative duplicate layer behind them. The set is
+   rendered twice back to back (the second copy inert and hidden from
+   assistive tech, built via a markup clone so it carries no duplicate
+   listeners/state) so translating the whole track by exactly -50% loops
+   seamlessly. Hovering or focusing inside pauses the drift so a like or
+   remove tap doesn't have to chase a moving target. */
+#thoughts-stack-list.thought-drift{overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 92%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 6%,#000 92%,transparent 100%);}
+.thought-drift-track{display:flex;flex-direction:column;flex:0 0 auto;gap:22px;will-change:transform;
+  animation:thoughtsStackDrift linear infinite;animation-duration:var(--tsd-duration, 90s);}
+.thought-drift-track.thought-drift-track--empty{animation:none;}
+.thought-drift-set{display:flex;flex-direction:column;flex:0 0 auto;gap:22px;}
+.thought-drift-set--dup{pointer-events:none;}
+#thoughts-stack-list.thought-drift:has(.thought-like:hover,.thought-delete:hover) .thought-drift-track,
+#thoughts-stack-list.thought-drift:focus-within .thought-drift-track{animation-play-state:paused;}
+@keyframes thoughtsStackDrift{0%{transform:translate(0,0);}100%{transform:translate(0,-50%);}}
+#thoughts-stack-list .thought-stack-item{cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;}
+#thoughts-stack-list .thought-stack-item:hover{
+  transform:translateY(-3px);
+  background-color:rgba(112,78,127,.17);
+  box-shadow:0 0 0 1.5px var(--accent), 0 12px 28px var(--card-shadow);}
+#thoughts-stack-list .thought-stack-item:active{
+  transform:translateY(-1px) scale(.98);
+  background-color:rgba(112,78,127,.22);
+  box-shadow:0 0 0 1.5px var(--accent), 0 5px 14px var(--card-shadow);
+  transition-duration:.08s;}
+/* Liking and removing only happen once a thought is centered and
+   stopped -- not while it's mid-drift in the column. */
+#thoughts-stack-list .thought-stack-item .thought-like,
+#thoughts-stack-list .thought-stack-item .thought-delete{display:none !important;}
+/* Tapping a thought zooms it from wherever it sits in the drifting
+   column to the center of the screen and blurs everything behind it --
+   the room's own "no clock running, take whatever time you need" made
+   literal. The card is the real, live node (not a copy), so liking or
+   removing it works once it's centered and stopped there (see the
+   FLIP-style transform in openThoughtFocus below for the zoom itself). */
+.thought-focus-overlay{position:fixed;inset:0;z-index:100020;display:flex;align-items:center;justify-content:center;
+  padding:24px;box-sizing:border-box;background:rgba(50,36,56,0.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  opacity:0;pointer-events:none;transition:opacity .35s ease;}
+.thought-focus-overlay.open{opacity:1;pointer-events:auto;}
+.thought-focus-overlay .thought-stack-item{cursor:default;width:100%;max-width:min(440px,88vw);max-height:min(76vh,620px);
+  overflow-y:auto;position:relative;border-color:color-mix(in srgb, var(--thought-glow, var(--accent)) 45%, var(--rule));
+  background-color:color-mix(in srgb, var(--thought-glow, var(--accent)) 7%, var(--paper));
+  box-shadow:0 0 0 1px rgba(107,74,122,.2),0 24px 60px rgba(50,36,56,.5),0 0 34px rgba(107,74,122,.14);}
+.thought-focus-overlay .thought-stack-item::before{content:'';position:absolute;inset:0;pointer-events:none;
+  border-radius:inherit;background:
+    linear-gradient(color-mix(in srgb, var(--thought-glow, var(--accent)) 65%, var(--paper)), color-mix(in srgb, var(--thought-glow, var(--accent)) 65%, var(--paper))) top center/34px 5px no-repeat,
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(107,74,122,.12), transparent 72%),
+    radial-gradient(ellipse 60% 40% at 50% 112%, rgba(107,74,122,.08), transparent 70%);}
+/* A card opened into focus is read closely, not glanced at in passing —
+   so a photo attached to it sits framed and still instead of the small
+   loosely-tilted "sticker" it is in the drifting list (that tilt reads
+   fine at thumbnail size; at full card width it just overflowed the
+   card's own rounded corners). Kept centered above the words/song,
+   never side-by-side, since there's no drifting column to tuck it into
+   here. */
+.thought-focus-overlay .thought-stack-item .thought-media-note{
+  flex-direction:column !important;align-items:center;gap:12px;margin:2px 0 10px;}
+.thought-focus-overlay .thought-stack-item .thought-media-note .speak-media{
+  transform:none !important;max-width:82%;margin:0 auto;
+  padding:9px;border-radius:16px;
+  background:color-mix(in srgb, var(--paper) 88%, var(--thought-glow, var(--accent)) 12%);
+  box-shadow:inset 0 0 0 1px rgba(107,74,122,.16), 0 10px 24px rgba(50,36,56,.16);}
+.thought-focus-overlay .thought-stack-item .thought-media-note .speak-media img,
+.thought-focus-overlay .thought-stack-item .thought-media-note .speak-media video{
+  display:block;max-width:100%;max-height:260px;width:auto;height:auto;
+  border-radius:10px;box-shadow:none;}
+.thought-focus-overlay .thought-stack-item .thought-media-note .speak-media-caption{
+  text-align:center;max-width:100%;}
+.thought-focus-overlay .thought-stack-item .speak-radio{
+  border-radius:14px;border:0;
+  background:color-mix(in srgb, var(--ink) 5%, var(--paper));
+  box-shadow:inset 0 1px 3px rgba(50,36,56,.14), inset 0 0 0 1px rgba(107,74,122,.1);}
+.thought-focus-overlay .thought-stack-item .speak-radio-art{
+  box-shadow:0 1px 4px rgba(50,36,56,.18), inset 0 0 0 1px rgba(255,255,255,.3);}
+.thought-focus-overlay .thought-stack-item p,
+.thought-focus-overlay .thought-stack-item time,
+.thought-focus-overlay .thought-stack-item .thought-like,
+.thought-focus-overlay .thought-stack-item .thought-media-note{position:relative;z-index:1;}
+.thought-focus-overlay .thought-stack-item time{
+  display:block;margin-top:12px;padding-top:10px;
+  border-top:1px solid rgba(107,74,122,.2);}
+.thought-focus-overlay .thought-stack-item .thought-like{
+  margin-top:10px;border:1px solid color-mix(in srgb, var(--thought-glow, var(--accent)) 28%, var(--rule));
+  background:color-mix(in srgb, var(--thought-glow, var(--accent)) 5%, transparent);}
+.thought-focus-overlay .thought-stack-item .thought-like.liked{
+  border-color:var(--thought-glow, var(--accent));}
+.thought-focus-close{all:unset;position:absolute;top:max(18px,env(safe-area-inset-top,18px));right:max(18px,env(safe-area-inset-right,18px));
+  box-sizing:border-box;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:var(--paper);background:rgba(50,36,56,.55);transition:background .2s ease, transform .15s ease;}
+.thought-focus-close:hover{background:rgba(50,36,56,.75);transform:scale(1.06);}
+.thought-focus-close:focus-visible{outline:2px solid var(--paper);outline-offset:2px;}
+.thought-focus-close svg{width:16px;height:16px;}
+</style>
 <div class="thoughts-stacked-room" id="thoughts-stacked-room" aria-hidden="true">
   <div class="thoughts-stacked-header">
     <button type="button" class="thoughts-stacked-back" id="thoughts-stacked-back">
@@ -1280,11 +1550,20 @@ html body #landing-page #landing-room:hover{opacity:1;}
     <p class="thoughts-stacked-sub" id="thoughts-room-sub" style="white-space:normal;overflow:visible;text-overflow:clip;">there's no clock running. take whatever time you need to read them.</p>
   </div>
 
-  <div class="thoughts-stack-list" id="thoughts-stack-list">
+  <div class="thoughts-stack-list thought-drift" id="thoughts-stack-list">
+    <div class="thought-drift-track" id="thoughts-stack-track">
+      <div class="thought-drift-set" id="thoughts-stack-set"></div>
+      <div class="thought-drift-set thought-drift-set--dup" id="thoughts-stack-set-dup" aria-hidden="true" inert></div>
+    </div>
     <p class="thoughts-loading" id="thoughts-stack-loading">looking for them&hellip;</p>
   </div>
   <button type="button" class="thoughts-link" id="thoughts-stacked-goto-wall">see what's here</button>
   <footer class="footer-note site-footer" data-site-footer></footer>
+</div>
+<div class="thought-focus-overlay" id="thought-focus-overlay" aria-hidden="true">
+  <button type="button" class="thought-focus-close" id="thought-focus-close" aria-label="close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
 </div>
 
 <!-- ============================================================
@@ -1399,10 +1678,166 @@ html body #landing-page #landing-room:hover{opacity:1;}
   </div>
 
   <div class="thoughts-stack-list" id="diaries-list">
+    <div class="diary-cards-bg" id="diary-cards-bg" aria-hidden="true">
+      <div class="dcb-col" id="dcb-col-1"></div>
+      <div class="dcb-col" id="dcb-col-2"></div>
+    </div>
     <p class="thoughts-loading" id="diaries-loading" hidden>looking for them&hellip;</p>
   </div>
   <footer class="footer-note site-footer" data-site-footer></footer>
 </div>
+
+<style id="diary-cards-bg-style">
+/* The drifting column of diary cards behind the search header — pulled
+   live from the real diaries table (see script below), so every card
+   here (including the seamless-loop duplicate) is real and openable.
+   Hidden entirely when no real diaries exist yet. It never touches the
+   real .thought-stack-item cards or their click/search logic. */
+#diaries-list{position:relative;z-index:0;}
+.diary-cards-bg{position:absolute;top:0;bottom:0;left:9%;right:9%;z-index:-1;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 88%,transparent 100%);
+  opacity:1;filter:blur(0);transition:opacity .35s ease,filter .35s ease;}
+.diary-cards-bg--searching{opacity:0;filter:blur(6px);transition:opacity 0s,filter 0s;}
+.diary-cards-bg .dcb-col{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;}
+.diary-cards-bg .dcb-col:nth-of-type(1){left:0;}
+.diary-cards-bg .dcb-col:nth-of-type(2){left:50%;}
+.diary-cards-bg .dcb-track{display:flex;flex-direction:column;align-items:center;gap:22px;width:100%;
+  will-change:transform;transition:opacity .6s ease,filter .6s ease;}
+.diary-cards-bg .dcb-col:nth-of-type(1) .dcb-track{animation:dcbDrift 34s linear infinite;}
+.diary-cards-bg .dcb-col:nth-of-type(2) .dcb-track{animation:dcbDriftMirror 40s linear infinite;padding-top:70px;}
+/* a quieter cousin of the real index-card look (ribbon tab, title, ruled
+   meta line) — each card sits at a faint hand-set tilt, straightening on
+   hover/focus, so the column reads as a loose stack rather than a grid */
+.diary-cards-bg .dcb-card{position:relative;flex:0 0 auto;width:82%;max-width:230px;text-align:center;
+  padding:17px 16px 13px;border:1px solid var(--rule);border-radius:11px;
+  background-color:var(--paper);
+  background-image:radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.65), transparent 62%);
+  box-shadow:0 3px 14px var(--card-shadow);font-family:'Source Serif 4',Georgia,serif;
+  pointer-events:auto;cursor:pointer;transform:rotate(var(--dcb-tilt,0deg));
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+.diary-cards-bg .dcb-card:nth-child(3n+1){--dcb-tilt:-1.4deg;}
+.diary-cards-bg .dcb-card:nth-child(3n+2){--dcb-tilt:0.9deg;}
+.diary-cards-bg .dcb-card:nth-child(3n+3){--dcb-tilt:-0.4deg;}
+.diary-cards-bg .dcb-card:hover,.diary-cards-bg .dcb-card:focus-visible{
+  --dcb-tilt:0deg;border-color:var(--accent);box-shadow:0 14px 28px var(--card-shadow);}
+.diary-cards-bg .dcb-card:active{box-shadow:0 6px 16px var(--card-shadow);}
+.diary-cards-bg .dcb-card:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+.diary-cards-bg .dcb-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:26px;height:4px;border-radius:0 0 3px 3px;background:var(--accent);opacity:.7;}
+.diary-cards-bg .dcb-name{margin:2px 0 7px;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;
+  color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.diary-cards-bg .dcb-meta{display:block;margin:0;padding-top:7px;border-top:1px solid var(--rule);
+  font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);}
+@keyframes dcbDrift{
+  0%{transform:translate(0,0);}
+  20%{transform:translate(-4px,-10%);}
+  40%{transform:translate(3px,-20%);}
+  60%{transform:translate(-3px,-30%);}
+  80%{transform:translate(4px,-40%);}
+  100%{transform:translate(0,-50%);}
+}
+@keyframes dcbDriftMirror{
+  0%{transform:translate(0,-50%);}
+  20%{transform:translate(4px,-40%);}
+  40%{transform:translate(-3px,-30%);}
+  60%{transform:translate(3px,-20%);}
+  80%{transform:translate(-4px,-10%);}
+  100%{transform:translate(0,0);}
+}
+</style>
+<script>
+(function () {
+  // Drifting column now shows real diaries only, fetched from Supabase.
+  // Hidden entirely until at least one real diary exists -- no placeholder
+  // names, no fake dates.
+  var SUPABASE_URL = 'https://mqabccidpyjulcxdcwgm.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_GNKGjGcsXLTYf427dbw4gw_yTCihnzN';
+  var H = { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY };
+
+  function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function diaryTitle(name) {
+    name = String(name || '').trim();
+    if (!name) return name;
+    return name + (/s$/i.test(name) ? '\u2019' : '\u2019s') + ' Diary';
+  }
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    return 'started ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase();
+  }
+
+  var CARDS_PER_COL = 4;
+  var slots = ['dcb-col-1', 'dcb-col-2'];
+
+  function distribute(pool) {
+    // Split real diaries across the two columns, newest-first. When there
+    // isn't enough real content to give both columns their own entries,
+    // mirror the same pool into both rather than leaving a column empty --
+    // still real diaries, just shown twice instead of once.
+    if (pool.length < 2) return [pool, pool];
+    var cols = [[], []];
+    pool.forEach(function (e, i) { cols[i % 2].push(e); });
+    return cols;
+  }
+  function renderSet(entries, hidden) {
+    return entries.map(function (e) { return renderCard(e, hidden); }).join('');
+  }
+  function renderCard(e, hidden) {
+    return '<div class="dcb-card" data-name="' + esc(e.raw) + '"' + (hidden ? ' aria-hidden="true" tabindex="-1"' : ' role="button" tabindex="0"') + '>' +
+      '<p class="dcb-name">' + esc(diaryTitle(e.raw)) + '</p><span class="dcb-meta">' + esc(e.date) + '</span></div>';
+  }
+  function place(pool) {
+    if (!pool.length) { bg.hidden = true; return; }
+    bg.hidden = false;
+    var cols = distribute(pool);
+    slots.forEach(function (id, i) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var picks = cols[i].slice(0, CARDS_PER_COL);
+      el.innerHTML = picks.length ? '<span class="dcb-track">' + renderSet(picks) + renderSet(picks, true) + '</span>' : '';
+    });
+  }
+
+  var bg = document.getElementById('diary-cards-bg');
+  if (!bg) return;
+  bg.hidden = true; // nothing to show until real rows load in
+  window.setDiaryDriftSearching = function (isSearching) {
+    bg.classList.toggle('diary-cards-bg--searching', !!isSearching);
+  };
+
+  // clicking (or tapping) a drifting card opens that diary for real, same
+  // as tapping one of the actual index cards below it -- including the
+  // aria-hidden duplicate half of each lane (there only to make the loop
+  // seamless), which is a real, visible card and should open just as well.
+  // It stays out of tab order and off-screen-reader-radar since it's a
+  // repeat of a card that's already reachable that way.
+  function openFromCard(card) {
+    var name = card && card.getAttribute('data-name');
+    if (name && window.openDiaryView) window.openDiaryView(name);
+  }
+  bg.addEventListener('click', function (ev) {
+    var card = ev.target.closest && ev.target.closest('.dcb-card');
+    if (card) openFromCard(card);
+  });
+  bg.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    var card = ev.target.closest && ev.target.closest('.dcb-card:not([aria-hidden])');
+    if (card) { ev.preventDefault(); openFromCard(card); }
+  });
+
+  fetch(SUPABASE_URL + '/rest/v1/diaries?select=name,created_at&order=created_at.desc&limit=50', { headers: H })
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (rows) {
+      var pool = (rows || []).map(function (r) {
+        return { raw: r.name, date: fmtDate(r.created_at) };
+      }).filter(function (e) { return e.raw; });
+      place(pool);
+    })
+    .catch(function () { /* leave hidden on failure */ });
+})();
+</script>
 
 <div class="thoughts-overlay" id="diary-new-overlay" inert>
   <div class="thoughts-modal">
@@ -1502,10 +1937,45 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .diary-field{width:100%;border:1px solid var(--rule);border-radius:8px;padding:7px 10px;font-family:'Source Serif 4',Georgia,serif;font-size:14px;color:var(--ink);background:var(--paper);margin-top:8px;}
   .diary-field::placeholder{color:var(--muted);}
   .diary-field:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
-  #diaries-list .thought-stack-item{cursor:pointer;}
-  #diaries-list .thought-stack-item:hover{box-shadow:0 4px 20px var(--card-shadow);}
-  #diaries-list .thought-stack-item p{font-weight:600;}
-  .diary-meta{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-style:italic;}
+  /* the directory ("other diaries") gets real index cards — a diary is a
+     place someone can be found again, so it should look kept, not like a
+     torn-off slip. entries inside one diary stay the plain transparent
+     lines used everywhere else on the wall (untouched, below). */
+  #diaries-list .thought-stack-item:not(.skeleton-card){
+    position:relative;
+    align-self:center;
+    text-align:center;
+    cursor:pointer;
+    padding:22px 22px 16px;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    background-color:var(--paper);
+    background-image:radial-gradient(ellipse at 50% -18%, rgba(255,255,255,.65), transparent 62%);
+    box-shadow:0 3px 14px var(--card-shadow);
+    transition:box-shadow .2s ease, border-color .2s ease;
+    animation:diaryCardFloat 6s ease-in-out infinite;
+  }
+  #diaries-list .thought-stack-item:not(.skeleton-card):hover,
+  #diaries-list .thought-stack-item:not(.skeleton-card):active{
+    animation-play-state:paused;
+  }
+  @keyframes diaryCardFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+  }
+  #diaries-list .thought-stack-item:not(.skeleton-card)::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:34px;height:4px;border-radius:0 0 3px 3px;background:var(--accent);opacity:.7;
+  }
+  #diaries-list .thought-stack-item:not(.skeleton-card):hover{border-color:var(--accent);box-shadow:0 12px 26px var(--card-shadow);}
+  #diaries-list .thought-stack-item:not(.skeleton-card):active{box-shadow:0 6px 16px var(--card-shadow);}
+  #diaries-list .thought-stack-item p{margin:2px 0 9px;font-weight:600;font-size:17px;}
+  #diaries-list .thought-stack-item p::before,#diaries-list .thought-stack-item p::after{content:none;}
+  #diaries-list .diary-meta{
+    display:block;margin:0;padding-top:9px;border-top:1px solid var(--rule);
+    font-family:'Courier Prime','Courier New',monospace;
+    font-style:normal;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  }
   .diary-view-compose{border-top:1px solid var(--rule);padding:12px clamp(20px,6vw,52px) max(12px,env(safe-area-inset-bottom,0px));max-width:720px;width:100%;margin:0 auto;flex:0 1 auto;max-height:55vh;overflow-y:auto;}
   .diary-view-compose > .speak-link{margin-top:0;}
   /* .speak-link's `all:unset` beats the browser's [hidden] rule (same issue already
@@ -1590,7 +2060,126 @@ html body #landing-page #landing-room:hover{opacity:1;}
     const gotoStackedBtn = document.getElementById('thoughts-goto-stacked');
     const stackedRoomEl = document.getElementById('thoughts-stacked-room');
     const stackedBackBtn = document.getElementById('thoughts-stacked-back');
-    const stackedListEl = document.getElementById('thoughts-stack-list');
+    const stackedListEl = document.getElementById('thoughts-stack-set');
+    const stackedDupEl = document.getElementById('thoughts-stack-set-dup');
+    const stackedTrackEl = document.getElementById('thoughts-stack-track');
+    // Mirrors the real set into the inert duplicate set (markup only, no
+    // listeners) so the drift track's translate(-50%) loop lands exactly
+    // back at the start, then sizes the loop speed to how much content
+    // there is -- more thoughts, a longer (not faster) lap -- and turns
+    // the drift off entirely when there's nothing to loop.
+    function syncStackDrift() {
+      if (!stackedListEl || !stackedDupEl || !stackedTrackEl) return;
+      const count = stackedListEl.querySelectorAll('.thought-stack-item').length;
+      if (count < 1) {
+        stackedDupEl.innerHTML = '';
+        stackedTrackEl.classList.add('thought-drift-track--empty');
+        return;
+      }
+      stackedDupEl.innerHTML = stackedListEl.innerHTML;
+      stackedTrackEl.classList.remove('thought-drift-track--empty');
+      stackedTrackEl.style.setProperty('--tsd-duration', Math.max(50, count * 9) + 's');
+    }
+
+    // Tapping a thought (anywhere but its like/remove buttons) lifts the
+    // real card out of the drifting column into a centered, blurred-out
+    // focus view -- the room's own promise that there's no clock running
+    // made literal. The card is moved, not copied, so its like/remove
+    // buttons keep working exactly as they do in the column, and it's
+    // put back exactly where it came from on close.
+    const thoughtFocusOverlay = document.getElementById('thought-focus-overlay');
+    const thoughtFocusClose = document.getElementById('thought-focus-close');
+    let focusedThought = null;
+    function closeThoughtFocus(skipReinsert) {
+      if (!focusedThought) return;
+      const { card, parent, next } = focusedThought;
+      focusedThought = null;
+      thoughtFocusOverlay.classList.remove('open');
+      thoughtFocusOverlay.setAttribute('aria-hidden', 'true');
+      if (!skipReinsert) {
+        try {
+          parent.insertBefore(card, (next && next.parentNode === parent) ? next : null);
+        } catch (e) {
+          // The remembered spot is gone (e.g. that neighbor was deleted
+          // while this one was focused) -- put it back in the list
+          // somewhere rather than losing the close entirely.
+          (parent.isConnected ? parent : stackedListEl).appendChild(card);
+        }
+      }
+      syncStackDrift();
+    }
+    function openThoughtFocus(card) {
+      if (!thoughtFocusOverlay) return;
+      // If our own state still thinks a thought is focused but the
+      // overlay isn't actually showing one -- e.g. the visitor left this
+      // room by some other route than this overlay's own close button or
+      // backdrop tap -- every future tap would otherwise silently do
+      // nothing forever. Recover instead of staying stuck.
+      if (focusedThought && !thoughtFocusOverlay.classList.contains('open')) {
+        focusedThought = null;
+      }
+      if (focusedThought) return;
+      const firstRect = card.getBoundingClientRect();
+      const firstCenterX = firstRect.left + firstRect.width / 2;
+      const firstCenterY = firstRect.top + firstRect.height / 2;
+      // The card's own entrance animation (cardIn, "both"-filled) keeps
+      // overriding transform forever after it finishes -- cancel it here
+      // or our zoom transform below gets silently clobbered back to none.
+      card.style.animation = 'none';
+      focusedThought = { card, parent: card.parentNode, next: card.nextSibling };
+      // This overlay's z-index was a static value, but every room it can
+      // be opened on top of bumps itself past that same value the moment
+      // it opens (see bringOverlayToFront) -- so the zoomed card was
+      // silently rendering behind the room instead of over it. Bump this
+      // overlay the same way, right before showing it, so it always wins.
+      if (window.bringOverlayToFront) window.bringOverlayToFront(thoughtFocusOverlay);
+      thoughtFocusOverlay.appendChild(card);
+      thoughtFocusOverlay.classList.add('open');
+      thoughtFocusOverlay.setAttribute('aria-hidden', 'false');
+      syncStackDrift();
+      // Snap the card to where it was (relative to its new centered
+      // size/position), then transition back to none -- so it's a real
+      // zoom from wherever it was tapped to dead center, not a fade.
+      const lastRect = card.getBoundingClientRect();
+      const dx = firstCenterX - (lastRect.left + lastRect.width / 2);
+      const dy = firstCenterY - (lastRect.top + lastRect.height / 2);
+      card.style.transition = 'none';
+      card.style.transform = `translate(${dx}px, ${dy}px) scale(0.4)`;
+      card.style.opacity = '0.5';
+      card.offsetWidth; // force reflow so the snap above isn't itself animated
+      card.style.transition = 'transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s ease';
+      card.style.transform = 'none';
+      card.style.opacity = '1';
+      let animCleaned = false;
+      function cleanupOpenAnim() {
+        if (animCleaned) return;
+        animCleaned = true;
+        card.style.transition = '';
+        card.style.transform = '';
+        card.style.opacity = '';
+        card.removeEventListener('transitionend', onTransitionEnd);
+      }
+      function onTransitionEnd(e) {
+        if (e.propertyName !== 'transform') return;
+        cleanupOpenAnim();
+      }
+      card.addEventListener('transitionend', onTransitionEnd);
+      setTimeout(cleanupOpenAnim, 500);
+    }
+    if (stackedListEl && thoughtFocusOverlay) {
+      stackedListEl.addEventListener('click', (e) => {
+        if (e.target.closest('button, a')) return;
+        const card = e.target.closest('.thought-stack-item');
+        if (card) openThoughtFocus(card);
+      });
+      thoughtFocusOverlay.addEventListener('click', (e) => {
+        if (e.target === thoughtFocusOverlay) closeThoughtFocus();
+      });
+      if (thoughtFocusClose) thoughtFocusClose.addEventListener('click', () => closeThoughtFocus());
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && focusedThought) closeThoughtFocus();
+      });
+    }
     const listEl = document.getElementById('thoughts-list');
     const loadingEl = document.getElementById('thoughts-loading');
     const inputEl = document.getElementById('thoughts-input');
@@ -2089,6 +2678,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
         const stackEmpty = stackedListEl.querySelector('.thoughts-stack-empty');
         if (stackEmpty) stackEmpty.remove();
         stackedListEl.prepend(buildStackItem(entry, true));
+        syncStackDrift();
       }
       if (!stageActive) return;
       clearTimeout(stageTimer);
@@ -2345,7 +2935,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
       const meta = document.createElement('div');
       meta.className = 'speak-radio-meta';
       const idNum = hashSeed(String(entry.id != null ? entry.id : entry.music_url || ''));
-      const freq = 'track ' + String(idNum % 1000).padStart(3, '0');
+      const freq = '';
       const parts = String(entry.music_title || '').split(' \u2014 ');
       const titleText = parts[0] || entry.music_title || 'a song';
       const titleEl = document.createElement('p');
@@ -2549,6 +3139,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
             entry.likes_count = returned;
             paint();
           }
+          syncStackDrift();
         } else {
           entry._localLikes = count;
           const local = readLocal();
@@ -2604,7 +3195,11 @@ html body #landing-page #landing-room:hover{opacity:1;}
         if (ok) {
           item.style.transition = 'opacity .4s ease';
           item.style.opacity = '0';
-          setTimeout(() => item.remove(), 420);
+          setTimeout(() => {
+            item.remove();
+            if (focusedThought && focusedThought.card === item) closeThoughtFocus(true);
+            syncStackDrift();
+          }, 420);
         } else {
           btn.disabled = false;
           btn.querySelector('.lbl').textContent = 'remove';
@@ -2615,15 +3210,19 @@ html body #landing-page #landing-room:hover{opacity:1;}
 
     function renderStackedList(thoughts) {
       if (!stackedListEl) return;
+      const stackLoading = document.getElementById('thoughts-stack-loading');
+      if (stackLoading) stackLoading.remove();
       stackedListEl.innerHTML = '';
       if (!thoughts.length) {
         const empty = document.createElement('p');
         empty.className = 'thoughts-empty thoughts-stack-empty';
         empty.textContent = 'nothing here yet. you can go first.';
         stackedListEl.appendChild(empty);
+        syncStackDrift();
         return;
       }
       thoughts.forEach(t => stackedListEl.appendChild(buildStackItem(t, false)));
+      syncStackDrift();
     }
 
     async function loadThoughts() {
@@ -3378,6 +3977,20 @@ html body #landing-page #landing-room:hover{opacity:1;}
       return api;
     }
 
+    function buildRadioArt(src) {
+      const art = el('img', 'speak-radio-art');
+      art.src = src;
+      art.alt = '';
+      art.loading = 'lazy';
+      return art;
+    }
+    function buildRadioWatermark() {
+      const wm = el('div', 'speak-radio-watermark');
+      wm.setAttribute('aria-hidden', 'true');
+      wm.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+      return wm;
+    }
+
     function buildRadio(post) {
       const box = el('div', 'speak-radio');
       const btn = el('button', 'say');
@@ -3388,7 +4001,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
       btn.setAttribute('aria-label', 'play');
       const meta = el('div', 'speak-radio-meta');
       const idNum = Number(post.id) || 0;
-      const freq = 'entry ' + String(idNum % 1000).padStart(3, '0');
+      const freq = '';
       const titleEl = post.audio_title ? el('p', 'speak-radio-title') : null;
       if (titleEl) {
         titleEl.appendChild(el('span', 'speak-radio-title-in', post.audio_title));
@@ -5399,14 +6012,6 @@ html body #landing-page #landing-room:hover{opacity:1;}
   var drag = null;
   avatar.addEventListener('pointerdown', function(e){
     if (e.button > 0) return;
-    avatar.style.pointerEvents = 'none';
-    var under = document.elementFromPoint(e.clientX, e.clientY);
-    avatar.style.pointerEvents = '';
-    var real = under && under.closest('a,button,[role="button"]');
-    if (real) {
-      var rr = real.getBoundingClientRect();
-      if (rr.width <= 160 && rr.height <= 80) { real.click(); return; }
-    }
     lastTouch = Date.now();
     drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: e.clientX - x, oy: e.clientY - y, moved: false };
     try { avatar.setPointerCapture(e.pointerId); } catch (err) {}
@@ -5865,6 +6470,14 @@ html body #landing-page #landing-room:hover{opacity:1;}
       return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
+    // "Alex" -> "Alex\u2019s Diary", "Chris" -> "Chris\u2019 Diary" (trailing s
+    // takes just the apostrophe), same pattern as Selrick\u2019s Diary.
+    function diaryTitle(name) {
+      name = String(name || '').trim();
+      if (!name) return name;
+      return name + (/s$/i.test(name) ? '\u2019' : '\u2019s') + ' Diary';
+    }
+
     // a few pulsing placeholder cards while a list is still loading,
     // shaped like the real cards so nothing jumps when they arrive
     function renderSkeletons(container, n) {
@@ -5879,9 +6492,14 @@ html body #landing-page #landing-room:hover{opacity:1;}
     // ---------- directory ----------
     async function loadDiaries(term) {
       listEl.querySelectorAll('.thought-stack-item, .thoughts-stack-empty').forEach((n) => n.remove());
+      if (!term) {
+        // No default full listing here -- the drifting cards behind this
+        // list are the only "browse everything" view. This static list is
+        // just search results, so it stays empty until someone types.
+        return;
+      }
       renderSkeletons(listEl, 3);
-      let url = `${SUPABASE_URL}/rest/v1/diaries?select=id,name,created_at&order=created_at.desc&limit=50`;
-      if (term) url += `&name=ilike.*${encodeURIComponent(term)}*`;
+      const url = `${SUPABASE_URL}/rest/v1/diaries?select=id,name,created_at&order=created_at.desc&limit=50&name=ilike.*${encodeURIComponent(term)}*`;
       try {
         const res = await fetch(url, { headers: H });
         const rows = res.ok ? await res.json() : [];
@@ -5889,41 +6507,53 @@ html body #landing-page #landing-room:hover{opacity:1;}
         if (!rows.length) {
           const p = document.createElement('p');
           p.className = 'thoughts-loading thoughts-stack-empty';
-          p.textContent = term ? `no diary named like that yet.` : `no diaries yet — be the first.`;
+          p.textContent = `no diary named like that yet.`;
           listEl.appendChild(p);
           return;
         }
         rows.forEach((d) => {
           const card = document.createElement('div');
           card.className = 'thought-stack-item';
-          card.innerHTML = `<p>${escapeHtml(d.name)}</p><span class="diary-meta">started ${fmtDate(d.created_at)}</span>`;
+          card.innerHTML = `<p>${escapeHtml(diaryTitle(d.name))}</p><span class="diary-meta">started ${fmtDate(d.created_at)}</span>`;
           card.addEventListener('click', () => openDiaryView(d.name));
           listEl.appendChild(card);
         });
       } catch {
+        // Same call as when the directory is fetched normally: on a real
+        // failure just clear the skeletons and fall back to the drifting
+        // cards, same as an empty directory -- no center text over them.
         listEl.querySelectorAll('.skeleton-card').forEach((n) => n.remove());
-        const p = document.createElement('p');
-        p.className = 'thoughts-loading thoughts-stack-empty';
-        p.textContent = 'could not look just now. try again.';
-        listEl.appendChild(p);
       }
     }
 
     let searchDebounce;
     searchEl.addEventListener('input', () => {
+      const term = searchEl.value.trim();
+      if (window.setDiaryDriftSearching) window.setDiaryDriftSearching(!!term);
       clearTimeout(searchDebounce);
-      searchDebounce = setTimeout(() => loadDiaries(searchEl.value.trim()), 260);
+      if (!term) {
+        // Clearing (including backspacing the last character) skips the
+        // debounce entirely -- the stale result rows come off screen in
+        // the same tick the drift starts un-hiding, instead of lingering
+        // for up to 260ms and then popping away mid-fade.
+        loadDiaries(term);
+        return;
+      }
+      searchDebounce = setTimeout(() => loadDiaries(term), 260);
     });
 
     function openDiaries() {
       if (window.bringOverlayToFront) window.bringOverlayToFront(room);
       room.classList.add('open');
       room.setAttribute('aria-hidden', 'false');
-      loadDiaries(searchEl.value.trim());
+      const term = searchEl.value.trim();
+      if (window.setDiaryDriftSearching) window.setDiaryDriftSearching(!!term);
+      loadDiaries(term);
     }
     function closeDiaries() {
       room.classList.remove('open');
       room.setAttribute('aria-hidden', 'true');
+      if (window.setDiaryDriftSearching) window.setDiaryDriftSearching(false);
       if (window.showLanding) window.showLanding();
     }
     backBtn.addEventListener('click', closeDiaries);
@@ -5984,8 +6614,9 @@ html body #landing-page #landing-room:hover{opacity:1;}
         if (!res.ok) throw new Error(String(res.status));
         lastCode = code;
         closeNew();
-        room.classList.remove('open');
-        room.setAttribute('aria-hidden', 'true');
+        // Leave the diaries list open underneath (same as opening an
+        // existing diary from it), so backing out of the new diary
+        // returns to that list instead of jumping to the landing page.
         openDiaryView(name);
       } catch {
         newStatus.textContent = 'could not start it just now. try again.';
@@ -6184,11 +6815,24 @@ html body #landing-page #landing-room:hover{opacity:1;}
     // diary's own code has been typed in (the same gate that unlocks
     // writing) — and is checked again server-side, through the
     // delete_diary_entry function, not just here.
+    //
+    // Important: this returns boolean (whether a row actually matched),
+    // not void. A DELETE whose WHERE clause matches nothing is not an
+    // error in Postgres, so a plain "returns void" version reports
+    // success even when the code was wrong and nothing was removed —
+    // the entry then vanishes from this screen but is still there next
+    // time the diary is opened. Returning whether a row matched lets
+    // the client tell the two cases apart.
     //   create or replace function delete_diary_entry(p_entry_id bigint, p_code_hash text)
-    //   returns void language plpgsql security definer as $$
+    //   returns boolean language plpgsql security definer as $$
+    //   declare affected int;
+    //   begin
     //     delete from diary_entries
     //     where id = p_entry_id
     //       and diary_id in (select id from diaries where code_hash = p_code_hash);
+    //     get diagnostics affected = row_count;
+    //     return affected > 0;
+    //   end;
     //   $$;
     //   grant execute on function delete_diary_entry(bigint, text) to anon, authenticated;
     async function deleteDiaryEntry(entry) {
@@ -6201,7 +6845,13 @@ html body #landing-page #landing-room:hover{opacity:1;}
           headers: H,
           body: JSON.stringify({ p_entry_id: entry.id, p_code_hash: code_hash })
         });
-        return res.ok;
+        if (!res.ok) return false;
+        // Older deployments of this function still `returns void` and
+        // reply with an empty body -- treat that the same as before
+        // (any 2xx meant success) instead of breaking on them.
+        const text = await res.text();
+        if (!text) return true;
+        try { return JSON.parse(text) !== false; } catch (e) { return true; }
       } catch (e) { return false; }
     }
     function buildDiaryDeleteButton(entry, card) {
@@ -6244,9 +6894,20 @@ html body #landing-page #landing-room:hover{opacity:1;}
     // itself: knowing the code proves it's yours to remove. Checked
     // again server-side, through delete_diary (entries cascade with
     // it, same as delete_diary_entry already assumes for one).
+    //
+    // Same fix as delete_diary_entry above and for the same reason: a
+    // wrong code matches zero rows, which Postgres doesn't treat as an
+    // error, so a "returns void" version reports success while leaving
+    // the diary untouched -- this closed the view as if it had been
+    // deleted, even though reopening it would show it was still there.
     //   create or replace function delete_diary(p_name text, p_code_hash text)
-    //   returns void language plpgsql security definer as $$
+    //   returns boolean language plpgsql security definer as $$
+    //   declare affected int;
+    //   begin
     //     delete from diaries where name = p_name and code_hash = p_code_hash;
+    //     get diagnostics affected = row_count;
+    //     return affected > 0;
+    //   end;
     //   $$;
     //   grant execute on function delete_diary(text, text) to anon, authenticated;
     async function deleteDiary() {
@@ -6263,8 +6924,14 @@ html body #landing-page #landing-room:hover{opacity:1;}
           let detail = '';
           try { detail = (await res.json()).message || ''; } catch (e) {}
           console.error('delete_diary failed', res.status, detail);
+          return false;
         }
-        return res.ok;
+        // Older deployments of this function still `returns void` and
+        // reply with an empty body -- treat that the same as before
+        // (any 2xx meant success) instead of breaking on them.
+        const text = await res.text();
+        if (!text) return true;
+        try { return JSON.parse(text) !== false; } catch (e) { return true; }
       } catch (e) { return false; }
     }
     if (viewDeleteDiary) {
@@ -6426,7 +7093,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
       viewRoom.style.transform = 'none';
       viewRoom.style.pointerEvents = 'auto';
       viewRoom.style.zIndex = '999999';
-      viewTitle.textContent = name;
+      viewTitle.textContent = diaryTitle(name);
       viewSub.textContent = DEFAULT_DIARY_SUB;
       viewInput.value = ''; viewCode.value = lastCode; viewStatus.textContent = ''; viewStatus.classList.remove('error');
       if (viewCodeWrap) viewCodeWrap.hidden = !lastCode;
@@ -6471,6 +7138,12 @@ html body #landing-page #landing-room:hover{opacity:1;}
       viewRoom.style.transform = '';
       viewRoom.style.pointerEvents = '';
       viewRoom.style.zIndex = '';
+      // Normally the diaries list stays open underneath this view (whether
+      // the diary was opened from the list or just created), so closing
+      // just reveals it again. This is only a fallback for the rare case
+      // nothing is open underneath -- land on the landing page instead of
+      // leaving the screen blank.
+      if (!room.classList.contains('open') && window.showLanding) window.showLanding();
     }
     viewBack.addEventListener('click', closeDiaryView);
     window.openDiaryView = openDiaryView;
@@ -6769,7 +7442,7 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .site-footer .sf-copyright{font-size:10px;opacity:.6;margin-top:2px;}
   #landing-page{overflow-y:auto;}
   #landing-page .landing-inner{margin:auto 0;}
-  #landing-page .site-footer{margin:0;padding-top:20px;flex:0 0 auto;}
+  #landing-page .site-footer{margin:0;padding-top:20px;flex:0 0 auto;position:relative;}
   .thoughts-modal .site-footer{flex:0 0 auto;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);}
   .thoughts-stacked-room .site-footer{position:relative;flex:0 0 auto;margin:0;padding:10px 16px max(12px,env(safe-area-inset-bottom,0px));border-top:1px solid var(--rule);}
 
@@ -6782,12 +7455,12 @@ html body #landing-page #landing-room:hover{opacity:1;}
   .attach-rights-note a:hover{color:var(--accent);}
 
   /* steadier landing + compose pages and footer: the flicker stays on the wall and in the room */
-  #landing-page h1,#landing-page p,#thoughts-title,#thoughts-panel-compose .feedback-sub,.site-footer{animation:none !important;}
+  #landing-page h1,#landing-page p:not(.ltb-card),#thoughts-title,#thoughts-panel-compose .feedback-sub,.site-footer{animation:none !important;}
 
   /* easier to read: a slightly deeper grey, and nothing set below 12px */
   :root{--muted:#5a5065;}
   html body .thoughts-count,html body .thoughts-list::after,html body .thought-line time,html body .thoughts-stacked-room .thought-stack-item time,
-  html body .thought-like-time,html body .speak-foot{font-size:12px;}
+  html body .thought-like-time,html body .speak-foot,html body .speak-room .speak-reply-name,html body .speak-room .speak-reply .speak-time{font-size:12px;}
   .site-footer{font-size:12px;}
 
   /* buttons and links a thumb can hit: 40px for the main ones, 36px for the quiet ones */
